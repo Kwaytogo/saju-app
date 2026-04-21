@@ -15,8 +15,8 @@ const V={bg:'#060C18',s:'#0A1628',am:'#E88C12',go:'#C8A055',tx:'#EDE5D3',mu:'#8A
 const FF="'Cormorant Garamond',Georgia,serif";
 
 function calcYear(y){const si=((y-4)%10+10)%10,bi=((y-4)%12+12)%12;return{s:S[si],b:B[bi],se:SE[si],be:BE[bi],yy:SY[si],ko:SKO[si]+BKO[bi],si,bi};}
-function calcMonth(y,m,d){const ySI=((y-4)%10+10)%10,base=[2,4,6,8,0][Math.floor(ySI/2)],cuts=[6,4,6,5,6,6,7,8,8,8,7,7],mi=m-1,sol=d>=cuts[mi]?(mi-1+12)%12:(mi-2+12)%12,si=(base+sol)%10,bi=(sol+2)%12;return{s:S[si],b:B[bi],se:SE[si],be:BE[bi],yy:SY[si],ko:SKO[si]+BKO[bi],si,bi};}
-function calcDay(ds){const[y,m,d]=ds.split('-').map(Number),diff=Math.round((new Date(y,m-1,d)-new Date(2000,0,1))/86400000),idx=((16+diff)%60+60)%60,si=idx%10,bi=idx%12;return{s:S[si],b:B[bi],se:SE[si],be:BE[bi],yy:SY[si],ko:SKO[si]+BKO[bi],si,bi};}
+function calcMonth(y,m,d){const ySI=((y-4)%10+10)%10,base=[2,4,6,8,0][ySI%5],cuts=[6,4,6,5,6,6,7,8,8,8,7,7],mi=m-1,sol=d>=cuts[mi]?(mi-1+12)%12:(mi-2+12)%12,si=(base+sol)%10,bi=(sol+2)%12;return{s:S[si],b:B[bi],se:SE[si],be:BE[bi],yy:SY[si],ko:SKO[si]+BKO[bi],si,bi};}
+function calcDay(ds){const[y,m,d]=ds.split('-').map(Number),diff=Math.round((new Date(y,m-1,d)-new Date(2000,0,1))/86400000),idx=((53+diff)%60+60)%60,si=idx%10,bi=idx%12;return{s:S[si],b:B[bi],se:SE[si],be:BE[bi],yy:SY[si],ko:SKO[si]+BKO[bi],si,bi};}
 function dominant(ps){const c={};ps.forEach(p=>{c[p.se]=(c[p.se]||0)+1;c[p.be]=(c[p.be]||0)+1;});return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];}
 
 function buildPrompt(type,YP,MP,DP,gender){
@@ -31,7 +31,7 @@ function buildPrompt(type,YP,MP,DP,gender){
   if(type==='career')return`Korean SAJU career oracle. Career fortune in English using "you".\n\n${base}4 sections:\n### YOUR NATURAL GIFTS\n3 sentences.\n### DESTINED PATHS\n3-4 sentences. 4-5 specific career titles.\n### YOUR POWER DECADE\n3 sentences.\n### 2026 CAREER FORECAST\n3 sentences.\nProse. Confident.`;
   if(type==='story'){const hero=gender==='male'?'a Knight on a quest':'a Princess awakening to her destiny';return`Master storyteller. Korean mystical fairy tale. Reader is ${hero}.\n\n${base}Structure (no labels in story):\nRising: ${eW[YP.se]}\nJourney: ${trials[MP.se]}\nDestiny: ${resols[DP.se]} — MUST end happily\n\n290-310 words. Second person. Korean imagery: lanterns, jade mountains, ancient gates, moonlight. Happy ending.`;}
 }
-async function callClaude(p){const r=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:p}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
+async function callClaude(p){const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:p}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
 function parseSections(text){const m=[...text.matchAll(/###\s+(.+?)\n([\s\S]+?)(?=\n###|$)/g)];return m.map(x=>({title:x[1].trim(),body:x[2].trim()}));}
 
 const TABS=[{id:'basic',ko:'Basic Fortune',icon:'命'},{id:'love',ko:'Love Fortune',icon:'♡'},{id:'career',ko:'Career Fortune',icon:'山'},{id:'story',ko:'Your Story',icon:'✦'}];
