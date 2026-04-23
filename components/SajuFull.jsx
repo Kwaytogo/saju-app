@@ -89,11 +89,13 @@ function KoreanNight(){
     <path d="M571 272 L571 257 Q571 246 582 246 L641 246 Q652 246 652 257 L652 272Z" fill="#E88C12" opacity=".2"/><path d="M571 272 L571 257 Q571 246 582 246 L641 246 Q652 246 652 257 L652 272Z" fill="none" stroke="#E88C12" strokeWidth="1.1" opacity=".48"/>
     <rect x="308" y="206" width="19" height="68" fill="#0C1820"/><rect x="473" y="206" width="19" height="68" fill="#0C1820"/>
     <rect x="52" y="210" width="696" height="34" fill="#0D1725"/>
+    {[[88,215,50,24],[196,215,50,24],[558,215,50,24],[666,215,50,24]].map(([x,y,w,h],i)=>(<g key={i} opacity=".45"><rect x={x} y={y} width={w} height={h} fill="none" stroke="#E88C12" strokeWidth=".7"/><line x1={x+16} y1={y} x2={x+16} y2={y+h} stroke="#E88C12" strokeWidth=".4"/><line x1={x+33} y1={y} x2={x+33} y2={y+h} stroke="#E88C12" strokeWidth=".4"/><line x1={x} y1={y+h/2} x2={x+w} y2={y+h/2} stroke="#E88C12" strokeWidth=".4"/></g>))}
     <line x1="309" y1="206" x2="309" y2="214" stroke="#C8A055" strokeWidth=".8" opacity=".7"/><ellipse cx="309" cy="221" rx="5" ry="7.5" fill="#E88C12" opacity=".92"/>
     <line x1="491" y1="206" x2="491" y2="214" stroke="#C8A055" strokeWidth=".8" opacity=".7"/><ellipse cx="491" cy="221" rx="5" ry="7.5" fill="#E88C12" opacity=".92"/>
     {[370,400,430].map((x,i)=>(<g key={i}><line x1={x} y1="210" x2={x} y2="218" stroke="#C8A055" strokeWidth=".7" opacity=".6"/><ellipse cx={x} cy="225" rx="4" ry="6.5" fill="#E88C12" opacity=".86"/></g>))}
     <rect x="52" y="193" width="696" height="18" fill="#0F1C10"/>{dc.slice(0,24).map((col,i)=><rect key={i} x={58+i*28} y="194" width="18" height="8" fill={col} opacity=".78"/>)}<line x1="52" y1="193" x2="748" y2="193" stroke="#C8A055" strokeWidth=".9" opacity=".65"/>
     <rect x="82" y="156" width="636" height="38" fill="#0D1620"/>
+    {[[128,161,46,26],[250,161,46,26],[377,161,48,26],[504,161,46,26],[624,161,46,26]].map(([x,y,w,h],i)=>(<g key={i} opacity=".38"><rect x={x} y={y} width={w} height={h} fill="none" stroke="#E88C12" strokeWidth=".7"/><line x1={x+w/3} y1={y} x2={x+w/3} y2={y+h} stroke="#E88C12" strokeWidth=".4"/><line x1={x+2*w/3} y1={y} x2={x+2*w/3} y2={y+h} stroke="#E88C12" strokeWidth=".4"/><line x1={x} y1={y+h/2} x2={x+w} y2={y+h/2} stroke="#E88C12" strokeWidth=".4"/></g>))}
     <rect x="82" y="138" width="636" height="18" fill="#0F1C10"/>{dc.slice(0,22).map((col,i)=><rect key={i} x={88+i*28} y="139" width="18" height="8" fill={col} opacity=".70"/>)}<line x1="82" y1="138" x2="718" y2="138" stroke="#C8A055" strokeWidth=".85" opacity=".58"/>
     <path d="M48 138 Q200 114 400 110 Q600 114 752 138 L754 142 L46 142Z" fill="#080E1A"/>
     <path d="M48 138 Q200 114 400 110 Q600 114 752 138" fill="none" stroke="#C8A055" strokeWidth="2.2" opacity=".93"/>
@@ -290,9 +292,9 @@ export default function SajuFull(){
           {/* COMPATIBILITY */}
           <div className="ri4" style={{marginBottom:40}}>
             {!showCompat
-              ?<button onClick={()=>setShowCompat(true)} style={{width:'100%',background:'none',border:`1px solid ${V.br}`,color:V.mu,padding:'18px',fontFamily:FF,fontSize:16,cursor:'pointer',lineHeight:1.6,transition:'all .2s'}} onMouseOver={e=>{e.currentTarget.style.borderColor=V.am;e.currentTarget.style.color=V.tx;}} onMouseOut={e=>{e.currentTarget.style.borderColor=V.br;e.currentTarget.style.color=V.mu;}}>
+              ?<button onClick={()=>setShowCompat(true)} style={{width:'100%',background:`${V.am}18`,border:`2px solid ${V.am}`,color:V.tx,padding:'20px',fontFamily:FF,fontSize:18,cursor:'pointer',lineHeight:1.6,transition:'all .2s'}} onMouseOver={e=>{e.currentTarget.style.background=V.am;e.currentTarget.style.color=V.bg;}} onMouseOut={e=>{e.currentTarget.style.background=`${V.am}18`;e.currentTarget.style.color=V.tx;}}>
                 ♡ Is someone special compatible with you?<br/>
-                <span style={{fontSize:12,letterSpacing:3,color:V.mu}}>ENTER THEIR BIRTHDAY →</span>
+                <span style={{fontSize:13,letterSpacing:3,color:V.am}}>ENTER THEIR BIRTHDAY →</span>
               </button>
               :<div style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px',textAlign:'left'}}>
                 <p style={{fontSize:12,letterSpacing:5,color:V.am,marginBottom:16,textAlign:'center'}}>COMPATIBILITY · 궁합</p>
@@ -338,10 +340,61 @@ export default function SajuFull(){
             </div>
           )}
 
+          {/* INLINE PACKAGE CARDS on reveal page */}
+          <div className="ri5" style={{marginBottom:40}}>
+            <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:20,textAlign:'center'}}>CHOOSE YOUR READING</p>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
+              {[
+                {id:'basic',ko:'Basic Fortune',price:'$13.99',orig:'$19.99',desc:'Full destiny + K-pop idol match',icon:'命',hot:true},
+                {id:'story',ko:'Your Story',price:'$19.99',orig:'$27.99',desc:'Your life as a Korean fairy tale',icon:'✦',hot:false},
+                {id:'love',ko:'Love Fortune',price:'$6.99',orig:null,desc:'Your ideal partner revealed',icon:'♡',hot:false},
+                {id:'career',ko:'Career Fortune',price:'$6.99',orig:null,desc:'Your destined paths & power years',icon:'山',hot:false},
+              ].map(pkg=>(
+                <button key={pkg.id} onClick={()=>setView('saju')}
+                  style={{background:V.s,border:`1px solid ${pkg.hot?V.am:V.br}`,padding:'16px 12px',fontFamily:FF,cursor:'pointer',textAlign:'left',color:V.tx,transition:'border-color .2s',position:'relative'}}
+                  onMouseOver={e=>e.currentTarget.style.borderColor=V.am}
+                  onMouseOut={e=>e.currentTarget.style.borderColor=pkg.hot?V.am:V.br}>
+                  {pkg.hot&&<span style={{position:'absolute',top:-1,left:12,background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>POPULAR</span>}
+                  <div style={{fontSize:20,color:V.am,marginBottom:6,marginTop:pkg.hot?8:0}}>{pkg.icon}</div>
+                  <div style={{fontSize:14,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div>
+                  <div style={{fontSize:12,color:V.mu,lineHeight:1.4,marginBottom:8}}>{pkg.desc}</div>
+                  <div style={{display:'flex',alignItems:'baseline',gap:6}}>
+                    {pkg.orig&&<span style={{fontSize:11,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}
+                    <span style={{fontSize:18,color:V.am,fontWeight:600}}>{pkg.price}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+            {/* Bundle row */}
+            <button onClick={()=>setView('saju')}
+              style={{width:'100%',background:'#081420',border:`1px solid ${V.go}`,padding:'16px 20px',fontFamily:FF,cursor:'pointer',textAlign:'left',color:V.tx,display:'flex',justifyContent:'space-between',alignItems:'center'}}
+              onMouseOver={e=>e.currentTarget.style.borderColor=V.am}
+              onMouseOut={e=>e.currentTarget.style.borderColor=V.go}>
+              <div>
+                <span style={{background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700,marginRight:8}}>BEST VALUE</span>
+                <span style={{fontSize:15,letterSpacing:1}}>Complete Bundle · All 4 Readings</span>
+              </div>
+              <div style={{display:'flex',alignItems:'baseline',gap:8,flexShrink:0}}>
+                <span style={{fontSize:13,color:'#2A4070',textDecoration:'line-through'}}>$47.96</span>
+                <span style={{fontSize:22,color:V.am,fontWeight:700}}>$29.99</span>
+              </div>
+            </button>
+          </div>
+
           <div className="ri5">
             <p style={{fontSize:16,color:V.mu,marginBottom:18,lineHeight:1.6}}>This is your element. Your full destiny — love, career, your story — goes so much deeper.</p>
             <button className="hvr-fill" onClick={()=>setView('saju')} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'18px',fontFamily:FF,fontSize:20,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:10}}>UNLOCK MY FULL READING ✦</button>
-            <p style={{fontSize:13,color:'#2A4060',letterSpacing:2}}>Basic Fortune $13.99 · Complete Bundle $29.99</p>
+            <div style={{background:'#0A1220',border:`1px solid ${V.go}`,padding:'16px 20px',marginTop:4}}>
+              <p style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:6}}>🔥 LIMITED OFFER · RIGHT NOW ONLY</p>
+              <p style={{fontSize:16,color:V.tx,lineHeight:1.5,marginBottom:8}}>Surprised? <strong>You haven't seen anything yet.</strong><br/>Get all 4 readings at a price we only show once.</p>
+              <div style={{display:'flex',alignItems:'baseline',gap:10,justifyContent:'center',marginBottom:10}}>
+                <span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>$47.96</span>
+                <span style={{fontSize:32,color:V.am,fontWeight:700}}>$25.99</span>
+                <span style={{fontSize:13,color:V.mu}}>complete bundle</span>
+              </div>
+              <button onClick={()=>setView('saju')} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $25.99 ✦</button>
+              <p style={{fontSize:11,color:'#2A4060',marginTop:8,textAlign:'center'}}>or start with Basic Fortune only · $13.99</p>
+            </div>
           </div>
         </div>
       </div>
@@ -434,19 +487,21 @@ export default function SajuFull(){
         }
 
         {/* BUNDLE UPSELL */}
-        <div style={{maxWidth:600,margin:'32px auto 0',background:'#081420',border:`1px solid ${V.go}`,padding:'24px'}}>
-          <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
-            <span style={{background:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'3px 10px',fontWeight:700}}>🔥 LIMITED OFFER</span>
-            <span style={{fontSize:11,color:'#3A5070',letterSpacing:1}}>only shown inside this reading</span>
+        <div style={{maxWidth:600,margin:'32px auto 0',background:'#081420',border:`2px solid ${V.am}`,padding:'28px'}}>
+          <div style={{textAlign:'center',marginBottom:16}}>
+            <span style={{background:V.am,color:V.bg,fontSize:11,letterSpacing:3,padding:'5px 16px',fontWeight:700}}>🔥 LIMITED · THIS WINDOW ONLY</span>
           </div>
-          <p style={{fontSize:18,color:V.tx,marginBottom:6,lineHeight:1.5}}>Loved this? You haven't seen anything yet.</p>
-          <p style={{fontSize:14,color:V.mu,lineHeight:1.6,marginBottom:16}}>Get all 4 readings — Basic, Love, Career, and Your Story — at a price we only show after your first reading.</p>
-          <div style={{display:'flex',alignItems:'baseline',gap:12,marginBottom:16}}>
-            <span style={{fontSize:15,color:'#2A4070',textDecoration:'line-through'}}>$29.99</span>
-            <span style={{fontSize:36,color:V.am,fontWeight:700}}>$25.99</span>
-            <span style={{fontSize:13,color:V.mu}}>complete bundle</span>
+          <h3 style={{fontSize:24,fontWeight:400,textAlign:'center',marginBottom:8,lineHeight:1.4}}>놀라셨나요?<br/><span style={{color:V.am}}>더 놀랄 준비 하세요.</span></h3>
+          <p style={{fontSize:15,color:V.mu,textAlign:'center',marginBottom:6,lineHeight:1.6}}>Surprised? You haven't seen anything yet.</p>
+          <p style={{fontSize:14,color:V.mu,textAlign:'center',lineHeight:1.6,marginBottom:20}}>Get <strong style={{color:V.tx}}>all 4 readings</strong> — Basic Fortune, Love, Career, and Your Story — at a price we only unlock after your first reading.</p>
+          <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:16,marginBottom:8}}>
+            <span style={{fontSize:22,color:'#3A5070',textDecoration:'line-through'}}>$29.99</span>
+            <span style={{fontSize:14,color:V.mu,alignSelf:'center'}}>→</span>
+            <span style={{fontSize:52,color:V.am,fontWeight:700,lineHeight:1}}>$25.99</span>
           </div>
-          <button onClick={()=>setView('saju')} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'14px',fontFamily:FF,fontSize:17,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET EVERYTHING · $25.99 ✦</button>
+          <p style={{fontSize:12,color:V.am,textAlign:'center',letterSpacing:3,marginBottom:16}}>✦ 지금 이 창에서만 · THIS PAGE ONLY ✦</p>
+          <button onClick={()=>setView('saju')} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'16px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700}}>YES — GET ALL 4 READINGS · $25.99 ✦</button>
+          <p style={{fontSize:12,color:'#2A4060',marginTop:10,textAlign:'center',letterSpacing:1}}>* this price disappears when you leave this page</p>
         </div>
 
         <div style={{textAlign:'center',marginTop:24,display:'flex',gap:8,justifyContent:'center',flexWrap:'wrap'}}>
