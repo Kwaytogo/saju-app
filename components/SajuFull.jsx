@@ -393,7 +393,7 @@ export default function SajuFull(){
                 <span style={{fontSize:13,color:V.mu}}>complete bundle</span>
               </div>
               <button onClick={()=>setView('saju')} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $25.99 ✦</button>
-              <p style={{fontSize:11,color:'#2A4060',marginTop:8,textAlign:'center'}}>or start with Basic Fortune only · $13.99</p>
+
             </div>
           </div>
         </div>
@@ -494,10 +494,16 @@ export default function SajuFull(){
           <h3 style={{fontSize:24,fontWeight:400,textAlign:'center',marginBottom:8,lineHeight:1.4}}>놀라셨나요?<br/><span style={{color:V.am}}>더 놀랄 준비 하세요.</span></h3>
           <p style={{fontSize:15,color:V.mu,textAlign:'center',marginBottom:6,lineHeight:1.6}}>Surprised? You haven't seen anything yet.</p>
           <p style={{fontSize:14,color:V.mu,textAlign:'center',lineHeight:1.6,marginBottom:20}}>Get <strong style={{color:V.tx}}>all 4 readings</strong> — Basic Fortune, Love, Career, and Your Story — at a price we only unlock after your first reading.</p>
-          <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:16,marginBottom:8}}>
-            <span style={{fontSize:22,color:'#3A5070',textDecoration:'line-through'}}>$29.99</span>
-            <span style={{fontSize:14,color:V.mu,alignSelf:'center'}}>→</span>
-            <span style={{fontSize:52,color:V.am,fontWeight:700,lineHeight:1}}>$25.99</span>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:12,marginBottom:8}}>
+            <div style={{textAlign:'center'}}>
+              <div style={{fontSize:13,color:V.mu,letterSpacing:2,marginBottom:4}}>regular price</div>
+              <span style={{fontSize:28,color:'#4A6070',textDecoration:'line-through',fontWeight:400}}>$29.99</span>
+            </div>
+            <span style={{fontSize:28,color:V.am}}>→</span>
+            <div style={{textAlign:'center'}}>
+              <div style={{fontSize:13,color:V.am,letterSpacing:2,marginBottom:4}}>TODAY ONLY</div>
+              <span style={{fontSize:56,color:V.am,fontWeight:700,lineHeight:1}}>$25.99</span>
+            </div>
           </div>
           <p style={{fontSize:12,color:V.am,textAlign:'center',letterSpacing:3,marginBottom:16}}>✦ 지금 이 창에서만 · THIS PAGE ONLY ✦</p>
           <button onClick={()=>setView('saju')} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'16px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700}}>YES — GET ALL 4 READINGS · $25.99 ✦</button>
