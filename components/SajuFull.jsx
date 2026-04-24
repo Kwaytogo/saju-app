@@ -56,9 +56,9 @@ function buildPrompt(type,YP,MP,DP,gender){
   if(type==='basic')return`Mystical Korean SAJU astrologer. Personal destiny reading in English using "you". Warm, specific, poetic.\n\n${base}${idolLine}\n\n4 sections ### headers:\n### WHO YOU ARE\n4 sentences. Day Master ${DP.s} personality. Include K-pop idol connection warmly.\n### YOUR ELEMENTAL NATURE\n3 sentences. ${dom} gifts and shadow.\n### YOUR LIFE PATH\n3-4 sentences. All pillars into destiny.\n### 2026 FORECAST\n3 sentences. 丙午 Fire Horse — fierce, transformative.\nProse only. No bullets.`;
   if(type==='love')return`Korean SAJU love reader. Personalized love fortune in English using "you".\n\n${base}Ideal partner: ${pe} element — ${pts[pe]}\n\n4 sections:\n### YOUR ROMANTIC NATURE\n3 sentences.\n### YOUR IDEAL PARTNER\n4 sentences. Romantic, vivid, specific.\n### WHERE LOVE FINDS YOU\n3 sentences.\n### 2026 LOVE FORECAST\n3 sentences. Fire Horse 丙午.\nProse. Romantic.`;
   if(type==='career')return`Korean SAJU career oracle. Career fortune in English using "you".\n\n${base}4 sections:\n### YOUR NATURAL GIFTS\n3 sentences.\n### DESTINED PATHS\n3-4 sentences. 4-5 specific career titles.\n### YOUR POWER DECADE\n3 sentences.\n### 2026 CAREER FORECAST\n3 sentences.\nProse. Confident.`;
-  if(type==='story'){const hero=gender==='male'?'a Knight on a quest for love and destiny':'a Princess awakening to her true power';return`Master storyteller. Korean mystical fairy tale. Reader is ${hero}.\n\n${base}Structure (no labels):\nRising: ${eW[YP.se]}\nJourney: ${trials[MP.se]}\nDestiny: ${resols[DP.se]} — MUST end happily.\n\n290-310 words. Second person "you". Simple warm language — short sentences, easy words, like a bedtime story for adults. Korean imagery: lanterns, mountains, ancient gates, cherry blossoms, moonlight. Happy ending.`;}
+  if(type==='story'){const hero=gender==='male'?'a Knight on a quest for love and destiny':'a Princess awakening to her true power';return`Master storyteller. Write a rich, immersive Korean mystical fairy tale. The reader is ${hero}.\n\n${base}Story structure:\nRising (기 - first third): World of ${eW[YP.se]}. Introduce the hero — their world, their gifts, what they long for. Rich sensory detail.\nJourney (승 - middle third): ${trials[MP.se]}. The hardest passage. The moment everything breaks. Vivid, emotional.\nDestiny (전+결 - final third): ${resols[DP.se]}. The transformation. The arrival. MUST end with warmth, love, and belonging.\n\nLength: 1400-1600 words. Write the FULL story, do not cut short.\nStyle: Second person "you". Simple warm sentences. Beautiful not complicated. Like a fairy tale for adults.\nDO NOT use any markdown: no #headers, no ---dividers, no **bold**, no bullet points. Plain prose paragraphs only.\nKorean imagery throughout: jade mountains, stone gates, lanterns, cherry blossoms, moonlight, silk, ancient forests.\nMust feel written for THIS exact person based on their specific elements.\nHappy ending — love found, belonging arrived.`;}
 }
-async function callClaude(p){const r=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:p}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
+async function callClaude(p,maxTok=1200){const r=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:p}],max_tokens:maxTok})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
 function parseSections(text){const m=[...text.matchAll(/###\s+(.+?)\n([\s\S]+?)(?=\n###|$)/g)];return m.map(x=>({title:x[1].trim(),body:x[2].trim()}));}
 
 const TABS=[{id:'basic',ko:'Basic Fortune',icon:'命'},{id:'love',ko:'Love Fortune',icon:'♡'},{id:'career',ko:'Career Fortune',icon:'↑'},{id:'story',ko:'Your Story',icon:'✦'}];
@@ -138,7 +138,7 @@ export default function SajuFull(){
   const generate=async(type)=>{
     setTab(type);if(readings[type]){setView('reading');return;}
     setView('loading');
-    try{const text=await callClaude(buildPrompt(type,saju.year,saju.month,saju.day,gender));setReadings(r=>({...r,[type]:text}));setView('reading');}
+    try{const maxT=type==='story'?5000:1200;const text=await callClaude(buildPrompt(type,saju.year,saju.month,saju.day,gender),maxT);setReadings(r=>({...r,[type]:text}));setView('reading');}
     catch(e){setErr('Connection error. Please check Vercel environment variables.');setView('saju');}
   };
   const checkCompat=()=>{
@@ -478,6 +478,33 @@ export default function SajuFull(){
             <StoryIllus1/>
             {(()=>{const lines=reading.split('\n').filter(l=>l.trim());const t=Math.floor(lines.length/3);const p1=lines.slice(0,t).join('\n');const p2=lines.slice(t,t*2).join('\n');const p3=lines.slice(t*2).join('\n');return(<><p style={{fontSize:17,lineHeight:2.1,color:V.tx,fontStyle:'italic'}}>{p1}</p><StoryIllus2/><p style={{fontSize:17,lineHeight:2.1,color:V.tx,fontStyle:'italic'}}>{p2}</p><StoryIllus3/><p style={{fontSize:17,lineHeight:2.1,color:V.tx,fontStyle:'italic'}}>{p3}</p></>);})()}
             <div style={{textAlign:'center',marginTop:20,fontSize:11,letterSpacing:5,color:V.go}}>✦ THE END · 끝 ✦</div>
+            <div style={{marginTop:24,paddingTop:20,borderTop:`1px solid ${V.br}`,textAlign:'center'}}>
+              <button onClick={()=>{
+                const el=document.getElementById('story-content');
+                const win=window.open('','_blank');
+                win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Your Story — SAJU</title><style>
+                  body{font-family:'Georgia',serif;max-width:680px;margin:60px auto;padding:0 40px;color:#1a1a1a;line-height:2.2;background:#fff;}
+                  h1{font-size:28px;font-weight:400;margin-bottom:8px;color:#1a1a1a;}
+                  .sub{font-size:13px;color:#888;letter-spacing:3px;margin-bottom:48px;}
+                  p{font-size:17px;margin-bottom:24px;text-align:justify;}
+                  .end{text-align:center;margin-top:48px;font-size:12px;letter-spacing:5px;color:#888;}
+                  .footer{margin-top:60px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;letter-spacing:2px;}
+                </style></head><body>
+                <h1>Your Story</h1>
+                <div class="sub">당신의 이야기 · SAJU READING</div>
+                ${reading.split('\n').filter(l=>l.trim()).map(p=>`<p>${p}</p>`).join('')}
+                <div class="end">✦ THE END · 끝 ✦</div>
+                <div class="footer">Generated by SAJU · Your Korean Fate Reading</div>
+                </body></html>`);
+                win.document.close();
+                setTimeout(()=>win.print(),500);
+              }} style={{background:V.s,border:`1px solid ${V.br}`,color:V.mu,padding:'11px 28px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:3,transition:'all .2s',marginRight:8}}
+              onMouseOver={e=>{e.currentTarget.style.borderColor=V.am;e.currentTarget.style.color=V.tx;}}
+              onMouseOut={e=>{e.currentTarget.style.borderColor=V.br;e.currentTarget.style.color=V.mu;}}>
+                ↓ SAVE AS PDF
+              </button>
+              <p style={{fontSize:11,color:'#2A4070',marginTop:10,letterSpacing:1}}>Print → Save as PDF · works on iPhone too</p>
+            </div>
           </div>
           :<div style={{maxWidth:600,margin:'0 auto'}}>
             {sections&&sections.length>0
