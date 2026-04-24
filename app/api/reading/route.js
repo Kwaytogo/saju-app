@@ -10,7 +10,7 @@ export async function POST(request) {
     },
     body: JSON.stringify({
       model: 'claude-opus-4-6',
-      max_tokens: body.max_tokens || 1200,
+      max_tokens: body.max_tokens || 2500,
       messages: body.messages,
     }),
   })
