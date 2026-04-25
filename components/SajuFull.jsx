@@ -82,9 +82,12 @@ const PRODUCTS = {
   love:    'fc08f115-8975-473b-893f-596bde238032',
   story:   '8b7cc976-1128-4f87-b3af-f7794ba034a6',
 };
-function polarCheckout(productId){
+function polarCheckout(productId, onTestSuccess){
   const isTest = typeof window !== 'undefined' && window.location.search.includes('test=true');
-  if(isTest){ alert('TEST MODE: Payment skipped. In production this opens Polar checkout.'); return; }
+  if(isTest){
+    if(onTestSuccess) onTestSuccess();
+    return;
+  }
   window.open(`https://buy.polar.sh/${productId}?embed=true`,'_blank','width=500,height=700,left=400,top=100');
 }
 
@@ -372,7 +375,7 @@ export default function SajuFull(){
           {/* INLINE PACKAGE CARDS on reveal page */}
           <div className="ri5" style={{marginBottom:40}}>
             <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:20,textAlign:'center'}}>CHOOSE YOUR READING</p>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10,alignItems:'stretch'}}>
               {[
                 {id:'basic',ko:'Basic Fortune',price:'$13.99',orig:'$19.99',desc:'Full destiny + K-pop idol match',icon:'命',hot:true},
                 {id:'story',ko:'Your Story',price:'$19.99',orig:'$27.99',desc:'Your life as a Korean fairy tale',icon:'✦',hot:false},
@@ -380,7 +383,7 @@ export default function SajuFull(){
                 {id:'career',ko:'Career Fortune',price:'$6.99',orig:null,desc:'Your destined paths & power years',icon:'山',hot:false},
               ].map(pkg=>(
                 <div key={pkg.id}
-                  style={{background:V.s,border:`1px solid ${pkg.hot?V.am:V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s'}}
+                  style={{background:V.s,border:`1px solid ${pkg.hot?V.am:V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s',display:'flex',flexDirection:'column',justifyContent:'space-between'}}
                   onMouseOver={e=>e.currentTarget.style.borderColor=V.am}
                   onMouseOut={e=>e.currentTarget.style.borderColor=pkg.hot?V.am:V.br}>
                   {pkg.hot&&<span style={{position:'absolute',top:-1,left:12,background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>POPULAR</span>}
@@ -391,7 +394,7 @@ export default function SajuFull(){
                     {pkg.orig&&<span style={{fontSize:11,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}
                     <span style={{fontSize:18,color:V.am,fontWeight:600}}>{pkg.price}</span>
                   </div>
-                  <button onClick={()=>polarCheckout(PRODUCTS[pkg.id])} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'9px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2,fontWeight:700}}>BUY →</button>
+                  <button onClick={()=>polarCheckout(PRODUCTS[pkg.id],()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'9px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2,fontWeight:700}}>BUY →</button>
                 </div>
               ))}
             </div>
@@ -407,13 +410,13 @@ export default function SajuFull(){
                   <span style={{fontSize:22,color:V.am,fontWeight:700}}>$29.99</span>
                 </div>
               </div>
-              <button onClick={()=>polarCheckout(PRODUCTS.bundle)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS →</button>
+              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS →</button>
             </div>
           </div>
 
           <div className="ri5">
             <p style={{fontSize:16,color:V.mu,marginBottom:18,lineHeight:1.6}}>This is your element. Your full destiny — love, career, your story — goes so much deeper.</p>
-            <button className="hvr-fill" onClick={()=>polarCheckout(PRODUCTS.bundle)} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'18px',fontFamily:FF,fontSize:20,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:10}}>UNLOCK MY FULL READING ✦</button>
+            <button className="hvr-fill" onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'18px',fontFamily:FF,fontSize:20,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:10}}>UNLOCK MY FULL READING ✦</button>
             <div style={{background:'#0A1220',border:`1px solid ${V.go}`,padding:'16px 20px',marginTop:4}}>
               <p style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:6}}>🔥 LIMITED OFFER · RIGHT NOW ONLY</p>
               <p style={{fontSize:16,color:V.tx,lineHeight:1.5,marginBottom:8}}>Surprised? <strong>You haven't seen anything yet.</strong><br/>Get all 4 readings at a price we only show once.</p>
@@ -422,7 +425,7 @@ export default function SajuFull(){
                 <span style={{fontSize:32,color:V.am,fontWeight:700}}>$25.99</span>
                 <span style={{fontSize:13,color:V.mu}}>complete bundle</span>
               </div>
-              <button onClick={()=>polarCheckout(PRODUCTS.bundle)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $25.99 ✦</button>
+              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $25.99 ✦</button>
 
             </div>
           </div>
