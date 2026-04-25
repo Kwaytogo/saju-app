@@ -268,7 +268,7 @@ export default function SajuFull(){
       <style>{`@keyframes tw{0%,100%{opacity:.8}50%{opacity:.2}} @keyframes tw2{0%,100%{opacity:.45}50%{opacity:.95}} .el-item:hover{background:#0A1628} .pkg-card:hover{border-color:#E88C12!important} .hvr-fill:hover{background:#E88C12!important;color:#060C18!important} @media(max-width:600px){.hero-h1{font-size:36px!important}.pkg-grid{grid-template-columns:1fr!important}.why-grid{grid-template-columns:1fr!important}.bundle-inner{flex-direction:column!important}.sp{padding:56px 20px!important}}`}</style>
       {popup&&<DiscountPopup/>}
       <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 32px',borderBottom:`1px solid ${V.br}`,position:'sticky',top:0,background:'rgba(6,12,24,.97)',zIndex:50}}>
-        <div style={{fontSize:18,letterSpacing:5}}><span style={{color:V.am,fontSize:22}}>사</span>주 SAJU</div>
+        <div style={{fontSize:16,letterSpacing:4,fontWeight:400}}>BORN <span style={{color:V.am}}>FROM</span></div>
         <button className="hvr-fill" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'9px 22px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:3,transition:'all .2s'}}>GET READING</button>
       </nav>
       <section style={{position:'relative',overflow:'hidden'}}>
@@ -277,9 +277,9 @@ export default function SajuFull(){
             {[[42,28,1,'tw',2.8,0],[112,14,1.5,'tw2',3.4,.5],[198,44,1,'tw',2.2,.2],[278,11,1,'tw2',3.8,.8],[354,34,1.5,'tw',2.5,.3],[432,7,1,'tw2',3,.1],[512,26,1,'tw',2.8,.6],[594,17,1.5,'tw2',3.2,1],[664,38,1,'tw',2.6,.4],[754,20,1,'tw2',2.9,.9],[68,72,1,'tw',3.6,.7],[164,86,1.5,'tw2',2.4,.2],[244,64,1,'tw',3.1,.5],[484,68,1.5,'tw',3.3,.8],[720,60,1.5,'tw',3,.9]].map(([cx,cy,r,a,d,dl],i)=>(<circle key={i} cx={cx} cy={cy} r={r} fill={i%9===4?'#C8A055':i%13===7?'#E88C12':'#EDE5D3'} style={{animation:`${a} ${d}s ${dl}s infinite`}}/>))}
             <circle cx="680" cy="55" r="28" fill="#C8A055" opacity=".14"/><circle cx="690" cy="53" r="24" fill="#060C18"/><path d="M658 50 Q668 40 680 56 Q668 72 658 62 Q650 56 658 50Z" fill="#C8A055" opacity=".30"/>
           </svg>
-          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>K-ASTROLOGY · SAJU · KOREAN FATE READING</p>
-          <h1 className="hero-h1" style={{fontSize:64,lineHeight:1.08,fontWeight:600,marginBottom:20}}>You Were Born<br/>From The <span style={{color:V.am}}>Elements</span></h1>
-          <p style={{fontSize:20,color:V.mu,lineHeight:1.65,maxWidth:480,margin:'0 auto 36px'}}>Ancient Korean SAJU reveals whether fire, water, wood, earth, or metal shapes your destiny.</p>
+          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>COSMIC PERSONAL ANALYSIS · WHAT ELEMENT WERE YOU BORN FROM?</p>
+          <h1 className="hero-h1" style={{fontSize:64,lineHeight:1.08,fontWeight:600,marginBottom:20}}>You Were Born<br/>From The <span style={{color:V.am}}>Elements.</span><br/><span style={{fontSize:'0.55em',fontWeight:400,color:V.mu,letterSpacing:2}}>Ancient Korea knew exactly who you are.</span></h1>
+          <p style={{fontSize:19,color:V.mu,lineHeight:1.7,maxWidth:500,margin:'0 auto 36px'}}>Your birthdate contains a precise cosmic signature — one of five elemental forces that shapes your personality, relationships, and path. <span style={{color:V.tx}}>This is your personal analysis.</span> Not a horoscope. Not a personality test. The ancient Korean system that has mapped human nature for 3,000 years.</p>
           <button className="hvr-fill" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'15px 44px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:18}}>DISCOVER YOUR ELEMENT ✦</button>
           <p style={{fontSize:12,color:'#2A4060',letterSpacing:3}}>✦ TRUSTED BY 40,000+ SEEKERS WORLDWIDE ✦</p>
         </div>
@@ -290,12 +290,12 @@ export default function SajuFull(){
       </section>
       <section className="sp" style={{padding:'80px 40px',borderTop:`1px solid ${V.br}`,borderBottom:`1px solid ${V.br}`}}>
         <div style={{maxWidth:820,margin:'0 auto',textAlign:'center'}}>
-          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>WHY SAJU?</p>
-          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.25,marginBottom:36}}>Tarot told you nothing.<br/>Astrology left you guessing.<br/><span style={{color:V.am}}>SAJU actually answers.</span></h2>
+          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>WHY BORN FROM?</p>
+          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.25,marginBottom:36}}>Tarot gave you symbols.<br/>Astrology gave you archetypes.<br/><span style={{color:V.am}}>Born From gives you yourself.</span></h2>
           <div className="why-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,textAlign:'left',marginBottom:48}}>
-            {[{icon:'木',title:'You were born from nature',body:"From the moment of your first breath, one of the Five Elements became the core of who you are. This isn't a personality test. This is the universe's own record of you."},{icon:'地',title:"The Earth's code, decoded",body:"SAJU reads from the same elemental forces that govern the natural world. Live in alignment with your element, and happiness is not a hope — it is a certainty."},{icon:'命',title:'Your path to happiness exists',body:"Tarot shows you cards. Astrology shows you planets. SAJU shows you you — with precision born from thousands of years of Eastern wisdom."},{icon:'✦',title:'The K-way to go',body:"From K-pop to K-beauty, Korea has been showing the world a better way to live. SAJU is Korea's oldest gift — the ancient science of living aligned with your true nature."}].map((c,i)=>(<div key={i} style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px'}}><div style={{fontSize:28,color:V.am,marginBottom:10}}>{c.icon}</div><h3 style={{fontSize:19,marginBottom:10,fontWeight:400}}>{c.title}</h3><p style={{fontSize:16,color:V.mu,lineHeight:1.7}}>{c.body}</p></div>))}
+            {[{icon:'木',title:'You were born from nature',body:"From the moment of your first breath, one of the Five Elements became the core of who you are. This isn't a personality test. This is the universe's own record of you."},{icon:'地',title:"The Earth's code, decoded",body:"SAJU reads from the same elemental forces that govern the natural world. Live in alignment with your element, and happiness is not a hope — it is a certainty."},{icon:'命',title:'Your path to happiness exists',body:"Tarot shows you cards. Astrology shows you planets. Born From shows you you — your exact elemental makeup, with precision developed over 3,000 years of Eastern wisdom."},{icon:'✦',title:'Korea's oldest science',body:"From K-pop to K-beauty to K-drama, Korea has been showing the world something real. Born From is Korea's oldest system — 3,000 years of mapping who people truly are, now available in English for the first time."}].map((c,i)=>(<div key={i} style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px'}}><div style={{fontSize:28,color:V.am,marginBottom:10}}>{c.icon}</div><h3 style={{fontSize:19,marginBottom:10,fontWeight:400}}>{c.title}</h3><p style={{fontSize:16,color:V.mu,lineHeight:1.7}}>{c.body}</p></div>))}
           </div>
-          <p style={{fontSize:20,color:V.tx,lineHeight:1.9,maxWidth:580,margin:'0 auto',fontStyle:'italic'}}>"당신이 행복해질 길이 있다. 그것을 알려준다."<br/><span style={{fontSize:16,color:V.mu,fontStyle:'normal'}}>Your path to happiness exists. We will show it to you.</span></p>
+          <p style={{fontSize:20,color:V.tx,lineHeight:1.9,maxWidth:580,margin:'0 auto',fontStyle:'italic'}}>"당신이 행복해질 길이 있다."<br/><span style={{fontSize:16,color:V.mu,fontStyle:'normal'}}>Your path to happiness exists — and it was written the day you were born.</span></p>
         </div>
       </section>
       <div style={{display:'flex',borderBottom:`1px solid ${V.br}`,flexWrap:'wrap'}}>
@@ -308,7 +308,7 @@ export default function SajuFull(){
           <p style={{fontSize:17,color:V.mu,marginTop:10}}>Every reading generated uniquely from your birth data</p>
         </div>
         <div className="pkg-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18,maxWidth:800,margin:'0 auto'}}>
-          {[{id:'basic',ko:'Basic Fortune',en:'FULL SAJU READING',desc:'Your five elements, chart, complete destiny — plus the K-pop idol who shares your exact energy.',orig:'$19.99',price:'$13.99',badge:'MOST POPULAR',bl:true,feat:false,il:<IllusPentagon/>},{id:'story',ko:'Your Story',en:'DESTINY STORY',desc:'A Korean fairy tale written in the stars with you as the hero. Love, trial, and triumph.',orig:'$27.99',price:'$19.99',badge:'SIGNATURE ✦',bl:false,feat:true,il:<IllusPerson/>},{id:'love',ko:'Love Fortune',en:'LOVE READING',desc:'Your ideal partner element, timing of love, and your romantic destiny.',orig:null,price:'$6.99',badge:null,il:<IllusMoons/>},{id:'career',ko:'Career Fortune',en:'CAREER READING',desc:'Your natural talents, destined career paths, and the exact decade your power peaks.',orig:null,price:'$6.99',badge:null,il:<IllusMountain/>}].map(pkg=>(<div key={pkg.id} className="pkg-card" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:V.s,border:`1px solid ${pkg.feat?V.go:V.br}`,padding:'28px',cursor:'pointer',transition:'border-color .25s',position:'relative'}}>{pkg.badge&&<span style={{position:'absolute',top:-1,[pkg.bl?'left':'right']:22,background:pkg.feat?V.go:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 12px',fontWeight:700}}>{pkg.badge}</span>}<div style={{height:110,marginBottom:20}}>{pkg.il}</div><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:10}}>{pkg.en}</div><div style={{fontSize:15,color:V.mu,lineHeight:1.6,marginBottom:18}}>{pkg.desc}</div><div style={{display:'flex',alignItems:'baseline',gap:10}}>{pkg.orig&&<span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}<span style={{fontSize:28,color:V.am,fontWeight:600}}>{pkg.price}</span></div>
+          {[{id:'basic',ko:'Basic Fortune',en:'FULL SAJU READING',desc:'Your five elements, chart, complete destiny — plus the K-pop idol who shares your exact energy.',orig:'$19.99',price:'$13.99',badge:'MOST POPULAR',bl:true,feat:false,il:<IllusPentagon/>},{id:'story',ko:'Your Story',en:'BORN FROM SIGNATURE',desc:'A Korean fairy tale written in the stars with you as the hero. Love, trial, and triumph.',orig:'$27.99',price:'$19.99',badge:'BORN FROM SIGNATURE ✦',bl:false,feat:true,il:<IllusPerson/>},{id:'love',ko:'Love Fortune',en:'LOVE READING',desc:'Your ideal partner element, timing of love, and your romantic destiny.',orig:null,price:'$6.99',badge:null,il:<IllusMoons/>},{id:'career',ko:'Career Fortune',en:'CAREER READING',desc:'Your natural talents, destined career paths, and the exact decade your power peaks.',orig:null,price:'$6.99',badge:null,il:<IllusMountain/>}].map(pkg=>(<div key={pkg.id} className="pkg-card" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:V.s,border:`1px solid ${V.br}`,padding:'28px',cursor:'pointer',transition:'border-color .25s .2s',position:'relative'}}>{pkg.badge&&<span style={{position:'absolute',top:-1,[pkg.bl?'left':'right']:22,background:pkg.feat?V.go:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 12px',fontWeight:700}}>{pkg.badge}</span>}<div style={{height:110,marginBottom:20}}>{pkg.il}</div><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:10}}>{pkg.en}</div><div style={{fontSize:15,color:V.mu,lineHeight:1.6,marginBottom:18}}>{pkg.desc}</div><div style={{display:'flex',alignItems:'baseline',gap:10}}>{pkg.orig&&<span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}<span style={{fontSize:28,color:V.am,fontWeight:600}}>{pkg.price}</span></div>
               <button onClick={(e)=>{e.stopPropagation();polarCheckout(PRODUCTS[pkg.id],()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'}));}} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700,marginTop:12}}>GET THIS READING →</button>
             </div>))}
         </div>
@@ -320,8 +320,8 @@ export default function SajuFull(){
       </section>
       <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
         <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:16}}>BEGIN YOUR READING</p>
-        <h2 style={{fontSize:44,fontWeight:600,marginBottom:14,lineHeight:1.1}}>What Element<br/><span style={{color:V.am}}>Are You?</span></h2>
-        <p style={{fontSize:17,color:V.mu,lineHeight:1.6,maxWidth:380,margin:'0 auto 40px'}}>Enter your birthday. Find out which of the Five Elements you were born from — instantly, for free.</p>
+        <h2 style={{fontSize:44,fontWeight:600,marginBottom:14,lineHeight:1.1}}>Discover Your<br/><span style={{color:V.am}}>Cosmic Signature</span></h2>
+        <p style={{fontSize:17,color:V.mu,lineHeight:1.6,maxWidth:400,margin:'0 auto 40px'}}>Enter your birthday. Your personal elemental analysis — free, instant, and unlike anything you've seen before.</p>
         <DateInputComp/>
       </section>
     </div>
@@ -335,7 +335,7 @@ export default function SajuFull(){
       <div style={{...base,minHeight:'100vh'}}>
         <style>{`@keyframes glow{0%,100%{opacity:.6}50%{opacity:1}} @keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}} .ri{animation:rise .8s ease forwards} .ri2{animation:rise .8s .15s ease both} .ri3{animation:rise .8s .3s ease both} .ri4{animation:rise .8s .45s ease both} .ri5{animation:rise .8s .6s ease both} .hvr-fill:hover{background:#E88C12!important;color:#060C18!important}`}</style>
         <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 32px',borderBottom:`1px solid ${V.br}`,background:V.bg}}>
-          <div style={{fontSize:18,letterSpacing:5}}><span style={{color:V.am,fontSize:22}}>사</span>주 SAJU</div>
+          <div style={{fontSize:16,letterSpacing:4,fontWeight:400}}>BORN <span style={{color:V.am}}>FROM</span></div>
           <button onClick={()=>setView('landing')} style={{background:'none',border:`1px solid ${V.br}`,color:V.mu,padding:'7px 16px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>← Back</button>
         </nav>
         <div style={{maxWidth:580,margin:'0 auto',padding:'56px 24px 80px',textAlign:'center'}}>
@@ -413,16 +413,17 @@ export default function SajuFull(){
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10,gridAutoRows:'1fr'}}>
               {[
                 {id:'basic',ko:'Basic Fortune',price:'$13.99',orig:'$19.99',desc:'Full destiny + K-pop idol match',icon:'命',hot:true},
-                {id:'story',ko:'Your Story',price:'$19.99',orig:'$27.99',desc:'Your life as a Korean fairy tale',icon:'✦',hot:false},
+                {id:'story',ko:'Your Story',price:'$19.99',orig:'$27.99',desc:'Your life as a Korean fairy tale',icon:'✦',hot:false,sig:true},
                 {id:'love',ko:'Love Fortune',price:'$6.99',orig:null,desc:'Your ideal partner revealed',icon:'♡',hot:false},
                 {id:'career',ko:'Career Fortune',price:'$6.99',orig:null,desc:'Your destined paths & power years',icon:'山',hot:false},
               ].map(pkg=>(
                 <div key={pkg.id}
-                  style={{background:V.s,border:`1px solid ${pkg.hot?V.am:V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s',display:'flex',flexDirection:'column',justifyContent:'space-between'}}
+                  style={{background:V.s,border:`1px solid ${V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s',display:'flex',flexDirection:'column',justifyContent:'space-between'}}
                   onMouseOver={e=>e.currentTarget.style.borderColor=V.am}
                   onMouseOut={e=>e.currentTarget.style.borderColor=pkg.hot?V.am:V.br}>
-                  {pkg.hot&&<span style={{position:'absolute',top:-1,left:12,background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>POPULAR</span>}
-                  <div style={{fontSize:20,color:V.am,marginBottom:6,marginTop:pkg.hot?8:0}}>{pkg.icon}</div>
+                  {pkg.hot&&<span style={{position:'absolute',top:-1,left:0,right:0,textAlign:'center',background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>POPULAR</span>}
+                  {pkg.sig&&<span style={{position:'absolute',top:-1,left:0,right:0,textAlign:'center',background:V.go,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>BORN FROM SIGNATURE ✦</span>}
+                  <div style={{fontSize:20,color:V.am,marginBottom:6,marginTop:(pkg.hot||pkg.sig)?14:0}}>{pkg.icon}</div>
                   <div style={{fontSize:14,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div>
                   <div style={{fontSize:12,color:V.mu,lineHeight:1.4,marginBottom:8}}>{pkg.desc}</div>
                   <div style={{display:'flex',alignItems:'baseline',gap:6,marginBottom:10}}>
