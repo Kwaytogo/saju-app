@@ -1,3 +1,5 @@
+'use client';
+
 export default function Legal() {
   const V = {bg:'#060C18',s:'#0A1628',tx:'#EDE5D3',mu:'#8A9BAB',am:'#E88C12',br:'#1B2E48'};
   const FF = "'Georgia, serif'";
@@ -56,4 +58,3 @@ export default function Legal() {
     </div>
   );
 }
-
