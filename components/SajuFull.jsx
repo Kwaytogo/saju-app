@@ -111,11 +111,11 @@ const TABS=[{id:'basic',ko:'Basic Fortune',icon:'命'},{id:'love',ko:'Love Fortu
 // ── POLAR PRODUCT IDs ─────────────────────────────────────
 const POLAR_ORG = 'born-from';
 const PRODUCTS = {
-  basic:   'GUMROAD_BASIC_ID',
-  career:  'GUMROAD_CAREER_ID',
-  bundle:  'GUMROAD_BUNDLE_ID',
-  love:    'GUMROAD_LOVE_ID',
-  story:   'GUMROAD_STORY_ID',
+  basic:   'drqcvf',
+  love:    'yqbcw',
+  career:  'lfvmx',
+  story:   'nuxbbx',
+  bundle:  'vhtko',
 };
 function polarCheckout(productId, onTestSuccess){
   const isTest = typeof window !== 'undefined' && window.location.search.includes('test=true');
@@ -123,7 +123,7 @@ function polarCheckout(productId, onTestSuccess){
     if(onTestSuccess) onTestSuccess();
     return;
   }
-  window.open(`https://gumroad.com/l/${productId}`,'_blank');
+  window.open(`https://bornfromco.gumroad.com/l/${productId}`,'_blank');
 }
 
 
