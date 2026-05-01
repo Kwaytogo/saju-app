@@ -213,9 +213,64 @@ export default function SajuFull(){
   };
   const shareCompat=()=>{
     if(!compatResult)return;
-    const txt=`My element is ${compatResult.myEl}, theirs is ${compatResult.theirEl} — ${compatResult.result.score}% compatible according to ancient Korean SAJU ♡  Check yours: saju-app-drab.vercel.app`;
-    if(typeof navigator!=='undefined'&&navigator.share)navigator.share({text:txt});
-    else if(typeof navigator!=='undefined'&&navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>alert('Copied! Paste into your Instagram story ♡'));
+    const EC2={Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#CCCCCC',Water:'#4090E0'};
+    const ECH2={Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+    const canvas=document.createElement('canvas');
+    canvas.width=1080;canvas.height=1080;
+    const ctx=canvas.getContext('2d');
+    // Background
+    ctx.fillStyle='#060C18';ctx.fillRect(0,0,1080,1080);
+    // Border
+    ctx.strokeStyle='#E88C12';ctx.lineWidth=3;ctx.strokeRect(40,40,1000,1000);
+    ctx.strokeStyle='#1B2E48';ctx.lineWidth=1;ctx.strokeRect(60,60,960,960);
+    // BORN FROM logo
+    ctx.fillStyle='#E88C12';ctx.font='bold 52px Georgia';ctx.textAlign='center';
+    ctx.fillText('BORN',540,160);
+    ctx.fillStyle='#EDE5D3';ctx.fillText('FROM',540,220);
+    // Divider
+    ctx.strokeStyle='#E88C12';ctx.lineWidth=1;ctx.globalAlpha=0.4;
+    ctx.beginPath();ctx.moveTo(380,248);ctx.lineTo(700,248);ctx.stroke();
+    ctx.globalAlpha=1;
+    // COMPATIBILITY label
+    ctx.fillStyle='#8A9BAB';ctx.font='24px Georgia';ctx.letterSpacing='8px';
+    ctx.fillText('COMPATIBILITY · 궁합',540,320);
+    // Elements
+    const myCol=EC2[compatResult.myEl]||'#E88C12';
+    const thCol=EC2[compatResult.theirEl]||'#4090E0';
+    const mySym=ECH2[compatResult.myEl]||'?';
+    const thSym=ECH2[compatResult.theirEl]||'?';
+    ctx.font='bold 180px Georgia';
+    ctx.fillStyle=myCol;ctx.textAlign='center';ctx.fillText(mySym,320,560);
+    ctx.fillStyle='#E88C12';ctx.font='80px Georgia';ctx.fillText('♡',540,520);
+    ctx.fillStyle=thCol;ctx.font='bold 180px Georgia';ctx.fillText(thSym,760,560);
+    // You / Them
+    ctx.fillStyle='#8A9BAB';ctx.font='28px Georgia';
+    ctx.fillText('You',320,610);ctx.fillText('Them',760,610);
+    // Score bar
+    const barW=700;const barX=(1080-barW)/2;
+    ctx.fillStyle='#1B2E48';ctx.fillRect(barX,650,barW,12);
+    ctx.fillStyle='#E88C12';ctx.fillRect(barX,650,barW*(compatResult.result.score/100),12);
+    // Score text
+    ctx.fillStyle='#E88C12';ctx.font='bold 28px Georgia';
+    ctx.fillText((compatResult.result.tag||'').toUpperCase()+' · '+compatResult.result.score+'%',540,710);
+    // Title
+    ctx.fillStyle='#EDE5D3';ctx.font='52px Georgia';
+    ctx.fillText(compatResult.result.title,540,780);
+    // CTA
+    ctx.fillStyle='#8A9BAB';ctx.font='28px Georgia';
+    ctx.fillText('Find yours FREE at bornfrom.co',540,880);
+    // Instagram handle
+    ctx.fillStyle='#E88C12';ctx.font='26px Georgia';
+    ctx.fillText('@bornfrom.official',540,940);
+    // Share
+    canvas.toBlob(blob=>{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;a.download='bornfrom-compat.png';a.click();
+      URL.revokeObjectURL(url);
+      const txt=`My element is ${compatResult.myEl}, theirs is ${compatResult.theirEl} — ${compatResult.result.score}% compatible ♡ Check yours FREE: bornfrom.co @bornfrom.official`;
+      if(navigator.share)navigator.share({text:txt}).catch(()=>{});
+    },'image/png');
   };
 
   const base={background:V.bg,color:V.tx,fontFamily:FF,minHeight:'100vh'};
@@ -281,9 +336,9 @@ export default function SajuFull(){
           <h1 className="hero-h1" style={{fontSize:64,lineHeight:1.08,fontWeight:600,marginBottom:20}}>You Were Born<br/>From The <span style={{color:V.am}}>Elements.</span><br/><span style={{fontSize:'0.55em',fontWeight:400,color:V.mu,letterSpacing:2}}>Ancient Korea knew exactly who you are.</span></h1>
           <p style={{fontSize:19,color:V.mu,lineHeight:1.7,maxWidth:500,margin:'0 auto 36px'}}>Your birthdate contains a precise cosmic signature — one of five elemental forces that shapes your personality, relationships, and path. <span style={{color:V.tx}}>This is your personal analysis.</span> Not a horoscope. Not a personality test. The ancient Korean system that has mapped human nature for 3,000 years.</p>
           <button className="hvr-fill" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'15px 44px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:18}}>DISCOVER YOUR ELEMENT ✦</button>
-          <p style={{fontSize:12,color:'#2A4060',letterSpacing:3}}>✦ TRUSTED BY 40,000+ SEEKERS WORLDWIDE ✦</p>
+          <p style={{fontSize:13,color:V.mu,letterSpacing:3,fontWeight:600}}>✦ TRUSTED BY 40,000+ SEEKERS WORLDWIDE ✦</p>
         </div>
-        <div style={{position:'relative',height:380,overflow:'hidden'}}>
+        <div style={{position:'relative',height:380,overflow:'hidden',marginTop:-40}}>
           <div style={{position:'absolute',top:0,left:0,right:0,height:60,background:`linear-gradient(to bottom,${V.bg},transparent)`,zIndex:2,pointerEvents:'none'}}/>
           <KoreanNight/>
         </div>
@@ -387,13 +442,17 @@ export default function SajuFull(){
                     <div style={{background:'#0A1628',height:6,borderRadius:3,marginBottom:18,overflow:'hidden'}}><div style={{background:V.am,height:'100%',width:`${compatResult.result.score}%`,borderRadius:3}}/></div>
                     <p style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8,textAlign:'center'}}>{compatResult.result.tag.toUpperCase()} · {compatResult.result.score}%</p>
                     <h3 style={{fontSize:22,marginBottom:10,fontWeight:400,textAlign:'center'}}>{compatResult.result.title}</h3>
-                    <p style={{fontSize:15,color:V.mu,lineHeight:1.75,marginBottom:20}}>{compatResult.result.desc}</p>
+                    <p style={{fontSize:16,color:V.tx,lineHeight:1.75,marginBottom:20}}>{compatResult.result.desc}</p>
                     <div style={{borderTop:`1px solid ${V.br}`,paddingTop:16}}>
                       <p style={{fontSize:14,color:V.go,marginBottom:12,lineHeight:1.6}}>✦ Want to know exactly what this means — the timing, who to look for, what 2026 brings for this connection?</p>
                       <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700,marginBottom:10}}>UNLOCK FULL LOVE READING · $9.99</button>
-                      <button onClick={shareCompat} style={{width:'100%',background:'none',border:`1px solid ${V.br}`,color:V.mu,padding:'11px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>📱 SHARE ON INSTAGRAM / TIKTOK</button>
+                      <button onClick={shareCompat} style={{width:'100%',background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'11px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>📲 SAVE & SHARE YOUR RESULT ✦</button>
                     </div>
-                    <button onClick={()=>{setCompatResult(null);setCM('');setCD('');setCY('');}} style={{marginTop:10,background:'none',border:'none',color:'#2A4060',fontSize:12,cursor:'pointer',fontFamily:FF,letterSpacing:2,width:'100%'}}>try a different person</button>
+                    <div style={{marginTop:14,padding:'12px',background:V.s,border:`1px solid ${V.br}`,textAlign:'center'}}>
+                      <p style={{fontSize:13,color:V.mu,marginBottom:8,lineHeight:1.6}}>Want to check more connections?</p>
+                      <p style={{fontSize:15,color:V.tx,fontStyle:'italic',marginBottom:10}}>"Enter your crush's birthday — find out if they're your match."</p>
+                      <button onClick={()=>{setCompatResult(null);setCM('');setCD('');setCY('');}} style={{background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'8px 20px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2}}>CHECK ANOTHER PERSON ✦</button>
+                    </div>
                   </>
                 }
               </div>
@@ -459,10 +518,10 @@ export default function SajuFull(){
               <p style={{fontSize:16,color:V.tx,lineHeight:1.5,marginBottom:8}}>Surprised? <strong>You haven't seen anything yet.</strong><br/>Get all 4 readings at a price we only show once.</p>
               <div style={{display:'flex',alignItems:'baseline',gap:10,justifyContent:'center',marginBottom:10}}>
                 <span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>$47.96</span>
-                <span style={{fontSize:32,color:V.am,fontWeight:700}}>$29.99</span>
+                <span style={{fontSize:32,color:V.am,fontWeight:700}}>$25.99</span>
                 <span style={{fontSize:13,color:V.mu}}>complete bundle</span>
               </div>
-              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $29.99 ✦</button>
+              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:16,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS · $25.99 ✦</button>
 
             </div>
           </div>
