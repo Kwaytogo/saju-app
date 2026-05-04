@@ -148,7 +148,7 @@ const PRODUCT_MAP = {
 function buildPDFHTML(productId, readings, saju, birthDate) {
   const elem = ELEMENTS[saju.day.stem];
   const color = ELEM_COLOR[elem] || '#E88C12';
-  const sym = ELEM_SYM[elem] || '命';
+  const sym = elem.substring(0,1).toUpperCase();
 
   const readingSections = readings.map(({type, text}) => {
     const sectionTitle = TITLES[type] || TITLES.basic;
@@ -216,7 +216,7 @@ async function generatePDF(readingText, productId, saju, birthDate) {
   
   const elem = ELEMENTS[saju.day.stem];
   const color = ELEM_COLOR[elem] || '#E88C12';
-  const sym = ELEM_SYM[elem] || '命';
+  const sym = elem.substring(0,1).toUpperCase();
   
   // Parse hex color to rgb
   function hexToRgb(hex) {
@@ -258,10 +258,10 @@ async function generatePDF(readingText, productId, saju, birthDate) {
   page.drawText('BORN FROM', { x:W/2-35, y:H-80, size:11, font:helveticaBold, color:accentColor, opacity:0.7 });
   
   // Element symbol (large)
-  page.drawText(sym, { x:W/2-30, y:H/2+60, size:80, font:helveticaBold, color:accentColor });
+  page.drawText(elem.toUpperCase(), { x:W/2-30, y:H/2+60, size:80, font:helveticaBold, color:accentColor });
   
   // Element name
-  const elemText = `${elem.toUpperCase()} · ${ELEM_KO[elem]}`;
+  const elemText = `${elem.toUpperCase()} ELEMENT`;
   page.drawText(elemText, { x:W/2-(elemText.length*3.5), y:H/2-10, size:12, font:helvetica, color:accentColor, opacity:0.8 });
   
   // Divider
@@ -277,7 +277,9 @@ async function generatePDF(readingText, productId, saju, birthDate) {
   
   // Birth date + pillars
   page.drawText(`Born: ${birthDate}`, { x:W/2-40, y:H/2-150, size:12, font:helvetica, color:mutedColor, opacity:0.8 });
-  const pillars = `${saju.year.stem}${saju.year.branch}  ·  ${saju.month.stem}${saju.month.branch}  ·  ${saju.day.stem}${saju.day.branch}`;
+  const stemNames = {'甲':'Jia','乙':'Yi','丙':'Bing','丁':'Ding','戊':'Wu','己':'Ji','庚':'Geng','辛':'Xin','壬':'Ren','癸':'Gui'};
+  const branchNames = {'子':'Zi','丑':'Chou','寅':'Yin','卯':'Mao','辰':'Chen','巳':'Si','午':'Wu','未':'Wei','申':'Shen','酉':'You','戌':'Xu','亥':'Hai'};
+  const pillars = `Year: ${stemNames[saju.year.stem]||'?'}${branchNames[saju.year.branch]||'?'}  |  Month: ${stemNames[saju.month.stem]||'?'}${branchNames[saju.month.branch]||'?'}  |  Day: ${stemNames[saju.day.stem]||'?'}${branchNames[saju.day.branch]||'?'}`;
   page.drawText(pillars, { x:W/2-50, y:H/2-170, size:14, font:helveticaBold, color:accentColor });
   
   // Footer
@@ -359,7 +361,7 @@ async function generatePDF(readingText, productId, saju, birthDate) {
   finalPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
   finalPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
   
-  finalPage.drawText(sym, { x:W/2-25, y:H/2+40, size:60, font:helveticaBold, color:accentColor, opacity:0.8 });
+  finalPage.drawText(elem.toUpperCase(), { x:W/2-25, y:H/2+40, size:60, font:helveticaBold, color:accentColor, opacity:0.8 });
   finalPage.drawText(`You were born from ${elem}.`, { x:W/2-80, y:H/2-20, size:14, font:helvetica, color:mutedColor });
   finalPage.drawText('This is your cosmic signature.', { x:W/2-85, y:H/2-40, size:14, font:helvetica, color:mutedColor });
   finalPage.drawText('Carry it well.', { x:W/2-40, y:H/2-60, size:14, font:helvetica, color:mutedColor });
