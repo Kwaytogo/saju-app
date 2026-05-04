@@ -360,7 +360,7 @@ export async function POST(req) {
     const emailHTML = buildReadingEmail(readings, saju, birthDate, productId);
 
     await resend.emails.send({
-      from: 'Born From <hello@bornfrom.co>',
+      from: 'Born From <onboarding@resend.dev>',
       to: email,
       subject: `✦ ${TITLES[productId]} — Born From`,
       html: emailHTML,
@@ -395,7 +395,7 @@ export async function GET(req) {
     const emailHTML = buildReadingEmail(readings, saju, testBirth, testProduct);
     
     await resend.emails.send({
-      from: 'Born From <hello@bornfrom.co>',
+      from: 'Born From <onboarding@resend.dev>',
       to: testEmail,
       subject: `✦ [TEST] ${TITLES[testProduct]} — Born From`,
       html: emailHTML,
