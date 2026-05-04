@@ -123,12 +123,9 @@ function polarCheckout(productId, onTestSuccess, birthDate, gender){
     if(onTestSuccess) onTestSuccess();
     return;
   }
-  let url = `https://bornfromco.gumroad.com/l/${productId}`;
-  const params = new URLSearchParams();
-  if(birthDate) params.set('prefilled_custom_fields[Birth Date (YYYY-MM-DD)]', birthDate);
-  if(gender) params.set('prefilled_custom_fields[Gender]', gender === 'male' ? 'Male' : 'Female');
-  const qs = params.toString();
-  if(qs) url += '?' + qs;
+  let url = `https://bornfromco.gumroad.com/l/${productId}?wanted=true`;
+  if(birthDate) url += `&Birth Date (YYYY-MM-DD)=${encodeURIComponent(birthDate)}`;
+  if(gender) url += `&Gender=${encodeURIComponent(gender === 'male' ? 'Male' : 'Female')}`;
   window.open(url, '_blank');
 }
 
