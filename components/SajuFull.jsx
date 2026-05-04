@@ -124,8 +124,8 @@ function polarCheckout(productId, onTestSuccess, birthDate, gender){
     return;
   }
   let url = `https://bornfromco.gumroad.com/l/${productId}?wanted=true`;
-  if(birthDate) url += `&Birth Date (YYYY-MM-DD)=${encodeURIComponent(birthDate)}`;
-  if(gender) url += `&Gender=${encodeURIComponent(gender === 'male' ? 'Male' : 'Female')}`;
+  if(birthDate) url += `&birth_date=${encodeURIComponent(birthDate)}`;
+  if(gender) url += `&gender=${encodeURIComponent(gender === 'male' ? 'male' : 'female')}`;
   window.open(url, '_blank');
 }
 
