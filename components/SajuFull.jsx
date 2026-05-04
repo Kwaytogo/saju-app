@@ -307,8 +307,8 @@ export default function SajuFull(){
         <h2 style={{fontSize:26,fontWeight:600,lineHeight:1.2,marginBottom:10}}>Don't leave your fate unread</h2>
         <p style={{fontSize:15,color:V.mu,marginBottom:24,lineHeight:1.6}}>Your destiny is one birthday away.</p>
         <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:12,marginBottom:24}}>
-          <span style={{fontSize:16,color:'#3A5070',textDecoration:'line-through'}}>$44.99</span>
-          <span style={{fontSize:44,color:V.am,fontWeight:700,lineHeight:1}}>$19.99</span>
+          <span style={{fontSize:16,color:'#3A5070',textDecoration:'line-through'}}>$47</span>
+          <span style={{fontSize:44,color:V.am,fontWeight:700,lineHeight:1}}>$27</span>
         </div>
         <button onClick={()=>{setPopup(false);document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'});}} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'15px',fontFamily:FF,fontSize:17,cursor:'pointer',letterSpacing:3,fontWeight:700,marginBottom:10}}>YES — CLAIM MY READING ✦</button>
         <p style={{fontSize:11,color:'#2A4060'}}>* expires when you close this window</p>
@@ -362,7 +362,7 @@ export default function SajuFull(){
           <p style={{fontSize:17,color:V.mu,marginTop:10}}>Every reading generated uniquely from your birth data</p>
         </div>
         <div className="pkg-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18,maxWidth:800,margin:'0 auto'}}>
-          {[{id:'basic',ko:'Basic Fortune',en:'FULL SAJU READING',desc:'~800 words · Your elemental identity, life path & 2026 forecast.',orig:null,price:'$19.99',badge:null,bl:true,feat:false,il:<IllusPentagon/>},{id:'story',ko:'The Life Script',en:'BORN FROM SIGNATURE',desc:'A Korean fairy tale written in the stars with you as the hero. Love, trial, and triumph.',orig:'$69.99',price:'$44.99',badge:'BORN FROM ONLY ✦',bl:false,feat:true,il:<IllusPerson/>},{id:'love',ko:'The Relationship Decoder',en:'LOVE READING',desc:'~700 words · Who loves you, where they find you & 2026 love.',orig:null,price:'$29.99',badge:'MOST POPULAR',bl:false,il:<IllusMoons/>},{id:'career',ko:'The Success Compass',en:'CAREER READING',desc:'Your natural talents, destined career paths, and the exact decade your power peaks.',orig:null,price:'$29.99',badge:null,il:<IllusMountain/>}].map(pkg=>(<div key={pkg.id} className="pkg-card" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:V.s,border:`1px solid ${V.br}`,padding:'28px',cursor:'pointer',transition:'border-color .25s .2s',position:'relative'}}>{pkg.badge&&<span style={{position:'absolute',top:-1,[pkg.bl?'left':'right']:22,background:pkg.feat?V.go:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 12px',fontWeight:700}}>{pkg.badge}</span>}<div style={{height:110,marginBottom:20}}>{pkg.il}</div><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:10}}>{pkg.en}</div><div style={{fontSize:15,color:V.mu,lineHeight:1.6,marginBottom:18}}>{pkg.desc}</div><div style={{display:'flex',alignItems:'baseline',gap:10}}>{pkg.orig&&<span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}<span style={{fontSize:28,color:V.am,fontWeight:600}}>{pkg.price}</span></div>
+          {[{id:'basic',ko:'Basic Fortune',en:'FULL SAJU READING',desc:'4,000+ characters · Your elemental identity, life path & 2026 forecast.',orig:null,price:'$27',badge:null,bl:true,feat:false,il:<IllusPentagon/>},{id:'story',ko:'The Life Script',en:'BORN FROM SIGNATURE',desc:'A Korean fairy tale written in the stars with you as the hero. Love, trial, and triumph.',orig:'$97',price:'$47',badge:'BORN FROM ONLY ✦',bl:false,feat:true,il:<IllusPerson/>},{id:'love',ko:'The Relationship Decoder',en:'LOVE READING',desc:'5,000+ characters · Who loves you, where they find you & 2026 love.',orig:null,price:'$37',badge:'MOST POPULAR',bl:false,il:<IllusMoons/>},{id:'career',ko:'The Success Compass',en:'CAREER READING',desc:'Your natural talents, destined career paths, and the exact decade your power peaks.',orig:null,price:'$37',badge:null,il:<IllusMountain/>}].map(pkg=>(<div key={pkg.id} className="pkg-card" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:V.s,border:`1px solid ${V.br}`,padding:'28px',cursor:'pointer',transition:'border-color .25s .2s',position:'relative'}}>{pkg.badge&&<span style={{position:'absolute',top:-1,[pkg.bl?'left':'right']:22,background:pkg.feat?V.go:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 12px',fontWeight:700}}>{pkg.badge}</span>}<div style={{height:110,marginBottom:20}}>{pkg.il}</div><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:10}}>{pkg.en}</div><div style={{fontSize:15,color:V.mu,lineHeight:1.6,marginBottom:18}}>{pkg.desc}</div><div style={{display:'flex',alignItems:'baseline',gap:10}}>{pkg.orig&&<span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}<span style={{fontSize:28,color:V.am,fontWeight:600}}>{pkg.price}</span></div>
               <button onClick={(e)=>{e.stopPropagation();polarCheckout(PRODUCTS[pkg.id],()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'}));}} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700,marginTop:12}}>GET THIS READING →</button>
             </div>))}
         </div>
@@ -370,7 +370,7 @@ export default function SajuFull(){
           <span style={{position:'absolute',top:-1,left:28,background:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 14px',fontWeight:700}}>BEST VALUE</span>
           <svg viewBox="0 0 120 90" width="110" height="83" style={{flexShrink:0}}><circle cx="60" cy="45" r="30" fill="none" stroke="#C8A055" strokeWidth=".8" strokeDasharray="3 3"/><circle cx="60" cy="45" r="18" fill="none" stroke="#E88C12" strokeWidth=".8" strokeDasharray="2 4"/><text x="60" y="52" textAnchor="middle" fontSize="22" fill="#E88C12" fontFamily="serif">命</text>{[[60,13,'#0D2010','#4CAF50','木'],[88,30,'#2A0E08','#E84012','火'],[78,62,'#2A2410','#C8A020','土'],[42,62,'#1A1A1A','#CCCCCC','金'],[32,30,'#0A1530','#4090E0','水']].map(([cx,cy,bg,cl,ch],i)=>(<g key={i}><circle cx={cx} cy={cy} r="7" fill={bg} stroke={cl} strokeWidth=".8"/><text x={cx} y={cy+4} textAnchor="middle" fontSize="8" fill={cl} fontFamily="serif">{ch}</text></g>))}</svg>
           <div style={{flex:1}}><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>Complete Destiny Bundle</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8}}>ALL FOUR READINGS</div><div style={{fontSize:15,color:V.mu,lineHeight:1.5,marginBottom:4}}>Your complete personal report — 4 readings, ~3,000 words.</div>
-              <div style={{fontSize:13,color:V.mu,lineHeight:1.6,marginBottom:12}}>✦ Your elemental nature &nbsp;✦ Love &nbsp;✦ Career<br/>✦ The Life Script (BORN FROM exclusive) &nbsp;✦ PDF download</div><div style={{display:'flex',alignItems:'baseline',gap:10,marginBottom:14}}><span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>$123.96</span><span style={{fontSize:30,color:V.am,fontWeight:600}}>$69.99</span></div><button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'}))} style={{background:V.am,color:V.bg,border:'none',padding:'12px 24px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET BUNDLE →</button></div>
+              <div style={{fontSize:13,color:V.mu,lineHeight:1.6,marginBottom:12}}>✦ Your elemental nature &nbsp;✦ Love &nbsp;✦ Career<br/>✦ The Life Script (BORN FROM exclusive) &nbsp;✦ PDF download</div><div style={{display:'flex',alignItems:'baseline',gap:10,marginBottom:14}}><span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>$148</span><span style={{fontSize:30,color:V.am,fontWeight:600}}>$97</span></div><button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'}))} style={{background:V.am,color:V.bg,border:'none',padding:'12px 24px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET BUNDLE →</button></div>
         </div>
       </section>
       <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
@@ -460,7 +460,7 @@ export default function SajuFull(){
                         <div style={{fontSize:10,letterSpacing:5,color:V.am,marginBottom:8}}>THE RELATIONSHIP DECODER</div>
                         <div style={{fontSize:20,color:V.tx,fontWeight:300,lineHeight:1.4,marginBottom:8}}>Want to know exactly what<br/>this connection means?</div>
                         <p style={{fontSize:13,color:V.mu,lineHeight:1.65,marginBottom:14}}>Timing · Who to look for · What 2026 brings for this connection — your full love destiny.</p>
-                        <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'14px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700,boxShadow:'0 0 24px #E88C1266'}}>🔓 UNLOCK THE RELATIONSHIP DECODER · $29.99 →</button>
+                        <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'14px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700,boxShadow:'0 0 24px #E88C1266'}}>🔓 UNLOCK THE RELATIONSHIP DECODER · $37 →</button>
                       </div>
                       <button onClick={shareCompat} style={{width:'100%',background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'11px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>📲 SAVE & SHARE YOUR RESULT ✦</button>
                     </div>
@@ -488,10 +488,10 @@ export default function SajuFull(){
             <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:20,textAlign:'center'}}>CHOOSE YOUR READING</p>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10,gridAutoRows:'1fr'}}>
               {[
-                {id:'basic',ko:'Basic Fortune',price:'$19.99',orig:null,desc:'~800 words · Your elemental identity, life path & 2026 forecast',icon:'命',hot:false},
-                {id:'story',ko:'The Life Script',price:'$44.99',orig:null,desc:'~1,000 words · A Korean fairy tale written with you as the hero',icon:'✦',hot:false,sig:true},
-                {id:'love',ko:'The Relationship Decoder',price:'$29.99',orig:null,desc:'~700 words · Who loves you, where they find you & 2026 love',icon:'♡',hot:true},
-                {id:'career',ko:'The Success Compass',price:'$29.99',orig:null,desc:'~700 words · Your destined paths, power decade & 2026 career',icon:'山',hot:false},
+                {id:'basic',ko:'Basic Fortune',price:'$27',orig:null,desc:'4,000+ characters · Your elemental identity, life path & 2026 forecast',icon:'命',hot:false},
+                {id:'story',ko:'The Life Script',price:'$47',orig:null,desc:'7,000+ characters · A Korean fairy tale written with you as the hero',icon:'✦',hot:false,sig:true},
+                {id:'love',ko:'The Relationship Decoder',price:'$37',orig:null,desc:'5,000+ characters · Who loves you, where they find you & 2026 love',icon:'♡',hot:true},
+                {id:'career',ko:'The Success Compass',price:'$37',orig:null,desc:'5,000+ characters · Your destined paths, power decade & 2026 career',icon:'山',hot:false},
               ].map(pkg=>(
                 <div key={pkg.id}
                   style={{background:V.s,border:`1px solid ${V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s',display:'flex',flexDirection:'column',justifyContent:'space-between'}}
@@ -518,8 +518,8 @@ export default function SajuFull(){
                   <span style={{fontSize:15,letterSpacing:1}}>Complete Bundle: Full Access · All 4 Readings</span>
                 </div>
                 <div style={{display:'flex',alignItems:'baseline',gap:8,flexShrink:0}}>
-                  <span style={{fontSize:13,color:'#2A4070',textDecoration:'line-through'}}>$123.96</span>
-                  <span style={{fontSize:22,color:V.am,fontWeight:700}}>$69.99</span>
+                  <span style={{fontSize:13,color:'#2A4070',textDecoration:'line-through'}}>$148</span>
+                  <span style={{fontSize:22,color:V.am,fontWeight:700}}>$97</span>
                 </div>
               </div>
               <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS →</button>
@@ -673,16 +673,16 @@ export default function SajuFull(){
           <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:12,marginBottom:8}}>
             <div style={{textAlign:'center'}}>
               <div style={{fontSize:13,color:V.mu,letterSpacing:2,marginBottom:4}}>regular price</div>
-              <span style={{fontSize:28,color:'#4A6070',textDecoration:'line-through',fontWeight:400}}>$44.99</span>
+              <span style={{fontSize:28,color:'#4A6070',textDecoration:'line-through',fontWeight:400}}>$47</span>
             </div>
             <span style={{fontSize:28,color:V.am}}>→</span>
             <div style={{textAlign:'center'}}>
               
-              <span style={{fontSize:56,color:V.am,fontWeight:700,lineHeight:1}}>$69.99</span>
+              <span style={{fontSize:56,color:V.am,fontWeight:700,lineHeight:1}}>$97</span>
             </div>
           </div>
           <p style={{fontSize:12,color:V.am,textAlign:'center',letterSpacing:3,marginBottom:16}}>✦ 지금 이 창에서만 · THIS PAGE ONLY ✦</p>
-          <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>{})} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'16px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700}}>YES — GET ALL 4 READINGS · $69.99 ✦</button>
+          <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>{})} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'16px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700}}>YES — GET ALL 4 READINGS · $97 ✦</button>
           <p style={{fontSize:12,color:'#2A4060',marginTop:10,textAlign:'center',letterSpacing:1}}>* this price disappears when you leave this page</p>
         </div>
 
