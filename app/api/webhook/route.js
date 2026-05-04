@@ -211,27 +211,166 @@ ${readingSections}
 </html>`;
 }
 
-async function generatePDF(html) {
-  const chromium = await import('@sparticuz/chromium');
-  const { default: puppeteer } = await import('puppeteer-core');
+async function generatePDF(readingText, productId, saju, birthDate) {
+  const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
   
-  const browser = await puppeteer.launch({
-    args: chromium.default.args,
-    defaultViewport: chromium.default.defaultViewport,
-    executablePath: await chromium.default.executablePath(),
-    headless: chromium.default.headless,
+  const elem = ELEMENTS[saju.day.stem];
+  const color = ELEM_COLOR[elem] || '#E88C12';
+  const sym = ELEM_SYM[elem] || '命';
+  
+  // Parse hex color to rgb
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255;
+    const g = parseInt(hex.slice(3,5),16)/255;
+    const b = parseInt(hex.slice(5,7),16)/255;
+    return rgb(r,g,b);
+  }
+  
+  const accentColor = hexToRgb(color);
+  const bgColor = rgb(0.024, 0.047, 0.094); // #060C18
+  const textColor = rgb(0.929, 0.898, 0.827); // #EDE5D3
+  const mutedColor = rgb(0.541, 0.608, 0.671); // #8A9BAB
+  
+  const pdfDoc = await PDFDocument.create();
+  const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  
+  const W = 595, H = 842; // A4
+  const margin = 60;
+  
+  // ── COVER PAGE ──
+  let page = pdfDoc.addPage([W, H]);
+  
+  // Dark background
+  page.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
+  
+  // Top accent line
+  page.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
+  
+  // Border
+  page.drawRectangle({ x:24, y:24, width:W-48, height:H-48, color:rgb(0,0,0), opacity:0 });
+  page.drawLine({ start:{x:24,y:24}, end:{x:W-24,y:24}, color:accentColor, thickness:0.5, opacity:0.3 });
+  page.drawLine({ start:{x:24,y:H-24}, end:{x:W-24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
+  page.drawLine({ start:{x:24,y:24}, end:{x:24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
+  page.drawLine({ start:{x:W-24,y:24}, end:{x:W-24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
+  
+  // BORN FROM
+  page.drawText('BORN FROM', { x:W/2-35, y:H-80, size:11, font:helveticaBold, color:accentColor, opacity:0.7 });
+  
+  // Element symbol (large)
+  page.drawText(sym, { x:W/2-30, y:H/2+60, size:80, font:helveticaBold, color:accentColor });
+  
+  // Element name
+  const elemText = `${elem.toUpperCase()} · ${ELEM_KO[elem]}`;
+  page.drawText(elemText, { x:W/2-(elemText.length*3.5), y:H/2-10, size:12, font:helvetica, color:accentColor, opacity:0.8 });
+  
+  // Divider
+  page.drawLine({ start:{x:W/2-40,y:H/2-30}, end:{x:W/2+40,y:H/2-30}, color:accentColor, thickness:0.5, opacity:0.4 });
+  
+  // Product title
+  const title = TITLES[productId] || TITLES.basic;
+  const titleLines = title.split(':');
+  titleLines.forEach((line, i) => {
+    const tw = line.trim().length * 7;
+    page.drawText(line.trim(), { x:W/2-tw/2, y:H/2-70-(i*30), size:22, font:helveticaBold, color:textColor });
   });
   
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: 'networkidle0' });
-  await page.waitForTimeout(2000);
-  const pdf = await page.pdf({
-    format: 'A4',
-    printBackground: true,
-    margin: { top: '0', right: '0', bottom: '0', left: '0' },
-  });
-  await browser.close();
-  return pdf;
+  // Birth date + pillars
+  page.drawText(`Born: ${birthDate}`, { x:W/2-40, y:H/2-150, size:12, font:helvetica, color:mutedColor, opacity:0.8 });
+  const pillars = `${saju.year.stem}${saju.year.branch}  ·  ${saju.month.stem}${saju.month.branch}  ·  ${saju.day.stem}${saju.day.branch}`;
+  page.drawText(pillars, { x:W/2-50, y:H/2-170, size:14, font:helveticaBold, color:accentColor });
+  
+  // Footer
+  page.drawText('BORNFROM.CO  ·  @bornfrom.official  ·  © 2026 Born From', { x:W/2-120, y:40, size:8, font:helvetica, color:mutedColor, opacity:0.5 });
+  
+  // ── READING PAGES ──
+  const sections = readingText.split('
+
+').filter(p => p.trim());
+  
+  let currentPage = pdfDoc.addPage([W, H]);
+  currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
+  currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
+  
+  // Page header
+  currentPage.drawText('BORN FROM  ·  COSMIC PERSONAL ANALYSIS', { x:margin, y:H-50, size:9, font:helvetica, color:accentColor, opacity:0.6 });
+  currentPage.drawText(title, { x:margin, y:H-80, size:20, font:helveticaBold, color:textColor });
+  currentPage.drawLine({ start:{x:margin,y:H-100}, end:{x:margin+50,y:H-100}, color:accentColor, thickness:1, opacity:0.4 });
+  
+  let yPos = H - 130;
+  const lineH = 18;
+  const maxW = W - margin*2;
+  
+  for (const para of sections) {
+    const isHeader = para === para.toUpperCase() && para.length < 40 && !para.includes('.');
+    
+    // Check if need new page
+    if (yPos < 100) {
+      // Footer on current page
+      currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
+      currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
+      
+      currentPage = pdfDoc.addPage([W, H]);
+      currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
+      currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
+      yPos = H - 60;
+    }
+    
+    if (isHeader) {
+      yPos -= 10;
+      currentPage.drawText(para.trim(), { x:margin, y:yPos, size:10, font:helveticaBold, color:accentColor, opacity:0.9 });
+      yPos -= lineH + 8;
+    } else {
+      // Word wrap
+      const words = para.trim().split(' ');
+      let line = '';
+      for (const word of words) {
+        const testLine = line + (line ? ' ' : '') + word;
+        const testW = testLine.length * 5.5;
+        if (testW > maxW && line) {
+          if (yPos < 100) {
+            currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
+            currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
+            currentPage = pdfDoc.addPage([W, H]);
+            currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
+            currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
+            yPos = H - 60;
+          }
+          currentPage.drawText(line, { x:margin, y:yPos, size:13, font:helvetica, color:rgb(0.784,0.847,0.910), opacity:0.9 });
+          yPos -= lineH;
+          line = word;
+        } else {
+          line = testLine;
+        }
+      }
+      if (line) {
+        currentPage.drawText(line, { x:margin, y:yPos, size:13, font:helvetica, color:rgb(0.784,0.847,0.910), opacity:0.9 });
+        yPos -= lineH;
+      }
+      yPos -= 10; // paragraph gap
+    }
+  }
+  
+  // Final page footer
+  currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
+  currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
+  
+  // ── FINAL PAGE ──
+  const finalPage = pdfDoc.addPage([W, H]);
+  finalPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
+  finalPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
+  finalPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
+  
+  finalPage.drawText(sym, { x:W/2-25, y:H/2+40, size:60, font:helveticaBold, color:accentColor, opacity:0.8 });
+  finalPage.drawText(`You were born from ${elem}.`, { x:W/2-80, y:H/2-20, size:14, font:helvetica, color:mutedColor });
+  finalPage.drawText('This is your cosmic signature.', { x:W/2-85, y:H/2-40, size:14, font:helvetica, color:mutedColor });
+  finalPage.drawText('Carry it well.', { x:W/2-40, y:H/2-60, size:14, font:helvetica, color:mutedColor });
+  finalPage.drawLine({ start:{x:W/2-30,y:H/2-80}, end:{x:W/2+30,y:H/2-80}, color:accentColor, thickness:0.5, opacity:0.3 });
+  finalPage.drawText('BORNFROM.CO  ·  @bornfrom.official', { x:W/2-70, y:H/2-100, size:9, font:helvetica, color:mutedColor, opacity:0.5 });
+  finalPage.drawText('© 2026 Born From  ·  All rights reserved  ·  For personal use only', { x:W/2-110, y:H/2-116, size:8, font:helvetica, color:mutedColor, opacity:0.35 });
+  
+  const pdfBytes = await pdfDoc.save();
+  return Buffer.from(pdfBytes);
 }
 
 async function generateReading(productId, saju, gender='female') {
@@ -311,14 +450,14 @@ export async function POST(req) {
     }
 
     const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
-    const pdfBuffer = await generatePDF(pdfHTML);
+    // pdf-lib generates directly from reading text
+    const pdfBuffer = await generatePDF(readings.map(r=>r.text).join('\n\n---\n\n'), productId, saju, birthDate);
 
     // Build attachments
     let emailAttachments = [];
     if (productId === 'bundle') {
       for (const r of readings) {
-        const rHTML = buildPDFHTML(r.type, [r], saju, birthDate);
-        const rPDF = await generatePDF(rHTML);
+        const rPDF = await generatePDF(r.text, r.type, saju, birthDate);
         emailAttachments.push({
           filename: `BornFrom_${TITLES[r.type].replace(/[^a-z0-9]/gi,'_')}.pdf`,
           content: Buffer.from(rPDF).toString('base64'),
