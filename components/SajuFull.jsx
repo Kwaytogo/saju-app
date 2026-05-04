@@ -380,6 +380,19 @@ export default function SajuFull(){
         <p style={{fontSize:17,color:V.mu,lineHeight:1.6,maxWidth:400,margin:'0 auto 40px'}}>Enter your birthday. Your personal elemental analysis — free, instant, and unlike anything you've seen before.</p>
         <DateInputComp/>
       </section>
+
+      {/* FOOTER */}
+      <footer style={{borderTop:`1px solid ${V.br}`,marginTop:60,padding:'28px 20px',textAlign:'center'}}>
+        <div style={{fontSize:11,letterSpacing:4,color:'#2A4060',marginBottom:8}}>BORN FROM · COSMIC PERSONAL ANALYSIS</div>
+        <div style={{display:'flex',justifyContent:'center',gap:20,marginBottom:10,flexWrap:'wrap'}}>
+          <a href="/legal" style={{fontSize:11,color:'#2A4060',letterSpacing:2,textDecoration:'none'}}>Terms of Service</a>
+          <span style={{color:'#1B2E48'}}>·</span>
+          <a href="/legal" style={{fontSize:11,color:'#2A4060',letterSpacing:2,textDecoration:'none'}}>Refund Policy</a>
+          <span style={{color:'#1B2E48'}}>·</span>
+          <a href="mailto:bornfrom.co@gmail.com" style={{fontSize:11,color:'#2A4060',letterSpacing:2,textDecoration:'none'}}>Contact</a>
+        </div>
+        <div style={{fontSize:10,color:'#1B2E48',letterSpacing:2}}>© 2026 Born From. All rights reserved.</div>
+      </footer>
     </div>
   );
 
