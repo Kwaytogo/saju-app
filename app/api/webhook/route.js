@@ -491,6 +491,45 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
-  return NextResponse.json({ status: 'Born From webhook active' });
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+  const testBirth = searchParams.get('birth');
+  const testEmail = searchParams.get('email');
+  const testProduct = searchParams.get('product') || 'love';
+  const testGender = searchParams.get('gender') || 'female';
+  
+  if (!testBirth || !testEmail) {
+    return NextResponse.json({ 
+      status: 'Born From webhook active',
+      test_usage: '?birth=1990-05-15&email=your@email.com&product=love&gender=female'
+    });
+  }
+  
+  try {
+    const [year, month, day] = testBirth.split('-').map(Number);
+    const saju = calcSaju(year, month, day);
+    const text = await generateReading(testProduct, saju, testGender);
+    const readings = [{ type: testProduct, text }];
+    const pdfBuffer = await generatePDF(text, testProduct, saju, testBirth);
+    
+    await (await import('resend')).Resend(process.env.RESEND_API_KEY).emails.send({
+      from: 'Born From <hello@bornfrom.co>',
+      to: testEmail,
+      subject: `✦ [TEST] ${TITLES[testProduct]} — Born From`,
+      html: `<div style="background:#060C18;color:#EDE5D3;font-family:Georgia,serif;padding:40px;max-width:600px;margin:0 auto">
+        <div style="text-align:center;margin-bottom:32px"><div style="font-size:22px;letter-spacing:6px;color:#E88C12">BORN FROM — TEST</div></div>
+        <p style="font-size:17px;color:#C8D8E8;line-height:1.8;margin-bottom:16px">Test reading attached. Birth: ${testBirth} · ${ELEMENTS[saju.day.stem]} element.</p>
+        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO</div>
+      </div>`,
+      attachments: [{
+        filename: `TEST_BornFrom_${TITLES[testProduct].replace(/[^a-z0-9]/gi,'_')}.pdf`,
+        content: Buffer.from(pdfBuffer).toString('base64'),
+        content_type: 'application/pdf',
+      }],
+    });
+    
+    return NextResponse.json({ success: true, message: `Test email sent to ${testEmail}`, saju, element: ELEMENTS[saju.day.stem] });
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
