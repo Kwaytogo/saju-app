@@ -245,15 +245,36 @@ export async function POST(req) {
     const productPermalink = new URLSearchParams(body).get('product_permalink') || '';
 
     let birthDate = '';
-    const bdMatch = body.match(/birth_date=([^&]+)/i) || body.match(/Birth[_+]?Date[^=]*=([^&]+)/i) || body.match(/birthday=([^&]+)/i);
-    if (bdMatch) birthDate = decodeURIComponent(bdMatch[1]).replace(/\+/g,' ').trim();
+    // Gumroad sends custom fields URL-encoded
+    // "Birth Date (YYYY-MM-DD)" becomes "Birth+Date+%28YYYY-MM-DD%29" or similar
+    console.log('Gumroad ping body:', body.substring(0, 500));
+    const decodedBody = decodeURIComponent(body.replace(/\+/g, ' '));
+    console.log('Decoded body:', decodedBody.substring(0, 500));
+    
+    // Try multiple patterns to find birth date
+    const bdPatterns = [
+      /Birth Date \(YYYY-MM-DD\)[=:]([^&\n]+)/i,
+      /birth_date[=:]([^&\n]+)/i,
+      /Birthday[=:]([^&\n]+)/i,
+      /birth.date[=:]([^&\n]+)/i,
+    ];
+    for (const pat of bdPatterns) {
+      const m = decodedBody.match(pat) || body.match(pat);
+      if (m) { birthDate = m[1].trim().replace(/[^0-9-]/g, ''); break; }
+    }
 
     let gender = 'female';
-    const gMatch = body.match(/Gender[^=]*=([^&]+)/i);
-    if (gMatch) {
-      const gRaw = decodeURIComponent(gMatch[1]).replace(/\+/g,' ').trim().toLowerCase();
-      // Normalize: male/m/man/남 → male, everything else → female
-      gender = ['male','m','man','남','남성','boy'].includes(gRaw) ? 'male' : 'female';
+    const gPatterns = [
+      /Gender \(male\/female\)[=:]([^&\n]+)/i,
+      /Gender[=:]([^&\n]+)/i,
+    ];
+    for (const pat of gPatterns) {
+      const m = decodedBody.match(pat) || body.match(pat);
+      if (m) {
+        const gRaw = m[1].trim().toLowerCase();
+        gender = ['male','m','man','남','남성','boy'].includes(gRaw) ? 'male' : 'female';
+        break;
+      }
     }
 
     if (!email || !birthDate) return NextResponse.json({ error: 'Missing data' }, { status: 400 });
