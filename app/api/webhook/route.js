@@ -212,10 +212,18 @@ ${readingSections}
 }
 
 async function generatePDF(html) {
-  const { chromium } = await import('playwright');
-  const browser = await chromium.launch();
+  const chromium = await import('@sparticuz/chromium');
+  const { default: puppeteer } = await import('puppeteer-core');
+  
+  const browser = await puppeteer.launch({
+    args: chromium.default.args,
+    defaultViewport: chromium.default.defaultViewport,
+    executablePath: await chromium.default.executablePath(),
+    headless: chromium.default.headless,
+  });
+  
   const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: 'networkidle' });
+  await page.setContent(html, { waitUntil: 'networkidle0' });
   await page.waitForTimeout(2000);
   const pdf = await page.pdf({
     format: 'A4',
