@@ -32,9 +32,10 @@ function calcSaju(year, month, day) {
 }
 
 const PROMPTS = {
-  basic: (s) => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
+  basic: (s, gender='female') => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
 
-This person's complete birth chart:
+This person: ${gender === 'male' ? 'Male' : 'Female'}
+Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch}: The world they were born into, their public face, ancestral energy
 - Month Pillar ${s.month.stem}${s.month.branch}: Their drive, work ethic, how they pursue goals, emotional patterns
 - Day Pillar ${s.day.stem}${s.day.branch}: Their true self, core identity, how they love — the most personal pillar
@@ -56,8 +57,9 @@ LIFE PATH
 
 End with: "This is your cosmic signature — ${s.day.stem}${s.day.branch}, born from ${ELEMENTS[s.day.stem]}."`,
 
-  love: (s) => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
+  love: (s, gender='female') => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
 
+This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch} (${ELEMENTS[s.year.stem]}): How others first perceive them in love, the romantic pattern they inherited
 - Month Pillar ${s.month.stem}${s.month.branch} (${ELEMENTS[s.month.stem]}): How they pursue and process love, their emotional operating system
@@ -82,8 +84,9 @@ HOW TO CATCH LOVE
 2026 LOVE FORECAST
 [Fire Horse 丙午 meets this specific three-pillar combination. Who arrives, what shifts, what must they pay attention to. End beautifully.]`,
 
-  career: (s) => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
+  career: (s, gender='female') => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
 
+This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch} (${ELEMENTS[s.year.stem]}): Their inherited work ethic, the career expectations they were born into
 - Month Pillar ${s.month.stem}${s.month.branch} (${ELEMENTS[s.month.stem]}): Their ambition engine, how they perform and produce, their professional rhythm
@@ -108,9 +111,9 @@ POWER DECADE
 2026 CAREER FORECAST
 [Fire Horse 丙午 meets this chart. What professional opportunity or shift arrives? What must they act on now? End with one powerful sentence]`,
 
-  story: (s) => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
+  story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
 
-The protagonist is born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
+This person: ${gender === 'male' ? 'He' : 'She'} — born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
 Their year pillar ${s.year.stem}${s.year.branch} is the world they came from.
 Their month pillar ${s.month.stem}${s.month.branch} is the force that drives them.
 
@@ -223,12 +226,13 @@ async function generatePDF(html) {
   return pdf;
 }
 
-async function generateReading(productId, saju) {
+async function generateReading(productId, saju, gender='female') {
   const prompt = PROMPTS[productId] || PROMPTS.basic;
+  const promptText = prompt(saju, gender);
   const msg = await anthropic.messages.create({
     model: 'claude-opus-4-6',
     max_tokens: productId === 'story' ? 4000 : productId === 'basic' ? 2500 : 3200,
-    messages: [{ role: 'user', content: prompt(saju) }],
+    messages: [{ role: 'user', content: promptText }],
   });
   return msg.content[0].text;
 }
@@ -243,6 +247,14 @@ export async function POST(req) {
     let birthDate = '';
     const bdMatch = body.match(/Birth[_+]?Date[^=]*=([^&]+)/i) || body.match(/birthday=([^&]+)/i);
     if (bdMatch) birthDate = decodeURIComponent(bdMatch[1]).replace(/\+/g,' ').trim();
+
+    let gender = 'female';
+    const gMatch = body.match(/Gender[^=]*=([^&]+)/i);
+    if (gMatch) {
+      const gRaw = decodeURIComponent(gMatch[1]).replace(/\+/g,' ').trim().toLowerCase();
+      // Normalize: male/m/man/남 → male, everything else → female
+      gender = ['male','m','man','남','남성','boy'].includes(gRaw) ? 'male' : 'female';
+    }
 
     if (!email || !birthDate) return NextResponse.json({ error: 'Missing data' }, { status: 400 });
 
@@ -259,14 +271,14 @@ export async function POST(req) {
     let readings = [];
     if (productId === 'bundle') {
       const [basic, love, career, story] = await Promise.all([
-        generateReading('basic', saju),
-        generateReading('love', saju),
-        generateReading('career', saju),
-        generateReading('story', saju),
+        generateReading('basic', saju, gender),
+        generateReading('love', saju, gender),
+        generateReading('career', saju, gender),
+        generateReading('story', saju, gender),
       ]);
       readings = [{type:'basic',text:basic},{type:'love',text:love},{type:'career',text:career},{type:'story',text:story}];
     } else {
-      readings = [{type: productId, text: await generateReading(productId, saju)}];
+      readings = [{type: productId, text: await generateReading(productId, saju, gender)}];
     }
 
     const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
