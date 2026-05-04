@@ -129,7 +129,7 @@ body { background:#060C18; color:#EDE5D3; font-family:'Cormorant Garamond',Georg
   <div style="font-family:'Cinzel',serif;font-size:42px;font-weight:300;color:#EDE5D3;line-height:1.2;margin-bottom:40px">${TITLES[productId]}</div>
   <div style="font-size:14px;color:#8A9BAB;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
   <div style="font-size:20px;color:${color};letter-spacing:4px;margin-bottom:60px">${saju.year.stem}${saju.year.branch} · ${saju.month.stem}${saju.month.branch} · ${saju.day.stem}${saju.day.branch}</div>
-  <div style="position:absolute;bottom:48px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official</div>
+  <div style="position:absolute;bottom:48px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
 </div>
 
 ${readingSections}
@@ -138,7 +138,8 @@ ${readingSections}
 <div style="min-height:50vh;background:#060C18;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 60px">
   <div style="font-size:60px;color:${color};margin-bottom:24px">${sym}</div>
   <div style="font-size:18px;color:#8A9BAB;font-style:italic;line-height:1.8;max-width:500px;margin-bottom:32px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
-  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official</div>
+          <div style="font-size:10px;color:#2A4060;letter-spacing:3px;margin-top:20px">© 2026 Born From · All rights reserved · For personal use only<br/>bornfrom.co · @bornfrom.official</div>
+  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
 </div>
 
 </body>
@@ -220,7 +221,7 @@ export async function POST(req) {
         <p style="font-size:17px;color:#C8D8E8;line-height:1.8;margin-bottom:20px">Your reading is attached as a beautifully designed PDF.</p>
         <p style="font-size:15px;color:#8A9BAB;line-height:1.8;margin-bottom:24px">Open <strong style="color:#EDE5D3">${TITLES[productId]}</strong> in the attachment. Save it — it's yours forever.</p>
         <p style="font-size:13px;color:#4A6080">On mobile: tap the attachment → share → save to Files.</p>
-        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO · @bornfrom.official</div>
+        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
       </div>`,
       attachments: [{
         filename: `BornFrom_${TITLES[productId].replace(/[^a-z0-9]/gi,'_')}.pdf`,
