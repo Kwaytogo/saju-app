@@ -11,7 +11,7 @@ export default function Legal() {
         <div style={{marginBottom:60}}>
           <p style={{fontSize:12,letterSpacing:6,color:V.am,marginBottom:12}}>BORN FROM</p>
           <h1 style={{fontSize:36,fontWeight:400,marginBottom:8}}>Terms of Service</h1>
-          <p style={{fontSize:14,color:V.mu,marginBottom:40}}>Last updated: April 2026</p>
+          <p style={{fontSize:14,color:V.mu,marginBottom:40}}>Last updated: May 2026</p>
 
           {[
             {title:'1. Acceptance of Terms', body:'By accessing or using Born From ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Service.'},
@@ -32,7 +32,7 @@ export default function Legal() {
 
         <div style={{borderTop:`1px solid ${V.br}`,paddingTop:60}}>
           <h1 style={{fontSize:36,fontWeight:400,marginBottom:8}}>Refund Policy</h1>
-          <p style={{fontSize:14,color:V.mu,marginBottom:40}}>Last updated: April 2026</p>
+          <p style={{fontSize:14,color:V.mu,marginBottom:40}}>Last updated: May 2026</p>
 
           {[
             {title:'Our Policy', body:'All sales of digital content on Born From are final. Because our products are AI-generated digital reports delivered instantly upon purchase, we generally do not offer refunds once content has been accessed.'},
