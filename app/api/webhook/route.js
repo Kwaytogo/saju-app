@@ -245,7 +245,7 @@ export async function POST(req) {
     const productPermalink = new URLSearchParams(body).get('product_permalink') || '';
 
     let birthDate = '';
-    const bdMatch = body.match(/Birth[_+]?Date[^=]*=([^&]+)/i) || body.match(/birthday=([^&]+)/i);
+    const bdMatch = body.match(/birth_date=([^&]+)/i) || body.match(/Birth[_+]?Date[^=]*=([^&]+)/i) || body.match(/birthday=([^&]+)/i);
     if (bdMatch) birthDate = decodeURIComponent(bdMatch[1]).replace(/\+/g,' ').trim();
 
     let gender = 'female';
