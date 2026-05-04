@@ -126,7 +126,7 @@ PART 3 — THE ARRIVAL (350 words)
 Resolution between all three pillars. The moment you became all three at once. A meeting or encounter that changes everything. End on the most beautiful sentence you have ever written.`,
 };
 
-const TITLES = const TITLES = {
+const TITLES = {
   basic: 'The Core Energy Audit',
   love: 'The Relationship Decoder',
   career: 'The Success Compass',
