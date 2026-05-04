@@ -277,7 +277,122 @@ export default function SajuFull(){
   const SS={background:V.bg,border:`1px solid ${V.br}`,color:V.tx,fontFamily:FF,fontSize:16,padding:'12px 8px',outline:'none',cursor:'pointer',width:'100%',WebkitAppearance:'none',appearance:'none'};
 
   const DateInputComp=()=>(
-    
+    <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:16}}>
+      <select value={month} onChange={e=>setMonth(e.target.value)} style={{...SS,maxWidth:100}}>
+        <option value="">Month</option>
+        {Array.from({length:12},(_,i)=><option key={i+1} value={i+1}>{i+1}</option>)}
+      </select>
+      <select value={dayNum} onChange={e=>setDayNum(e.target.value)} style={{...SS,maxWidth:90}}>
+        <option value="">Day</option>
+        {Array.from({length:31},(_,i)=><option key={i+1} value={i+1}>{i+1}</option>)}
+      </select>
+      <select value={year} onChange={e=>setYear(e.target.value)} style={{...SS,maxWidth:110}}>
+        <option value="">Year</option>
+        {Array.from({length:91},(_,i)=><option key={i} value={2010-i}>{2010-i}</option>)}
+      </select>
+    </div>
+  )
+
+  // ── REVEAL VIEW ────────────────────────────────────────────
+  if(view==='reveal'&&saju){
+    const dom=dominant([saju.year,saju.month,saju.day]);
+    const ECH2={Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+    const EC2={Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#AAAAAA',Water:'#4090E0'};
+    const CELEB={甲:['Rosé','Kylie Jenner'],乙:['V','G-Dragon'],丙:['Jungkook','Justin Bieber'],丁:['IU','Kim Kardashian'],戊:['Lisa','Ariana Grande'],己:['Suga','Selena Gomez'],庚:['Sabrina Carpenter','Cardi B'],辛:['RM','Zendaya'],壬:['Jennie','Timothée Chalamet'],癸:['Hailey Bieber','Taeyang']};
+    const celebs=CELEB[saju.day.s]||[];
+    const elemColor=EC2[dom]||'#E88C12';
+    const elemSym=ECH2[dom]||'命';
+    return(
+      <div style={{...base,padding:'28px 20px',maxWidth:540,margin:'0 auto'}}>
+        {/* NAV */}
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:28}}>
+          <button onClick={()=>setView('landing')} style={{background:'none',border:'none',color:V.mu,fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>← Back</button>
+          <div style={{fontSize:14,letterSpacing:4,fontFamily:FF}}><span style={{color:V.am}}>BORN</span> <span style={{color:V.tx}}>FROM</span></div>
+          <button onClick={()=>setView('saju')} style={{background:'none',border:`1px solid ${V.br}`,color:V.mu,padding:'5px 14px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2}}>CHART →</button>
+        </div>
+
+        {/* ELEMENT REVEAL */}
+        <div style={{textAlign:'center',marginBottom:28,padding:'28px 20px',background:V.s,border:`1px solid ${elemColor}33`}}>
+          <p style={{fontSize:10,letterSpacing:6,color:elemColor,marginBottom:12}}>YOU WERE BORN FROM</p>
+          <div style={{fontSize:96,color:elemColor,lineHeight:1,marginBottom:8,textShadow:`0 0 40px ${elemColor}44`}}>{elemSym}</div>
+          <h2 style={{fontSize:32,fontWeight:400,marginBottom:4}}>{dom}</h2>
+          <p style={{fontSize:14,color:V.mu,marginBottom:16}}>{saju.day.s} · Day Master</p>
+          {celebs.length>0&&<p style={{fontSize:13,color:V.mu,fontStyle:'italic'}}>Same energy as <span style={{color:elemColor}}>{celebs.join(' & ')}</span></p>}
+        </div>
+
+        {/* COMPAT SECTION */}
+        <div style={{marginBottom:24,padding:'20px',background:V.s,border:`1px solid ${V.br}`}}>
+          <p style={{fontSize:10,letterSpacing:5,color:V.am,marginBottom:12,textAlign:'center'}}>COMPATIBILITY · 궁합</p>
+          {!compatResult
+            ?<>
+              <p style={{fontSize:14,color:V.mu,textAlign:'center',marginBottom:12}}>Enter your crush's birthday</p>
+              <div style={{display:'flex',gap:8,justifyContent:'center',marginBottom:12}}>
+                <select value={cM} onChange={e=>setCM(e.target.value)} style={{...SS,maxWidth:100}}><option value="">Month</option>{Array.from({length:12},(_,i)=><option key={i+1} value={i+1}>{i+1}</option>)}</select>
+                <select value={cD} onChange={e=>setCD(e.target.value)} style={{...SS,maxWidth:90}}><option value="">Day</option>{Array.from({length:31},(_,i)=><option key={i+1} value={i+1}>{i+1}</option>)}</select>
+                <select value={cY} onChange={e=>setCY(e.target.value)} style={{...SS,maxWidth:110}}><option value="">Year</option>{Array.from({length:91},(_,i)=><option key={i} value={2010-i}>{2010-i}</option>)}</select>
+              </div>
+              <button onClick={checkCompat} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'12px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>CHECK COMPATIBILITY ✦</button>
+            </>
+            :<>
+              <div style={{textAlign:'center',marginBottom:16}}>
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:20,marginBottom:12}}>
+                  <span style={{fontSize:56,color:EC2[compatResult.myEl]||V.am}}>{ECH2[compatResult.myEl]||'?'}</span>
+                  <span style={{fontSize:28,color:V.am}}>♡</span>
+                  <span style={{fontSize:56,color:EC2[compatResult.theirEl]||V.am}}>{ECH2[compatResult.theirEl]||'?'}</span>
+                </div>
+                <div style={{background:V.br,height:8,borderRadius:4,marginBottom:8,overflow:'hidden'}}>
+                  <div style={{background:V.am,height:'100%',width:`${compatResult.result.score}%`,transition:'width 1s ease'}}/>
+                </div>
+                <p style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8}}>{(compatResult.result.tag||'').toUpperCase()} · {compatResult.result.score}%</p>
+                <h3 style={{fontSize:22,fontWeight:400,marginBottom:12,lineHeight:1.4}}>{compatResult.result.title}</h3>
+                <p style={{fontSize:15,color:V.mu,lineHeight:1.75,marginBottom:16,fontStyle:'italic'}}>{compatResult.result.desc}</p>
+              </div>
+              {/* LOVE CTA */}
+              <div style={{padding:'18px',background:'#081420',border:`2px solid ${V.am}`,textAlign:'center'}}>
+                <div style={{fontSize:10,letterSpacing:5,color:V.am,marginBottom:8}}>THE RELATIONSHIP DECODER</div>
+                <div style={{fontSize:20,color:V.tx,fontWeight:300,lineHeight:1.4,marginBottom:8}}>Want to know exactly what<br/>this connection means?</div>
+                <p style={{fontSize:13,color:V.mu,lineHeight:1.65,marginBottom:14}}>Timing · Who to look for · What 2026 brings<br/>for this connection — your full love destiny.</p>
+                <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'13px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700,marginBottom:8}}>UNLOCK THE RELATIONSHIP DECODER · $29.99 →</button>
+              </div>
+              <div style={{marginTop:12,padding:'12px',background:V.s,border:`1px solid ${V.br}`,textAlign:'center'}}>
+                <p style={{fontSize:13,color:V.mu,marginBottom:8,fontStyle:'italic'}}>"Enter your crush's birthday — find out if they're your match."</p>
+                <button onClick={()=>{setCompatResult(null);setCM('');setCD('');setCY('');}} style={{background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'7px 18px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2}}>CHECK ANOTHER ✦</button>
+              </div>
+              <button onClick={shareCompat} style={{width:'100%',marginTop:10,background:'none',border:`1px solid ${V.br}`,color:V.mu,padding:'10px',fontFamily:FF,fontSize:12,cursor:'pointer',letterSpacing:2}}>📲 SAVE & SHARE YOUR RESULT</button>
+            </>
+          }
+        </div>
+
+        {/* PACKAGE CARDS */}
+        <p style={{fontSize:11,letterSpacing:5,color:V.am,textAlign:'center',marginBottom:16}}>읽을 책을 선택하세요</p>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:12}}>
+          {[
+            {id:'basic',ko:'베이직 포춘',en:'The Core Energy Audit',price:'$19.99',icon:'命',hot:true},
+            {id:'story',ko:'당신의 이야기',en:'The Life Script',price:'$44.99',icon:'✦',sig:true},
+            {id:'love',ko:'사랑과 행운',en:'The Relationship Decoder',price:'$29.99',icon:'♡'},
+            {id:'career',ko:'커리어 포춘',en:'The Success Compass',price:'$29.99',icon:'山'},
+          ].map(pkg=>(
+            <div key={pkg.id} style={{background:V.s,border:`1px solid ${V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+              {pkg.hot&&<span style={{position:'absolute',top:-1,left:0,right:0,textAlign:'center',background:V.am,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>POPULAR</span>}
+              {pkg.sig&&<span style={{position:'absolute',top:-1,left:0,right:0,textAlign:'center',background:V.go,color:V.bg,fontSize:9,letterSpacing:2,padding:'2px 8px',fontWeight:700}}>BORN FROM ONLY ✦</span>}
+              <div style={{marginTop:(pkg.hot||pkg.sig)?14:0}}>
+                <div style={{fontSize:20,color:V.am,marginBottom:6}}>{pkg.icon}</div>
+                <div style={{fontSize:15,fontWeight:400,marginBottom:4}}>{pkg.ko}</div>
+                <div style={{fontSize:11,color:V.mu,marginBottom:8}}>{pkg.en}</div>
+                <div style={{fontSize:18,color:V.am,fontWeight:600,marginBottom:10}}>{pkg.price}</div>
+              </div>
+              <button onClick={()=>polarCheckout(PRODUCTS[pkg.id],()=>generate(pkg.id))} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'9px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:1,fontWeight:700}}>BUY →</button>
+            </div>
+          ))}
+        </div>
+        <div style={{background:'#081420',border:`2px solid ${V.am}`,padding:'16px',textAlign:'center',marginBottom:24}}>
+          <span style={{background:V.am,color:V.bg,fontSize:10,letterSpacing:3,padding:'3px 10px',fontWeight:700}}>BEST VALUE</span>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',margin:'10px 0'}}>
+            <span style={{fontSize:14,color:V.tx}}>Complete Bundle: Full Access · All 4 Readings</span>
+            <span style={{fontSize:22,color:V.am,fontWeight:700}}>$69.99</span>
+          </div>
+          <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>{})} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'12px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS →</button>
+        </div>
       </div>
     );
   }
