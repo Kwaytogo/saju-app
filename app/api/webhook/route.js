@@ -43,19 +43,31 @@ End: "This is your cosmic signature — ${s.day.stem}${s.day.branch}, born from 
 
   love: (s) => `You are Born From. Day Master: ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]})
 Full: Year ${s.year.stem}${s.year.branch} · Month ${s.month.stem}${s.month.branch} · Day ${s.day.stem}${s.day.branch}
-Write THE RELATIONSHIP DECODER with 4 sections. Each: 5-6 sentences. Intimate, honest, poetic.
+Write THE RELATIONSHIP DECODER with 5 sections. Each: 6-7 sentences. Intimate, honest, luminous. Every line should feel written for this exact person.
 ROMANTIC NATURE
+[How they love, what they give that others cannot, what they secretly need but rarely ask for]
 IDEAL PARTNER
+[The elemental profile of their perfect match — describe the feeling of being with them, not just traits. Make the reader feel like they already know this person]
 WHERE LOVE FINDS YOU
-2026 LOVE FORECAST`,
+[Specific circumstances, situations, the kind of moment where this person's heart opens. Not vague — specific scenes and environments]
+HOW TO CATCH LOVE
+[Practical elemental wisdom: what this person must do differently, what they must stop doing, the exact inner shift that opens the door to the love they deserve. Bold and specific]
+2026 LOVE FORECAST
+[What Fire Horse 丙午 brings specifically for this chart. Timing, who arrives, what changes. End with one beautiful hopeful sentence]`,
 
   career: (s) => `You are Born From. Day Master: ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]})
 Full: Year ${s.year.stem}${s.year.branch} · Month ${s.month.stem}${s.month.branch} · Day ${s.day.stem}${s.day.branch}
-Write THE SUCCESS COMPASS with 4 sections. Each: 5-6 sentences. Empowering, specific.
+Write THE SUCCESS COMPASS with 5 sections. Each: 6-7 sentences. Empowering, specific, visionary.
 NATURAL GIFTS
+[Their innate talents, how their element shapes working style, what they do effortlessly that others struggle with]
 DESTINED PATHS
+[Specific careers and callings that align — not generic, but vivid and specific to this element]
+THE SHADOW AT WORK
+[What holds them back, the shadow pattern of this element in professional settings, and how to transform it into power]
 POWER DECADE
-2026 CAREER FORECAST`,
+[When their career energy peaks and what that looks like — specific timing and what to build toward]
+2026 CAREER FORECAST
+[What Fire Horse 丙午 brings professionally — opportunities, shifts, what to act on. End with one powerful sentence]`,
 
   story: (s) => `You are Born From, writing THE LIFE SCRIPT for someone born as ${s.day.stem}${s.day.branch} — the ${ELEMENTS[s.day.stem]} archetype.
 Write a 950-1000 word story in 3 parts. No markdown, no headers. Pure prose paragraphs separated by blank lines. Second person "you". Ancient Korea filtered through elemental metaphor.
@@ -165,7 +177,7 @@ async function generateReading(productId, saju) {
   const prompt = PROMPTS[productId] || PROMPTS.basic;
   const msg = await anthropic.messages.create({
     model: 'claude-opus-4-6',
-    max_tokens: productId === 'story' ? 4000 : 2500,
+    max_tokens: productId === 'story' ? 4000 : productId === 'basic' ? 2500 : 3200,
     messages: [{ role: 'user', content: prompt(saju) }],
   });
   return msg.content[0].text;
@@ -210,25 +222,38 @@ export async function POST(req) {
     const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
     const pdfBuffer = await generatePDF(pdfHTML);
 
+    // Build attachments
+    let emailAttachments = [];
+    if (productId === 'bundle') {
+      for (const r of readings) {
+        const rHTML = buildPDFHTML(r.type, [r], saju, birthDate);
+        const rPDF = await generatePDF(rHTML);
+        emailAttachments.push({
+          filename: `BornFrom_${TITLES[r.type].replace(/[^a-z0-9]/gi,'_')}.pdf`,
+          content: Buffer.from(rPDF).toString('base64'),
+          content_type: 'application/pdf',
+        });
+      }
+    } else {
+      emailAttachments = [{
+        filename: `BornFrom_${TITLES[productId].replace(/[^a-z0-9]/gi,'_')}.pdf`,
+        content: Buffer.from(pdfBuffer).toString('base64'),
+        content_type: 'application/pdf',
+      }];
+    }
+
     await resend.emails.send({
       from: 'Born From <hello@bornfrom.co>',
       to: email,
       subject: `✦ ${TITLES[productId]} — Born From`,
       html: `<div style="background:#060C18;color:#EDE5D3;font-family:Georgia,serif;padding:40px;max-width:600px;margin:0 auto">
-        <div style="text-align:center;margin-bottom:32px">
-          <div style="font-size:22px;letter-spacing:6px;color:#E88C12">BORN FROM</div>
-        </div>
-        <p style="font-size:17px;color:#C8D8E8;line-height:1.8;margin-bottom:20px">Your reading is attached as a beautifully designed PDF.</p>
-        <p style="font-size:15px;color:#8A9BAB;line-height:1.8;margin-bottom:24px">Open <strong style="color:#EDE5D3">${TITLES[productId]}</strong> in the attachment. Save it — it's yours forever.</p>
-        <p style="font-size:13px;color:#4A6080">On mobile: tap the attachment → share → save to Files.</p>
-        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
+        <div style="text-align:center;margin-bottom:32px"><div style="font-size:22px;letter-spacing:6px;color:#E88C12">BORN FROM</div></div>
+        <p style="font-size:17px;color:#C8D8E8;line-height:1.8;margin-bottom:16px">${productId === 'bundle' ? 'Your 4 readings are attached as <strong style=\"color:#EDE5D3\">separate PDF files</strong> — save them all.' : 'Your reading is attached as a PDF. Save it — it is yours forever.'}</p>
+        <p style="font-size:13px;color:#4A6070">On mobile: tap attachment → share → Save to Files.</p>
+        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO · @bornfrom.official</div>
       </div>`,
-      attachments: [{
-        filename: `BornFrom_${TITLES[productId].replace(/[^a-z0-9]/gi,'_')}.pdf`,
-        content: Buffer.from(pdfBuffer).toString('base64'),
-        content_type: 'application/pdf',
-      }],
-    });
+      attachments: emailAttachments,
+    });;
 
     return NextResponse.json({ success: true });
 
