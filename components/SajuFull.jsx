@@ -213,63 +213,62 @@ export default function SajuFull(){
   };
   const shareCompat=()=>{
     if(!compatResult)return;
-    const EC2={Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#CCCCCC',Water:'#4090E0'};
     const ECH2={Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+    const EC2={Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#AAAAAA',Water:'#4090E0'};
     const canvas=document.createElement('canvas');
     canvas.width=1080;canvas.height=1080;
     const ctx=canvas.getContext('2d');
     // Background
     ctx.fillStyle='#060C18';ctx.fillRect(0,0,1080,1080);
     // Border
-    ctx.strokeStyle='#E88C12';ctx.lineWidth=3;ctx.strokeRect(40,40,1000,1000);
-    ctx.strokeStyle='#1B2E48';ctx.lineWidth=1;ctx.strokeRect(60,60,960,960);
-    // BORN FROM logo
-    ctx.fillStyle='#E88C12';ctx.font='bold 52px Georgia';ctx.textAlign='center';
-    ctx.fillText('BORN',540,160);
-    ctx.fillStyle='#EDE5D3';ctx.fillText('FROM',540,220);
+    ctx.strokeStyle='#E88C12';ctx.lineWidth=3;ctx.strokeRect(36,36,1008,1008);
+    ctx.strokeStyle='#1B2E48';ctx.lineWidth=1;ctx.strokeRect(52,52,976,976);
+    // BORN FROM
+    ctx.fillStyle='#E88C12';ctx.font='bold 48px Georgia';ctx.textAlign='center';
+    ctx.fillText('BORN FROM',540,140);
     // Divider
     ctx.strokeStyle='#E88C12';ctx.lineWidth=1;ctx.globalAlpha=0.4;
-    ctx.beginPath();ctx.moveTo(380,248);ctx.lineTo(700,248);ctx.stroke();
-    ctx.globalAlpha=1;
-    // COMPATIBILITY label
-    ctx.fillStyle='#8A9BAB';ctx.font='24px Georgia';ctx.letterSpacing='8px';
-    ctx.fillText('COMPATIBILITY · 궁합',540,320);
-    // Elements
+    ctx.beginPath();ctx.moveTo(360,165);ctx.lineTo(720,165);ctx.stroke();ctx.globalAlpha=1;
+    // COMPATIBILITY
+    ctx.fillStyle='#8A9BAB';ctx.font='24px Georgia';
+    ctx.fillText('COMPATIBILITY · 궁합',540,220);
+    // Element symbols
     const myCol=EC2[compatResult.myEl]||'#E88C12';
     const thCol=EC2[compatResult.theirEl]||'#4090E0';
     const mySym=ECH2[compatResult.myEl]||'?';
     const thSym=ECH2[compatResult.theirEl]||'?';
-    ctx.font='bold 180px Georgia';
-    ctx.fillStyle=myCol;ctx.textAlign='center';ctx.fillText(mySym,320,560);
-    ctx.fillStyle='#E88C12';ctx.font='80px Georgia';ctx.fillText('♡',540,520);
-    ctx.fillStyle=thCol;ctx.font='bold 180px Georgia';ctx.fillText(thSym,760,560);
-    // You / Them
-    ctx.fillStyle='#8A9BAB';ctx.font='28px Georgia';
-    ctx.fillText('You',320,610);ctx.fillText('Them',760,610);
+    ctx.font='bold 200px Georgia';
+    ctx.fillStyle=myCol;ctx.textAlign='center';ctx.fillText(mySym,290,540);
+    ctx.fillStyle='#E88C12';ctx.font='80px Georgia';ctx.fillText('♡',540,500);
+    ctx.fillStyle=thCol;ctx.font='bold 200px Georgia';ctx.fillText(thSym,790,540);
+    // Labels
+    ctx.fillStyle='#8A9BAB';ctx.font='26px Georgia';
+    ctx.fillText('You',290,590);ctx.fillText('Them',790,590);
     // Score bar
-    const barW=700;const barX=(1080-barW)/2;
-    ctx.fillStyle='#1B2E48';ctx.fillRect(barX,650,barW,12);
-    ctx.fillStyle='#E88C12';ctx.fillRect(barX,650,barW*(compatResult.result.score/100),12);
-    // Score text
-    ctx.fillStyle='#E88C12';ctx.font='bold 28px Georgia';
-    ctx.fillText((compatResult.result.tag||'').toUpperCase()+' · '+compatResult.result.score+'%',540,710);
+    const bW=700,bX=190;
+    ctx.fillStyle='#1B2E48';ctx.fillRect(bX,630,bW,12);
+    ctx.fillStyle='#E88C12';ctx.fillRect(bX,630,bW*(compatResult.result.score/100),12);
+    // Score
+    ctx.fillStyle='#E88C12';ctx.font='bold 26px Georgia';
+    ctx.fillText((compatResult.result.tag||'').toUpperCase()+' · '+compatResult.result.score+'%',540,690);
     // Title
     ctx.fillStyle='#EDE5D3';ctx.font='52px Georgia';
-    ctx.fillText(compatResult.result.title,540,780);
+    ctx.fillText(compatResult.result.title,540,770);
     // CTA
-    ctx.fillStyle='#8A9BAB';ctx.font='28px Georgia';
-    ctx.fillText('Find yours FREE at bornfrom.co',540,880);
-    // Instagram handle
-    ctx.fillStyle='#E88C12';ctx.font='26px Georgia';
-    ctx.fillText('@bornfrom.official',540,940);
-    // Share
+    ctx.fillStyle='#8A9BAB';ctx.font='26px Georgia';
+    ctx.fillText('Find your match at bornfrom.co',540,860);
+    ctx.fillStyle='#E88C12';ctx.font='24px Georgia';
+    ctx.fillText('@bornfrom.official',540,910);
+    // Download
     canvas.toBlob(blob=>{
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');
-      a.href=url;a.download='bornfrom-compat.png';a.click();
+      a.href=url;a.download='bornfrom-compatibility.png';a.click();
       URL.revokeObjectURL(url);
-      const txt=`My element is ${compatResult.myEl}, theirs is ${compatResult.theirEl} — ${compatResult.result.score}% compatible ♡ Check yours FREE: bornfrom.co @bornfrom.official`;
-      if(navigator.share)navigator.share({text:txt}).catch(()=>{});
+      setTimeout(()=>{
+        const txt=`${compatResult.myEl} meets ${compatResult.theirEl} — ${compatResult.result.score}% compatible ✦ Check yours: bornfrom.co @bornfrom.official`;
+        if(navigator.share)navigator.share({text:txt,files:[]}).catch(()=>{});
+      },500);
     },'image/png');
   };
 
@@ -461,7 +460,7 @@ export default function SajuFull(){
                         <div style={{fontSize:10,letterSpacing:5,color:V.am,marginBottom:8}}>THE RELATIONSHIP DECODER</div>
                         <div style={{fontSize:20,color:V.tx,fontWeight:300,lineHeight:1.4,marginBottom:8}}>Want to know exactly what<br/>this connection means?</div>
                         <p style={{fontSize:13,color:V.mu,lineHeight:1.65,marginBottom:14}}>Timing · Who to look for · What 2026 brings for this connection — your full love destiny.</p>
-                        <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'14px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700}}>UNLOCK THE RELATIONSHIP DECODER · $29.99 →</button>
+                        <button onClick={()=>polarCheckout(PRODUCTS.love)} style={{width:'100%',background:V.am,color:V.bg,border:'none',padding:'14px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700,boxShadow:'0 0 24px #E88C1266'}}>🔓 UNLOCK THE RELATIONSHIP DECODER · $29.99 →</button>
                       </div>
                       <button onClick={shareCompat} style={{width:'100%',background:'none',border:`1px solid ${V.am}`,color:V.am,padding:'11px',fontFamily:FF,fontSize:13,cursor:'pointer',letterSpacing:2}}>📲 SAVE & SHARE YOUR RESULT ✦</button>
                     </div>
