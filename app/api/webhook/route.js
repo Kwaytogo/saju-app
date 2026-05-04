@@ -211,167 +211,72 @@ ${readingSections}
 </html>`;
 }
 
-async function generatePDF(readingText, productId, saju, birthDate) {
-  const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
-  
+function buildReadingEmail(readings, saju, birthDate, productId) {
   const elem = ELEMENTS[saju.day.stem];
   const color = ELEM_COLOR[elem] || '#E88C12';
-  const sym = elem.substring(0,1).toUpperCase();
-  
-  // Parse hex color to rgb
-  function hexToRgb(hex) {
-    const r = parseInt(hex.slice(1,3),16)/255;
-    const g = parseInt(hex.slice(3,5),16)/255;
-    const b = parseInt(hex.slice(5,7),16)/255;
-    return rgb(r,g,b);
-  }
-  
-  const accentColor = hexToRgb(color);
-  const bgColor = rgb(0.024, 0.047, 0.094); // #060C18
-  const textColor = rgb(0.929, 0.898, 0.827); // #EDE5D3
-  const mutedColor = rgb(0.541, 0.608, 0.671); // #8A9BAB
-  
-  const pdfDoc = await PDFDocument.create();
-  const helvetica = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  
-  const W = 595, H = 842; // A4
-  const margin = 60;
-  
-  // ── COVER PAGE ──
-  let page = pdfDoc.addPage([W, H]);
-  
-  // Dark background
-  page.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
-  
-  // Top accent line
-  page.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
-  
-  // Border
-  page.drawRectangle({ x:24, y:24, width:W-48, height:H-48, color:rgb(0,0,0), opacity:0 });
-  page.drawLine({ start:{x:24,y:24}, end:{x:W-24,y:24}, color:accentColor, thickness:0.5, opacity:0.3 });
-  page.drawLine({ start:{x:24,y:H-24}, end:{x:W-24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
-  page.drawLine({ start:{x:24,y:24}, end:{x:24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
-  page.drawLine({ start:{x:W-24,y:24}, end:{x:W-24,y:H-24}, color:accentColor, thickness:0.5, opacity:0.3 });
-  
-  // BORN FROM
-  page.drawText('BORN FROM', { x:W/2-35, y:H-80, size:11, font:helveticaBold, color:accentColor, opacity:0.7 });
-  
-  // Element symbol (large)
-  page.drawText(elem.toUpperCase(), { x:W/2-30, y:H/2+60, size:80, font:helveticaBold, color:accentColor });
-  
-  // Element name
-  const elemText = `${elem.toUpperCase()} ELEMENT`;
-  page.drawText(elemText, { x:W/2-(elemText.length*3.5), y:H/2-10, size:12, font:helvetica, color:accentColor, opacity:0.8 });
-  
-  // Divider
-  page.drawLine({ start:{x:W/2-40,y:H/2-30}, end:{x:W/2+40,y:H/2-30}, color:accentColor, thickness:0.5, opacity:0.4 });
-  
-  // Product title
+  const sym = ELEM_SYM[elem] || '命';
   const title = TITLES[productId] || TITLES.basic;
-  const titleLines = title.split(':');
-  titleLines.forEach((line, i) => {
-    const tw = line.trim().length * 7;
-    page.drawText(line.trim(), { x:W/2-tw/2, y:H/2-70-(i*30), size:22, font:helveticaBold, color:textColor });
-  });
-  
-  // Birth date + pillars
-  page.drawText(`Born: ${birthDate}`, { x:W/2-40, y:H/2-150, size:12, font:helvetica, color:mutedColor, opacity:0.8 });
-  const stemNames = {'甲':'Jia','乙':'Yi','丙':'Bing','丁':'Ding','戊':'Wu','己':'Ji','庚':'Geng','辛':'Xin','壬':'Ren','癸':'Gui'};
-  const branchNames = {'子':'Zi','丑':'Chou','寅':'Yin','卯':'Mao','辰':'Chen','巳':'Si','午':'Wu','未':'Wei','申':'Shen','酉':'You','戌':'Xu','亥':'Hai'};
-  const pillars = `Year: ${stemNames[saju.year.stem]||'?'}${branchNames[saju.year.branch]||'?'}  |  Month: ${stemNames[saju.month.stem]||'?'}${branchNames[saju.month.branch]||'?'}  |  Day: ${stemNames[saju.day.stem]||'?'}${branchNames[saju.day.branch]||'?'}`;
-  page.drawText(pillars, { x:W/2-50, y:H/2-170, size:14, font:helveticaBold, color:accentColor });
-  
-  // Footer
-  page.drawText('BORNFROM.CO  ·  @bornfrom.official  ·  © 2026 Born From', { x:W/2-120, y:40, size:8, font:helvetica, color:mutedColor, opacity:0.5 });
-  
-  // ── READING PAGES ──
-  const sections = readingText.split(/\n\n/).filter(p => p.trim());
-  
-  let currentPage = pdfDoc.addPage([W, H]);
-  currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
-  currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
-  
-  // Page header
-  currentPage.drawText('BORN FROM  ·  COSMIC PERSONAL ANALYSIS', { x:margin, y:H-50, size:9, font:helvetica, color:accentColor, opacity:0.6 });
-  currentPage.drawText(title, { x:margin, y:H-80, size:20, font:helveticaBold, color:textColor });
-  currentPage.drawLine({ start:{x:margin,y:H-100}, end:{x:margin+50,y:H-100}, color:accentColor, thickness:1, opacity:0.4 });
-  
-  let yPos = H - 130;
-  const lineH = 18;
-  const maxW = W - margin*2;
-  
-  for (const para of sections) {
-    const isHeader = para === para.toUpperCase() && para.length < 40 && !para.includes('.');
-    
-    // Check if need new page
-    if (yPos < 100) {
-      // Footer on current page
-      currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
-      currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
-      
-      currentPage = pdfDoc.addPage([W, H]);
-      currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
-      currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
-      yPos = H - 60;
-    }
-    
-    if (isHeader) {
-      yPos -= 10;
-      currentPage.drawText(para.trim(), { x:margin, y:yPos, size:10, font:helveticaBold, color:accentColor, opacity:0.9 });
-      yPos -= lineH + 8;
-    } else {
-      // Word wrap
-      const words = para.trim().split(' ');
-      let line = '';
-      for (const word of words) {
-        const testLine = line + (line ? ' ' : '') + word;
-        const testW = testLine.length * 5.5;
-        if (testW > maxW && line) {
-          if (yPos < 100) {
-            currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
-            currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
-            currentPage = pdfDoc.addPage([W, H]);
-            currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
-            currentPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
-            yPos = H - 60;
-          }
-          currentPage.drawText(line, { x:margin, y:yPos, size:13, font:helvetica, color:rgb(0.784,0.847,0.910), opacity:0.9 });
-          yPos -= lineH;
-          line = word;
-        } else {
-          line = testLine;
-        }
+
+  const readingSections = readings.map(({type, text}) => {
+    const sectionTitle = TITLES[type] || title;
+    const paragraphs = text.split(/\n\n/).filter(p => p.trim()).map(p => {
+      const trimmed = p.trim();
+      if (trimmed === trimmed.toUpperCase() && trimmed.length < 40 && !trimmed.includes('.')) {
+        return `<div style="font-family:Georgia,serif;font-size:11px;letter-spacing:6px;color:${color};margin:36px 0 14px;opacity:.9">${trimmed}</div>`;
       }
-      if (line) {
-        currentPage.drawText(line, { x:margin, y:yPos, size:13, font:helvetica, color:rgb(0.784,0.847,0.910), opacity:0.9 });
-        yPos -= lineH;
-      }
-      yPos -= 10; // paragraph gap
-    }
-  }
-  
-  // Final page footer
-  currentPage.drawText('BORNFROM.CO  ·  © 2026 Born From  ·  For personal use only', { x:W/2-100, y:40, size:7, font:helvetica, color:mutedColor, opacity:0.4 });
-  currentPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
-  
-  // ── FINAL PAGE ──
-  const finalPage = pdfDoc.addPage([W, H]);
-  finalPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
-  finalPage.drawRectangle({ x:0, y:H-4, width:W, height:4, color:accentColor });
-  finalPage.drawRectangle({ x:0, y:0, width:W, height:4, color:accentColor });
-  
-  finalPage.drawText(elem.toUpperCase(), { x:W/2-25, y:H/2+40, size:60, font:helveticaBold, color:accentColor, opacity:0.8 });
-  finalPage.drawText(`You were born from ${elem}.`, { x:W/2-80, y:H/2-20, size:14, font:helvetica, color:mutedColor });
-  finalPage.drawText('This is your cosmic signature.', { x:W/2-85, y:H/2-40, size:14, font:helvetica, color:mutedColor });
-  finalPage.drawText('Carry it well.', { x:W/2-40, y:H/2-60, size:14, font:helvetica, color:mutedColor });
-  finalPage.drawLine({ start:{x:W/2-30,y:H/2-80}, end:{x:W/2+30,y:H/2-80}, color:accentColor, thickness:0.5, opacity:0.3 });
-  finalPage.drawText('BORNFROM.CO  ·  @bornfrom.official', { x:W/2-70, y:H/2-100, size:9, font:helvetica, color:mutedColor, opacity:0.5 });
-  finalPage.drawText('© 2026 Born From  ·  All rights reserved  ·  For personal use only', { x:W/2-110, y:H/2-116, size:8, font:helvetica, color:mutedColor, opacity:0.35 });
-  
-  const pdfBytes = await pdfDoc.save();
-  return Buffer.from(pdfBytes);
+      return `<p style="font-size:17px;color:#C8D8E8;line-height:1.95;margin-bottom:20px;font-style:italic;font-family:Georgia,serif">${trimmed}</p>`;
+    }).join('');
+
+    return `
+    <div style="padding:48px 48px 36px;background:#060C18;margin-bottom:2px">
+      <div style="position:relative;padding-top:3px;margin-bottom:0">
+        <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-bottom:24px"></div>
+      </div>
+      <div style="font-size:10px;letter-spacing:5px;color:#E88C12;opacity:.6;margin-bottom:14px">BORN FROM · COSMIC PERSONAL ANALYSIS</div>
+      <h2 style="font-family:Georgia,serif;font-size:32px;font-weight:400;color:#EDE5D3;margin:0 0 10px;line-height:1.2">${sectionTitle}</h2>
+      <p style="font-size:12px;color:${color};letter-spacing:4px;margin:0 0 28px">${saju.day.stem}${saju.day.branch} · ${elem} Element</p>
+      <div style="width:48px;height:1px;background:${color};opacity:.4;margin-bottom:36px"></div>
+      <div style="max-width:620px">${paragraphs}</div>
+    </div>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+<body style="margin:0;padding:0;background:#060C18;font-family:Georgia,serif">
+<div style="max-width:680px;margin:0 auto">
+
+  <!-- COVER SECTION -->
+  <div style="background:#060C18;padding:60px 48px;text-align:center;border-bottom:1px solid #1B2E48;position:relative">
+    <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-bottom:40px"></div>
+    <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:8px;color:#E88C12;opacity:.7;margin-bottom:40px">BORN FROM</div>
+    <div style="font-size:100px;color:${color};line-height:1;margin-bottom:16px;text-shadow:0 0 60px ${color}44">${sym}</div>
+    <div style="font-size:11px;letter-spacing:6px;color:${color};margin-bottom:40px">${elem.toUpperCase()} · ${ELEM_KO[elem]}</div>
+    <div style="width:60px;height:1px;background:#E88C12;opacity:.3;margin:0 auto 36px"></div>
+    <div style="font-size:10px;letter-spacing:6px;color:#4A6080;margin-bottom:16px">YOUR PERSONAL ANALYSIS</div>
+    <h1 style="font-family:Georgia,serif;font-size:34px;font-weight:400;color:#EDE5D3;line-height:1.2;margin:0 0 32px">${title}</h1>
+    <div style="font-size:14px;color:#8A9BAB;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
+    <div style="font-size:18px;color:${color};letter-spacing:4px">${saju.year.stem}${saju.year.branch} · ${saju.month.stem}${saju.month.branch} · ${saju.day.stem}${saju.day.branch}</div>
+    <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-top:40px"></div>
+  </div>
+
+  <!-- READING SECTIONS -->
+  ${readingSections}
+
+  <!-- FINAL SECTION -->
+  <div style="background:#060C18;padding:60px 48px;text-align:center;border-top:1px solid #1B2E48">
+    <div style="font-size:60px;color:${color};margin-bottom:24px;opacity:.8">${sym}</div>
+    <div style="font-size:18px;color:#8A9BAB;font-style:italic;line-height:1.9;max-width:400px;margin:0 auto 24px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
+    <div style="width:40px;height:1px;background:#E88C12;opacity:.3;margin:0 auto 24px"></div>
+    <div style="font-size:9px;letter-spacing:5px;color:#2A4060;margin-bottom:6px">BORNFROM.CO · @bornfrom.official</div>
+    <div style="font-size:8px;letter-spacing:2px;color:#1B2E48">© 2026 Born From · All rights reserved · For personal use only</div>
+  </div>
+
+</div>
+</body>
+</html>`;
 }
+
 
 async function generateReading(productId, saju, gender='female') {
   const prompt = PROMPTS[productId] || PROMPTS.basic;
@@ -450,41 +355,16 @@ export async function POST(req) {
     }
 
     const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
-    // pdf-lib generates directly from reading text
-    const pdfBuffer = await generatePDF(readings.map(r=>r.text).join('\n\n---\n\n'), productId, saju, birthDate);
+    // Email HTML built from readings
 
-    // Build attachments
-    let emailAttachments = [];
-    if (productId === 'bundle') {
-      for (const r of readings) {
-        const rPDF = await generatePDF(r.text, r.type, saju, birthDate);
-        emailAttachments.push({
-          filename: `BornFrom_${TITLES[r.type].replace(/[^a-z0-9]/gi,'_')}.pdf`,
-          content: Buffer.from(rPDF).toString('base64'),
-          content_type: 'application/pdf',
-        });
-      }
-    } else {
-      emailAttachments = [{
-        filename: `BornFrom_${TITLES[productId].replace(/[^a-z0-9]/gi,'_')}.pdf`,
-        content: Buffer.from(pdfBuffer).toString('base64'),
-        content_type: 'application/pdf',
-      }];
-    }
+    const emailHTML = buildReadingEmail(readings, saju, birthDate, productId);
 
     await resend.emails.send({
       from: 'Born From <hello@bornfrom.co>',
       to: email,
       subject: `✦ ${TITLES[productId]} — Born From`,
-      html: `<div style="background:#060C18;color:#EDE5D3;font-family:Georgia,serif;padding:40px;max-width:600px;margin:0 auto">
-        <div style="text-align:center;margin-bottom:32px"><div style="font-size:22px;letter-spacing:6px;color:#E88C12">BORN FROM</div></div>
-        <p style="font-size:17px;color:#C8D8E8;line-height:1.8;margin-bottom:16px">${productId === 'bundle' ? 'Your 4 readings are attached as <strong style=\"color:#EDE5D3\">separate PDF files</strong> — save them all.' : 'Your reading is attached as a PDF. Save it — it is yours forever.'}</p>
-        <p style="font-size:13px;color:#4A6070">On mobile: tap attachment → share → Save to Files.</p>
-        <div style="margin-top:40px;text-align:center;font-size:10px;letter-spacing:4px;color:#2A4060">BORNFROM.CO · @bornfrom.official</div>
-      </div>`,
-      attachments: emailAttachments,
-    });;
-
+      html: emailHTML,
+    });
     return NextResponse.json({ success: true });
 
   } catch (err) {
