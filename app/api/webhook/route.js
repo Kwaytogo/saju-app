@@ -284,9 +284,7 @@ async function generatePDF(readingText, productId, saju, birthDate) {
   page.drawText('BORNFROM.CO  ·  @bornfrom.official  ·  © 2026 Born From', { x:W/2-120, y:40, size:8, font:helvetica, color:mutedColor, opacity:0.5 });
   
   // ── READING PAGES ──
-  const sections = readingText.split('
-
-').filter(p => p.trim());
+  const sections = readingText.split(/\n\n/).filter(p => p.trim());
   
   let currentPage = pdfDoc.addPage([W, H]);
   currentPage.drawRectangle({ x:0, y:0, width:W, height:H, color:bgColor });
