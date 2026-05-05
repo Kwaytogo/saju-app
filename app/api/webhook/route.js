@@ -113,7 +113,7 @@ POWER DECADE
 
   story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
 
-This person: ${gender === 'male' ? 'He' : 'She'} — born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
+Born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
 Their year pillar ${s.year.stem}${s.year.branch} is the world they came from.
 Their month pillar ${s.month.stem}${s.month.branch} is the force that drives them.
 
@@ -315,19 +315,7 @@ export async function POST(req) {
       if (m) { birthDate = m[1].trim().replace(/[^0-9-]/g, ''); break; }
     }
 
-    let gender = 'female';
-    const gPatterns = [
-      /Gender \(male\/female\)[=:]([^&\n]+)/i,
-      /Gender[=:]([^&\n]+)/i,
-    ];
-    for (const pat of gPatterns) {
-      const m = decodedBody.match(pat) || body.match(pat);
-      if (m) {
-        const gRaw = m[1].trim().toLowerCase();
-        gender = ['male','m','man','남','남성','boy'].includes(gRaw) ? 'male' : 'female';
-        break;
-      }
-    }
+    const gender = 'female'; // gender removed from checkout
 
     if (!email || !birthDate) return NextResponse.json({ error: 'Missing data' }, { status: 400 });
 
@@ -360,7 +348,7 @@ export async function POST(req) {
     const emailHTML = buildReadingEmail(readings, saju, birthDate, productId);
 
     await resend.emails.send({
-      from: 'Born From <onboarding@resend.dev>',
+      from: 'Born From <hello@bornfrom.co>',
       to: email,
       subject: `✦ ${TITLES[productId]} — Born From`,
       html: emailHTML,
@@ -395,7 +383,7 @@ export async function GET(req) {
     const emailHTML = buildReadingEmail(readings, saju, testBirth, testProduct);
     
     await resend.emails.send({
-      from: 'Born From <onboarding@resend.dev>',
+      from: 'Born From <hello@bornfrom.co>',
       to: testEmail,
       subject: `✦ [TEST] ${TITLES[testProduct]} — Born From`,
       html: emailHTML,
