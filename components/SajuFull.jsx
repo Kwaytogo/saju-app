@@ -220,7 +220,11 @@ export default function SajuFull(){
     const EC2={Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#AAAAAA',Water:'#4090E0'};
     const canvas=document.createElement('canvas');
     canvas.width=1080;canvas.height=1080;
+    const dpr=window.devicePixelRatio||2;
+    canvas.width=1080*dpr;canvas.height=1080*dpr;
+    canvas.style.width='1080px';canvas.style.height='1080px';
     const ctx=canvas.getContext('2d');
+    ctx.scale(dpr,dpr);
     // Background
     ctx.fillStyle='#060C18';ctx.fillRect(0,0,1080,1080);
     // Border
@@ -258,10 +262,20 @@ export default function SajuFull(){
     ctx.fillStyle='#EDE5D3';ctx.font='52px Georgia';
     ctx.fillText(compatResult.result.title,540,770);
     // CTA
-    ctx.fillStyle='#8A9BAB';ctx.font='26px Georgia';
-    ctx.fillText('Find your match at bornfrom.co',540,860);
-    ctx.fillStyle='#E88C12';ctx.font='24px Georgia';
-    ctx.fillText('@bornfrom.official',540,910);
+    // Element names under symbols
+    ctx.fillStyle=myCol;ctx.font='22px Georgia';
+    ctx.fillText(compatResult.myEl.toUpperCase(),290,630);
+    ctx.fillStyle=thCol;
+    ctx.fillText(compatResult.theirEl.toUpperCase(),790,630);
+    // Website
+    ctx.fillStyle='#EDE5D3';ctx.font='bold 22px Georgia';
+    ctx.fillText('bornfrom.co',540,870);
+    // Instagram handle with different color
+    ctx.fillStyle='#E88C12';ctx.font='bold 26px Georgia';
+    ctx.fillText('● @bornfrom.official',540,910);
+    // Copyright
+    ctx.fillStyle='#4A6080';ctx.font='18px Georgia';
+    ctx.fillText('© 2026 Born From · All rights reserved',540,955);
     // Download
     canvas.toBlob(blob=>{
       const url=URL.createObjectURL(blob);
@@ -358,11 +372,18 @@ export default function SajuFull(){
       <div style={{display:'flex',borderBottom:`1px solid ${V.br}`,flexWrap:'wrap'}}>
         {[['木','WOOD','Growth · Vision','#4CAF50'],['火','FIRE','Passion · Power','#E84012'],['土','EARTH','Stability · Trust','#C8A020'],['金','METAL','Precision · Will','#CCCCCC'],['水','WATER','Flow · Wisdom','#4090E0']].map(([ch,nm,tr,cl])=>(<div key={nm} className="el-item" style={{flex:'1 1 60px',textAlign:'center',padding:'24px 8px',borderRight:`1px solid ${V.br}`,transition:'background .25s'}}><div style={{fontSize:30,color:cl,marginBottom:6}}>{ch}</div><div style={{fontSize:11,letterSpacing:4,color:V.mu}}>{nm}</div><div style={{fontSize:13,color:V.mu,marginTop:4}}>{tr}</div></div>))}
       </div>
+      <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
+        <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:16}}>BEGIN YOUR READING</p>
+        <h2 style={{fontSize:44,fontWeight:600,marginBottom:14,lineHeight:1.1}}>Discover Your<br/><span style={{color:V.am}}>Cosmic Signature</span></h2>
+        <p style={{fontSize:17,color:V.mu,lineHeight:1.6,maxWidth:400,margin:'0 auto 40px'}}>Enter your birthday. Your personal elemental analysis — free, instant, and unlike anything you've seen before.</p>
+        <DateInputComp/>
+      </section>
+
       <section className="sp" style={{padding:'80px 32px'}}>
         <div style={{textAlign:'center',marginBottom:52}}>
           <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:14}}>CHOOSE YOUR READING</p>
-          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.2}}>Your Fate, Your Choice</h2>
-          <p style={{fontSize:17,color:V.mu,marginTop:10}}>Every reading generated uniquely from your birth data</p>
+          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.2}}>Your Element Is Just The Beginning.</h2>
+          <p style={{fontSize:17,color:V.mu,marginTop:10,lineHeight:1.7}}>Go deeper. Unlock your full destiny, love life, and career path.<br/>Resolve what's been unclear. Finally know yourself.</p>
         </div>
         <div className="pkg-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18,maxWidth:800,margin:'0 auto'}}>
           {[{id:'basic',ko:'Basic Fortune',en:'FULL SAJU READING',desc:'Your elemental identity, life path & 2026 forecast',orig:null,price:'$27',badge:null,bl:true,feat:false,il:<IllusPentagon/>},{id:'story',ko:'The Life Script',en:'BORN FROM SIGNATURE',desc:'A Korean fairy tale written in the stars with you as the hero. Love, trial, and triumph.',orig:'$97',price:'$47',badge:'BORN FROM ONLY ✦',bl:false,feat:true,il:<IllusPerson/>},{id:'love',ko:'The Relationship Decoder',en:'LOVE READING',desc:'Who loves you, where they find you & 2026 love',orig:null,price:'$37',badge:'MOST POPULAR',bl:false,il:<IllusMoons/>},{id:'career',ko:'The Success Compass',en:'CAREER READING',desc:'Your natural talents, destined career paths, and the exact decade your power peaks.',orig:null,price:'$37',badge:null,il:<IllusMountain/>}].map(pkg=>(<div key={pkg.id} className="pkg-card" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:V.s,border:`1px solid ${V.br}`,padding:'28px',cursor:'pointer',transition:'border-color .25s .2s',position:'relative'}}>{pkg.badge&&<span style={{position:'absolute',top:-1,[pkg.bl?'left':'right']:22,background:pkg.feat?V.go:V.am,color:V.bg,fontSize:10,letterSpacing:2,padding:'4px 12px',fontWeight:700}}>{pkg.badge}</span>}<div style={{height:110,marginBottom:20}}>{pkg.il}</div><div style={{fontSize:22,letterSpacing:1,marginBottom:4}}>{pkg.ko}</div><div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:10}}>{pkg.en}</div><div style={{fontSize:15,color:V.mu,lineHeight:1.6,marginBottom:18}}>{pkg.desc}</div><div style={{display:'flex',alignItems:'baseline',gap:10}}>{pkg.orig&&<span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>{pkg.orig}</span>}<span style={{fontSize:28,color:V.am,fontWeight:600}}>{pkg.price}</span></div>
@@ -376,13 +397,6 @@ export default function SajuFull(){
               <div style={{fontSize:13,color:V.mu,lineHeight:1.6,marginBottom:12}}>✦ Your elemental nature &nbsp;✦ Love &nbsp;✦ Career<br/>✦ The Life Script (BORN FROM exclusive) &nbsp;✦ PDF download</div><div style={{display:'flex',alignItems:'baseline',gap:10,marginBottom:14}}><span style={{fontSize:14,color:'#2A4070',textDecoration:'line-through'}}>$148</span><span style={{fontSize:30,color:V.am,fontWeight:600}}>$97</span></div><button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'}),`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{background:V.am,color:V.bg,border:'none',padding:'12px 24px',fontFamily:FF,fontSize:15,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET BUNDLE →</button></div>
         </div>
       </section>
-      <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
-        <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:16}}>BEGIN YOUR READING</p>
-        <h2 style={{fontSize:44,fontWeight:600,marginBottom:14,lineHeight:1.1}}>Discover Your<br/><span style={{color:V.am}}>Cosmic Signature</span></h2>
-        <p style={{fontSize:17,color:V.mu,lineHeight:1.6,maxWidth:400,margin:'0 auto 40px'}}>Enter your birthday. Your personal elemental analysis — free, instant, and unlike anything you've seen before.</p>
-        <DateInputComp/>
-      </section>
-
       {/* FOOTER */}
       <footer style={{borderTop:`1px solid ${V.br}`,marginTop:60,padding:'28px 20px',textAlign:'center'}}>
         <div style={{fontSize:11,letterSpacing:4,color:'#2A4060',marginBottom:8}}>BORN FROM · COSMIC PERSONAL ANALYSIS</div>
@@ -430,10 +444,12 @@ export default function SajuFull(){
           {/* COMPATIBILITY */}
           <div className="ri4" style={{marginBottom:40}}>
             {!showCompat
-              ?<button onClick={()=>setShowCompat(true)} style={{width:'100%',background:`${V.am}18`,border:`2px solid ${V.am}`,color:V.tx,padding:'20px',fontFamily:FF,fontSize:18,cursor:'pointer',lineHeight:1.6,transition:'all .2s'}} onMouseOver={e=>{e.currentTarget.style.background=V.am;e.currentTarget.style.color=V.bg;}} onMouseOut={e=>{e.currentTarget.style.background=`${V.am}18`;e.currentTarget.style.color=V.tx;}}>
-                ♡ Is someone special compatible with you?<br/>
-                <span style={{fontSize:13,letterSpacing:3,color:V.am}}>ENTER THEIR BIRTHDAY →</span>
-              </button>
+              ?<button onClick={()=>setShowCompat(p=>!p)} style={{width:'100%',background:'#081420',border:`2px solid ${V.am}`,padding:'20px 24px',cursor:'pointer',textAlign:'center',marginBottom:0}}>
+              <p style={{fontSize:11,letterSpacing:5,color:V.am,marginBottom:8,fontFamily:FF}}>COMPATIBILITY · 궁합</p>
+              <p style={{fontSize:20,color:V.tx,fontWeight:400,marginBottom:6,fontFamily:FF}}>♡ Is someone special compatible with you?</p>
+              <p style={{fontSize:13,color:V.mu,marginBottom:12,fontFamily:FF}}>Enter their birthday — find out if your elements align.</p>
+              <div style={{display:'inline-block',background:V.am,color:V.bg,padding:'10px 28px',fontSize:13,letterSpacing:3,fontWeight:700,fontFamily:FF}}>CHECK COMPATIBILITY →</div>
+            </button>
               :<div style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px',textAlign:'left'}}>
                 <p style={{fontSize:12,letterSpacing:5,color:V.am,marginBottom:16,textAlign:'center'}}>COMPATIBILITY · 궁합</p>
                 {!compatResult
@@ -488,7 +504,9 @@ export default function SajuFull(){
 
           {/* INLINE PACKAGE CARDS on reveal page */}
           <div className="ri5" style={{marginBottom:40}}>
-            <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:20,textAlign:'center'}}>CHOOSE YOUR READING</p>
+            <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:8,textAlign:'center'}}>CHOOSE YOUR READING</p>
+            <p style={{fontSize:16,color:V.tx,textAlign:'center',marginBottom:4,fontWeight:300}}>This is just the beginning.</p>
+            <p style={{fontSize:13,color:V.mu,textAlign:'center',marginBottom:20,lineHeight:1.6}}>Go deeper. Unlock your full destiny, love, and career reading.<br/>Resolve what's been unclear. Finally know yourself.</p>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10,gridAutoRows:'1fr'}}>
               {[
                 {id:'basic',ko:'Basic Fortune',price:'$27',orig:null,desc:'Your elemental identity, life path & 2026 forecast',icon:'命',hot:false},
@@ -534,7 +552,7 @@ export default function SajuFull(){
 
           <div className="ri5">
             <p style={{fontSize:16,color:V.mu,marginBottom:18,lineHeight:1.6}}>This is your element. Your full destiny — love, career, your story — goes so much deeper.</p>
-            <button className="hvr-fill" onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'),`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'18px',fontFamily:FF,fontSize:20,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:10}}>UNLOCK MY FULL READING ✦</button>
+            <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>{},`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,border:'none',color:V.bg,padding:'18px',fontFamily:FF,fontSize:16,letterSpacing:2,cursor:'pointer',fontWeight:700,boxShadow:`0 0 24px ${V.am}66`,marginBottom:10}}>🔓 GET ALL 4 READINGS · $97 — COMPLETE BUNDLE</button>
             
           </div>
         </div>
