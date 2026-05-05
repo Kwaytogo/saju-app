@@ -32,7 +32,7 @@ function calcSaju(year, month, day) {
 }
 
 const PROMPTS = {
-  basic: (s, gender='female') => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
+  basic: (s) => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -57,7 +57,7 @@ LIFE PATH
 
 End with: "This is your cosmic signature — ${s.day.stem}${s.day.branch}, born from ${ELEMENTS[s.day.stem]}."`,
 
-  love: (s, gender='female') => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
+  love: (s) => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -84,7 +84,7 @@ HOW TO CATCH LOVE
 2026 LOVE FORECAST
 [Fire Horse 丙午 meets this specific three-pillar combination. Who arrives, what shifts, what must they pay attention to. End beautifully.]`,
 
-  career: (s, gender='female') => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
+  career: (s) => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -111,7 +111,7 @@ POWER DECADE
 2026 CAREER FORECAST
 [Fire Horse 丙午 meets this chart. What professional opportunity or shift arrives? What must they act on now? End with one powerful sentence]`,
 
-  story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
+  story: (s) => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
 
 Born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
 Their year pillar ${s.year.stem}${s.year.branch} is the world they came from.
@@ -278,9 +278,9 @@ function buildReadingEmail(readings, saju, birthDate, productId) {
 }
 
 
-async function generateReading(productId, saju, gender='female') {
+async function generateReading(productId, saju) {
   const prompt = PROMPTS[productId] || PROMPTS.basic;
-  const promptText = prompt(saju, gender);
+  const promptText = prompt(saju);
   const msg = await anthropic.messages.create({
     model: 'claude-opus-4-6',
     max_tokens: productId === 'story' ? 4000 : productId === 'basic' ? 2500 : 3200,
@@ -332,14 +332,14 @@ export async function POST(req) {
     let readings = [];
     if (productId === 'bundle') {
       const [basic, love, career, story] = await Promise.all([
-        generateReading('basic', saju, gender),
-        generateReading('love', saju, gender),
-        generateReading('career', saju, gender),
-        generateReading('story', saju, gender),
+        generateReading('basic', saju),
+        generateReading('love', saju),
+        generateReading('career', saju),
+        generateReading('story', saju),
       ]);
       readings = [{type:'basic',text:basic},{type:'love',text:love},{type:'career',text:career},{type:'story',text:story}];
     } else {
-      readings = [{type: productId, text: await generateReading(productId, saju, gender)}];
+      readings = [{type: productId, text: await generateReading(productId, saju)}];
     }
 
     const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
@@ -349,8 +349,9 @@ export async function POST(req) {
 
     await resend.emails.send({
       from: 'Born From <hello@bornfrom.co>',
+      replyTo: 'hello@bornfrom.co',
       to: email,
-      subject: `✦ ${TITLES[productId]} — Born From`,
+      subject: `${TITLES[productId]} — Born From`,
       html: emailHTML,
     });
     return NextResponse.json({ success: true });
@@ -378,14 +379,14 @@ export async function GET(req) {
   try {
     const [year, month, day] = testBirth.split('-').map(Number);
     const saju = calcSaju(year, month, day);
-    const text = await generateReading(testProduct, saju, testGender);
+    const text = await generateReading(testProduct, saju);
     const readings = [{ type: testProduct, text }];
     const emailHTML = buildReadingEmail(readings, saju, testBirth, testProduct);
     
     await resend.emails.send({
       from: 'Born From <hello@bornfrom.co>',
       to: testEmail,
-      subject: `✦ [TEST] ${TITLES[testProduct]} — Born From`,
+      subject: `[TEST] ${TITLES[testProduct]} — Born From`,
       html: emailHTML,
     });
     
