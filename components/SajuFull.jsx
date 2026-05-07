@@ -373,6 +373,50 @@ export default function SajuFull(){
       <div style={{display:'flex',borderBottom:`1px solid ${V.br}`,flexWrap:'wrap'}}>
         {[['木','WOOD','Growth · Vision','#4CAF50'],['火','FIRE','Passion · Power','#E84012'],['土','EARTH','Stability · Trust','#C8A020'],['金','METAL','Precision · Will','#CCCCCC'],['水','WATER','Flow · Wisdom','#4090E0']].map(([ch,nm,tr,cl])=>(<div key={nm} className="el-item" style={{flex:'1 1 60px',textAlign:'center',padding:'24px 8px',borderRight:`1px solid ${V.br}`,transition:'background .25s'}}><div style={{fontSize:30,color:cl,marginBottom:6}}>{ch}</div><div style={{fontSize:11,letterSpacing:4,color:V.mu}}>{nm}</div><div style={{fontSize:13,color:V.mu,marginTop:4}}>{tr}</div></div>))}
       </div>
+
+      {/* SOCIAL PROOF + LOGIC */}
+      <section style={{padding:'48px 24px',background:'#050B16'}}>
+        
+        {/* LOGIC HEADER */}
+        <div style={{textAlign:'center',marginBottom:36}}>
+          <p style={{fontSize:11,letterSpacing:5,color:V.am,marginBottom:10,fontWeight:700}}>HOW IT WORKS</p>
+          <h2 style={{fontSize:26,fontWeight:700,color:'#FFFFFF',marginBottom:10,lineHeight:1.3}}>800 Years of Pattern Recognition.<br/>Now Running as an Algorithm.</h2>
+          <p style={{fontSize:15,color:'#AAB8C2',lineHeight:1.75,maxWidth:520,margin:'0 auto'}}>Saju isn't mysticism. It's a statistical model — one that has mapped human behavioral patterns across millions of birth charts over centuries. Your birth date is the input. Your elemental frequency is the output.</p>
+        </div>
+
+        {/* LOGIC PILLS */}
+        <div style={{display:'flex',flexWrap:'wrap',gap:10,justifyContent:'center',marginBottom:44}}>
+          {[
+            '🧬 Elemental Frequency Analysis',
+            '📊 3-Pillar Pattern Recognition',
+            '🔬 Ancestral Data · 800+ Years',
+            '📩 Delivered as Personal Report',
+          ].map((pill,i)=>(
+            <div key={i} style={{background:'#0A1628',border:`1px solid ${V.br}`,padding:'8px 16px',fontSize:12,color:'#AAB8C2',letterSpacing:1,borderRadius:2}}>{pill}</div>
+          ))}
+        </div>
+
+        {/* REVIEWS */}
+        <p style={{fontSize:11,letterSpacing:5,color:V.am,textAlign:'center',marginBottom:24,fontWeight:700}}>WHAT PEOPLE ARE SAYING</p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:14,maxWidth:860,margin:'0 auto'}}>
+          {[
+            {q:'"I put my phone down after reading the HOW TO CATCH LOVE section. It named the exact pattern I've been running for years."',name:'Riley M.',loc:'Toronto, CA'},
+            {q:'"I've done MBTI, Human Design, Western astrology. None of them said the thing. This said the thing."',name:'Jess K.',loc:'London, UK'},
+            {q:'"The 2026 forecast described someone who entered my life two weeks later. I'm not exaggerating."',name:'Maya L.',loc:'Sydney, AU'},
+            {q:'"Sent it to my therapist. She asked me to send her the link."',name:'Hannah V.',loc:'New York, US'},
+          ].map((r,i)=>(
+            <div key={i} style={{background:'#0A1628',border:`1px solid ${V.br}`,padding:'20px',position:'relative'}}>
+              <div style={{fontSize:24,color:V.am,lineHeight:1,marginBottom:10,opacity:.6}}>"</div>
+              <p style={{fontSize:14,color:'#DDECF4',lineHeight:1.75,marginBottom:14,fontStyle:'italic'}}>{r.q}</p>
+              <div style={{fontSize:12,color:V.am,letterSpacing:1,fontWeight:700}}>{r.name}</div>
+              <div style={{fontSize:11,color:'#4A6080',letterSpacing:1}}>{r.loc}</div>
+              <div style={{position:'absolute',top:16,right:16,display:'flex',gap:2}}>
+                {'★★★★★'.split('').map((s,j)=><span key={j} style={{color:V.am,fontSize:12}}>{s}</span>)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
       <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
         <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:16}}>BEGIN YOUR READING</p>
         <h2 style={{fontSize:44,fontWeight:600,marginBottom:14,lineHeight:1.1}}>Discover Your<br/><span style={{color:V.am}}>Cosmic Signature</span></h2>
