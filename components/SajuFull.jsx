@@ -400,9 +400,9 @@ export default function SajuFull(){
         <p style={{fontSize:11,letterSpacing:5,color:V.am,textAlign:'center',marginBottom:24,fontWeight:700}}>WHAT PEOPLE ARE SAYING</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:14,maxWidth:860,margin:'0 auto'}}>
           {[
-            {q:'"I put my phone down after reading the HOW TO CATCH LOVE section. It named the exact pattern I've been running for years."',name:'Riley M.',loc:'Toronto, CA'},
-            {q:'"I've done MBTI, Human Design, Western astrology. None of them said the thing. This said the thing."',name:'Jess K.',loc:'London, UK'},
-            {q:'"The 2026 forecast described someone who entered my life two weeks later. I'm not exaggerating."',name:'Maya L.',loc:'Sydney, AU'},
+            {q:'"I put my phone down after reading the HOW TO CATCH LOVE section. It named the exact pattern I\'ve been running for years."',name:'Riley M.',loc:'Toronto, CA'},
+            {q:'"I\'ve done MBTI, Human Design, Western astrology. None of them said the thing. This said the thing."',name:'Jess K.',loc:'London, UK'},
+            {q:'"The 2026 forecast described someone who entered my life two weeks later. I\'m not exaggerating."',name:'Maya L.',loc:'Sydney, AU'},
             {q:'"Sent it to my therapist. She asked me to send her the link."',name:'Hannah V.',loc:'New York, US'},
           ].map((r,i)=>(
             <div key={i} style={{background:'#0A1628',border:`1px solid ${V.br}`,padding:'20px',position:'relative'}}>
