@@ -607,6 +607,7 @@ export default function SajuFull(){
                 {id:'basic',ko:'Basic Fortune',price:'$19',orig:null,desc:'Your elemental blueprint — personality, life path & 2026 forecast. Written only for you.',icon:'命',hot:false},
                 {id:'love',ko:'The Relationship Decoder',price:'$27',orig:null,desc:'How you love, who you attract, where love finds you & your 2026 forecast.',icon:'♡',hot:true},
                 {id:'career',ko:'The Success Compass',price:'$27',orig:null,desc:'Your natural gifts, destined career path & the decade your power peaks.',icon:'山',hot:false},
+                {id:'story',ko:'The Life Script',price:'$47',orig:null,desc:'A Korean fairy tale written with you as the hero. Your birth, trial, and arrival.',icon:'✦',hot:false,sig:true},
               ].map(pkg=>(
                 <div key={pkg.id}
                   style={{background:V.s,border:`1px solid ${V.br}`,padding:'16px 12px',textAlign:'left',position:'relative',transition:'border-color .2s',display:'flex',flexDirection:'column',justifyContent:'space-between'}}
@@ -640,7 +641,7 @@ export default function SajuFull(){
                   <span style={{fontSize:22,color:V.am,fontWeight:700}}>$97</span>
                 </div>
               </div>
-              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'),`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,color:'#FFFFFF',border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 3 READINGS →</button>
+              <button onClick={()=>polarCheckout(PRODUCTS.bundle,()=>setView('saju'),`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,color:'#FFFFFF',border:'none',padding:'11px',fontFamily:FF,fontSize:14,cursor:'pointer',letterSpacing:2,fontWeight:700}}>GET ALL 4 READINGS →</button>
             </div>
           </div>
 
