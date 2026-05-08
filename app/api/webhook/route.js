@@ -10,7 +10,7 @@ const STEMS = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
 const BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const ELEMENTS = {'甲':'Wood','乙':'Wood','丙':'Fire','丁':'Fire','戊':'Earth','己':'Earth','庚':'Metal','辛':'Metal','壬':'Water','癸':'Water'};
 const ELEM_SYM = {Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
-const ELEM_COLOR = {Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#AAAAAA',Water:'#4090E0'};
+const ELEM_COLOR = {Wood:'#4CAF50',Fire:'#E84012',Earth:'#C8A020',Metal:'#AAAAAA',Water:'#B38B8B'};
 const ELEM_KO = {Wood:'목(木)',Fire:'화(火)',Earth:'토(土)',Metal:'금(金)',Water:'수(水)'};
 
 function calcSaju(year, month, day) {
@@ -157,14 +157,14 @@ function buildPDFHTML(productId, readings, saju, birthDate) {
       if (trimmed === trimmed.toUpperCase() && trimmed.length < 40 && !trimmed.includes('.')) {
         return `<div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:6px;color:${color};margin:36px 0 16px;opacity:.9">${trimmed}</div>`;
       }
-      return `<p style="font-size:17px;color:#C8D8E8;line-height:1.9;margin-bottom:20px;font-style:italic">${trimmed}</p>`;
+      return `<p style="font-size:17px;color:#444444;line-height:1.9;margin-bottom:20px;font-style:italic">${trimmed}</p>`;
     }).join('');
 
     return `
-    <div style="padding:80px 80px 60px;min-height:100vh;background:#060C18;position:relative;page-break-after:always">
+    <div style="padding:80px 80px 60px;min-height:100vh;background:#F9F7F2;position:relative;page-break-after:always">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,${color},transparent)"></div>
-      <div style="font-size:10px;letter-spacing:5px;color:#E88C12;opacity:.6;margin-bottom:16px">BORN FROM · COSMIC PERSONAL ANALYSIS</div>
-      <h2 style="font-family:'Cinzel',serif;font-size:38px;font-weight:300;color:#EDE5D3;margin-bottom:20px;line-height:1.2">${sectionTitle}</h2>
+      <div style="font-size:10px;letter-spacing:5px;color:#B38B8B;opacity:.6;margin-bottom:16px">BORN FROM · COSMIC PERSONAL ANALYSIS</div>
+      <h2 style="font-family:'Cinzel',serif;font-size:38px;font-weight:300;color:#1A1A1A;margin-bottom:20px;line-height:1.2">${sectionTitle}</h2>
       <div style="width:60px;height:1px;background:${color};opacity:.4;margin-bottom:40px"></div>
       <div style="max-width:680px">${paragraphs}</div>
     </div>`;
@@ -177,34 +177,34 @@ function buildPDFHTML(productId, readings, saju, birthDate) {
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"/>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#060C18; color:#EDE5D3; font-family:'Cormorant Garamond',Georgia,serif; }
+body { background:#F9F7F2; color:#1A1A1A; font-family:'Cormorant Garamond',Georgia,serif; }
 </style>
 </head>
 <body>
 
 <!-- COVER -->
-<div style="width:100%;min-height:100vh;background:#060C18;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 60px;position:relative;page-break-after:always">
+<div style="width:100%;min-height:100vh;background:#F9F7F2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 60px;position:relative;page-break-after:always">
   <div style="position:absolute;inset:30px;border:1px solid ${color}33;pointer-events:none"></div>
   <div style="position:absolute;inset:42px;border:1px solid ${color}18;pointer-events:none"></div>
-  <div style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:8px;color:#E88C12;opacity:.7;margin-bottom:60px">BORN FROM</div>
+  <div style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:8px;color:#B38B8B;opacity:.7;margin-bottom:60px">BORN FROM</div>
   <div style="font-size:110px;color:${color};line-height:1;margin-bottom:16px;text-shadow:0 0 80px ${color}44">${sym}</div>
   <div style="font-size:11px;letter-spacing:7px;color:${color};margin-bottom:48px">${elem.toUpperCase()} · ${ELEM_KO[elem]}</div>
   <div style="width:80px;height:1px;background:#E88C12;opacity:.4;margin:0 auto 48px"></div>
   <div style="font-size:10px;letter-spacing:6px;color:#4A6080;margin-bottom:16px">YOUR PERSONAL ANALYSIS</div>
-  <div style="font-family:'Cinzel',serif;font-size:42px;font-weight:300;color:#EDE5D3;line-height:1.2;margin-bottom:40px">${TITLES[productId]}</div>
-  <div style="font-size:14px;color:#8A9BAB;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
+  <div style="font-family:'Cinzel',serif;font-size:42px;font-weight:300;color:#1A1A1A;line-height:1.2;margin-bottom:40px">${TITLES[productId]}</div>
+  <div style="font-size:14px;color:#666666;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
   <div style="font-size:20px;color:${color};letter-spacing:4px;margin-bottom:60px">${saju.year.stem}${saju.year.branch} · ${saju.month.stem}${saju.month.branch} · ${saju.day.stem}${saju.day.branch}</div>
-  <div style="position:absolute;bottom:48px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
+  <div style="position:absolute;bottom:48px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:5px;color:#999999">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
 </div>
 
 ${readingSections}
 
 <!-- FINAL -->
-<div style="min-height:50vh;background:#060C18;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 60px">
+<div style="min-height:50vh;background:#F9F7F2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 60px">
   <div style="font-size:60px;color:${color};margin-bottom:24px">${sym}</div>
-  <div style="font-size:18px;color:#8A9BAB;font-style:italic;line-height:1.8;max-width:500px;margin-bottom:32px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
-          <div style="font-size:10px;color:#2A4060;letter-spacing:3px;margin-top:20px">© 2026 Born From · All rights reserved · For personal use only<br/>bornfrom.co · @bornfrom.official</div>
-  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:#2A4060">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
+  <div style="font-size:18px;color:#666666;font-style:italic;line-height:1.8;max-width:500px;margin-bottom:32px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
+          <div style="font-size:10px;color:#999999;letter-spacing:3px;margin-top:20px">© 2026 Born From · All rights reserved · For personal use only<br/>bornfrom.co · @bornfrom.official</div>
+  <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:#999999">BORNFROM.CO · @bornfrom.official · © 2026 Born From. All rights reserved. · For personal use only.</div>
 </div>
 
 </body>
@@ -224,16 +224,16 @@ function buildReadingEmail(readings, saju, birthDate, productId) {
       if (trimmed === trimmed.toUpperCase() && trimmed.length < 40 && !trimmed.includes('.')) {
         return `<div style="font-family:Georgia,serif;font-size:11px;letter-spacing:6px;color:${color};margin:36px 0 14px;opacity:.9">${trimmed}</div>`;
       }
-      return `<p style="font-size:17px;color:#C8D8E8;line-height:1.95;margin-bottom:20px;font-style:italic;font-family:Georgia,serif">${trimmed}</p>`;
+      return `<p style="font-size:17px;color:#444444;line-height:1.95;margin-bottom:20px;font-style:italic;font-family:Georgia,serif">${trimmed}</p>`;
     }).join('');
 
     return `
-    <div style="padding:48px 48px 36px;background:#060C18;margin-bottom:2px">
+    <div style="padding:48px 48px 36px;background:#F9F7F2;margin-bottom:2px">
       <div style="position:relative;padding-top:3px;margin-bottom:0">
         <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-bottom:24px"></div>
       </div>
-      <div style="font-size:10px;letter-spacing:5px;color:#E88C12;opacity:.6;margin-bottom:14px">BORN FROM · COSMIC PERSONAL ANALYSIS</div>
-      <h2 style="font-family:Georgia,serif;font-size:32px;font-weight:400;color:#EDE5D3;margin:0 0 10px;line-height:1.2">${sectionTitle}</h2>
+      <div style="font-size:10px;letter-spacing:5px;color:#B38B8B;opacity:.6;margin-bottom:14px">BORN FROM · COSMIC PERSONAL ANALYSIS</div>
+      <h2 style="font-family:Georgia,serif;font-size:32px;font-weight:400;color:#1A1A1A;margin:0 0 10px;line-height:1.2">${sectionTitle}</h2>
       <p style="font-size:12px;color:${color};letter-spacing:4px;margin:0 0 28px">${saju.day.stem}${saju.day.branch} · ${elem} Element</p>
       <div style="width:48px;height:1px;background:${color};opacity:.4;margin-bottom:36px"></div>
       <div style="max-width:620px">${paragraphs}</div>
@@ -243,19 +243,19 @@ function buildReadingEmail(readings, saju, birthDate, productId) {
   return `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
-<body style="margin:0;padding:0;background:#060C18;font-family:Georgia,serif">
+<body style="margin:0;padding:0;background:#F9F7F2;font-family:Georgia,serif">
 <div style="max-width:680px;margin:0 auto">
 
   <!-- COVER SECTION -->
-  <div style="background:#060C18;padding:60px 48px;text-align:center;border-bottom:1px solid #1B2E48;position:relative">
+  <div style="background:#F9F7F2;padding:60px 48px;text-align:center;border-bottom:1px solid #E0DCD0;position:relative">
     <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-bottom:40px"></div>
-    <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:8px;color:#E88C12;opacity:.7;margin-bottom:40px">BORN FROM</div>
+    <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:8px;color:#B38B8B;opacity:.7;margin-bottom:40px">BORN FROM</div>
     <div style="font-size:100px;color:${color};line-height:1;margin-bottom:16px;text-shadow:0 0 60px ${color}44">${sym}</div>
     <div style="font-size:11px;letter-spacing:6px;color:${color};margin-bottom:40px">${elem.toUpperCase()} · ${ELEM_KO[elem]}</div>
     <div style="width:60px;height:1px;background:#E88C12;opacity:.3;margin:0 auto 36px"></div>
     <div style="font-size:10px;letter-spacing:6px;color:#4A6080;margin-bottom:16px">YOUR PERSONAL ANALYSIS</div>
-    <h1 style="font-family:Georgia,serif;font-size:34px;font-weight:400;color:#EDE5D3;line-height:1.2;margin:0 0 32px">${title}</h1>
-    <div style="font-size:14px;color:#8A9BAB;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
+    <h1 style="font-family:Georgia,serif;font-size:34px;font-weight:400;color:#1A1A1A;line-height:1.2;margin:0 0 32px">${title}</h1>
+    <div style="font-size:14px;color:#666666;font-style:italic;margin-bottom:8px">Born: ${birthDate}</div>
     <div style="font-size:18px;color:${color};letter-spacing:4px">${saju.year.stem}${saju.year.branch} · ${saju.month.stem}${saju.month.branch} · ${saju.day.stem}${saju.day.branch}</div>
     <div style="height:3px;background:linear-gradient(to right,transparent,${color},transparent);margin-top:40px"></div>
   </div>
@@ -264,12 +264,12 @@ function buildReadingEmail(readings, saju, birthDate, productId) {
   ${readingSections}
 
   <!-- FINAL SECTION -->
-  <div style="background:#060C18;padding:60px 48px;text-align:center;border-top:1px solid #1B2E48">
+  <div style="background:#F9F7F2;padding:60px 48px;text-align:center;border-top:1px solid #E0DCD0">
     <div style="font-size:60px;color:${color};margin-bottom:24px;opacity:.8">${sym}</div>
-    <div style="font-size:18px;color:#8A9BAB;font-style:italic;line-height:1.9;max-width:400px;margin:0 auto 24px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
+    <div style="font-size:18px;color:#666666;font-style:italic;line-height:1.9;max-width:400px;margin:0 auto 24px">You were born from ${elem}.<br/>This is your cosmic signature.<br/>Carry it well.</div>
     <div style="width:40px;height:1px;background:#E88C12;opacity:.3;margin:0 auto 24px"></div>
-    <div style="font-size:9px;letter-spacing:5px;color:#2A4060;margin-bottom:6px">BORNFROM.CO · @bornfrom.official</div>
-    <div style="font-size:8px;letter-spacing:2px;color:#1B2E48">© 2026 Born From · All rights reserved · For personal use only</div>
+    <div style="font-size:9px;letter-spacing:5px;color:#999999;margin-bottom:6px">BORNFROM.CO · @bornfrom.official</div>
+    <div style="font-size:8px;letter-spacing:2px;color:#CCCCCC">© 2026 Born From · All rights reserved · For personal use only</div>
   </div>
 
 </div>
