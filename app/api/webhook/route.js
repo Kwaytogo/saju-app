@@ -278,15 +278,88 @@ function buildReadingEmail(readings, saju, birthDate, productId) {
 }
 
 
-async function generateReading(productId, saju) {
+async function generateReading(productId, saju, gender='female') {
   const prompt = PROMPTS[productId] || PROMPTS.basic;
-  const promptText = prompt(saju);
+  const promptText = prompt(saju, gender);
   const msg = await anthropic.messages.create({
     model: 'claude-opus-4-6',
     max_tokens: productId === 'story' ? 4000 : productId === 'basic' ? 2500 : 3200,
     messages: [{ role: 'user', content: promptText }],
   });
   return msg.content[0].text;
+}
+
+export async function POST(req) {
+  try {
+    const body = await req.text();
+
+    const email = new URLSearchParams(body).get('email');
+    const productPermalink = new URLSearchParams(body).get('product_permalink') || '';
+
+    let birthDate = '';
+    // Gumroad sends custom fields URL-encoded
+    // "Birth Date (YYYY-MM-DD)" becomes "Birth+Date+%28YYYY-MM-DD%29" or similar
+    console.log('Gumroad ping body:', body.substring(0, 500));
+    const decodedBody = decodeURIComponent(body.replace(/\+/g, ' '));
+    console.log('Decoded body:', decodedBody.substring(0, 500));
+    
+    // Try multiple patterns to find birth date
+    const bdPatterns = [
+      /Birth Date \(YYYY-MM-DD\)[=:]([^&\n]+)/i,
+      /birth_date[=:]([^&\n]+)/i,
+      /Birthday[=:]([^&\n]+)/i,
+      /birth.date[=:]([^&\n]+)/i,
+    ];
+    for (const pat of bdPatterns) {
+      const m = decodedBody.match(pat) || body.match(pat);
+      if (m) { birthDate = m[1].trim().replace(/[^0-9-]/g, ''); break; }
+    }
+
+    const gender = 'female'; // gender removed from checkout
+
+    if (!email || !birthDate) return NextResponse.json({ error: 'Missing data' }, { status: 400 });
+
+    const [year, month, day] = birthDate.split(/[-\/]/).map(Number);
+    if (!year || !month || !day) return NextResponse.json({ error: 'Invalid date' }, { status: 400 });
+
+    const saju = calcSaju(year, month, day);
+
+    let productId = 'basic';
+    for (const [key, val] of Object.entries(PRODUCT_MAP)) {
+      if (productPermalink.includes(key) || body.includes(key)) { productId = val; break; }
+    }
+
+    let readings = [];
+    if (productId === 'bundle') {
+      const [basic, love, career, story] = await Promise.all([
+        generateReading('basic', saju),
+        generateReading('love', saju),
+        generateReading('career', saju),
+        generateReading('story', saju),
+      ]);
+      readings = [{type:'basic',text:basic},{type:'love',text:love},{type:'career',text:career},{type:'story',text:story}];
+    } else {
+      readings = [{type: productId, text: await generateReading(productId, saju)}];
+    }
+
+    const pdfHTML = buildPDFHTML(productId, readings, saju, birthDate);
+    // Email HTML built from readings
+
+    const emailHTML = buildReadingEmail(readings, saju, birthDate, productId);
+
+    await resend.emails.send({
+      from: 'Born From <hello@bornfrom.co>',
+      replyTo: 'hello@bornfrom.co',
+      to: email,
+      subject: `${TITLES[productId]} — Born From`,
+      html: emailHTML,
+    });
+    return NextResponse.json({ success: true });
+
+  } catch (err) {
+    console.error('Webhook error:', err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }
 
 export async function POST(req) {
