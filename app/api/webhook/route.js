@@ -32,7 +32,7 @@ function calcSaju(year, month, day) {
 }
 
 const PROMPTS = {
-  basic: (s) => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
+  basic: (s, gender='female') => `You are Born From, a master of Korean Four Pillars astrology. Write in poetic, precise English.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -57,7 +57,7 @@ LIFE PATH
 
 End with: "This is your cosmic signature — ${s.day.stem}${s.day.branch}, born from ${ELEMENTS[s.day.stem]}."`,
 
-  love: (s) => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
+  love: (s, gender='female') => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -84,7 +84,7 @@ HOW TO CATCH LOVE
 2026 LOVE FORECAST
 [Fire Horse 丙午 meets this specific three-pillar combination. Who arrives, what shifts, what must they pay attention to. End beautifully.]`,
 
-  career: (s) => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
+  career: (s, gender='female') => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
@@ -111,7 +111,7 @@ POWER DECADE
 2026 CAREER FORECAST
 [Fire Horse 丙午 meets this chart. What professional opportunity or shift arrives? What must they act on now? End with one powerful sentence]`,
 
-  story: (s) => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
+  story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
 
 Born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
 Their year pillar ${s.year.stem}${s.year.branch} is the world they came from.
