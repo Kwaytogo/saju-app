@@ -1,5 +1,3 @@
-import './globals.css'
-
 export const metadata = {
   title: 'Born From — Korean Saju & BaZi Reading in English',
   description: 'Discover your elemental identity with Saju (사주) — Korea\'s 3,000-year-old Four Pillars system. Free element reading, compatibility check, and personalized love, career & life reports delivered to your email.',
