@@ -38,24 +38,24 @@ This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch}: The world they were born into, their public face, ancestral energy
 - Month Pillar ${s.month.stem}${s.month.branch}: Their drive, work ethic, how they pursue goals, emotional patterns
-- Day Pillar ${s.day.stem}${s.day.branch}: Their true self, core identity, how they love — the most personal pillar
+- Day Pillar ${s.day.stem}${s.day.branch}: Their true self, core identity, how they love, the most personal pillar
 - Day Master Element: ${ELEMENTS[s.day.stem]} (their dominant energy)
 
-Analyze the INTERPLAY between all three pillars — tensions, harmonies, contradictions. This person is not just their day master. Write THE CORE ENERGY AUDIT with 4 sections, 6-7 sentences each. Pure flowing prose.
+Analyze the INTERPLAY between all three pillars, tensions, harmonies, contradictions. This person is not just their day master. Write THE CORE ENERGY AUDIT with 4 sections, 6-7 sentences each. Pure flowing prose.
 
 WHO YOU ARE
-[The full picture from all three pillars — who they are publicly vs privately, what tension they carry between their year pillar inheritance and their day master identity]
+[The full picture from all three pillars, who they are publicly vs privately, what tension they carry between their year pillar inheritance and their day master identity]
 
 ELEMENTAL NATURE
-[Their day master ${ELEMENTS[s.day.stem]} in depth — but show how their month pillar ${ELEMENTS[s.month.stem]} modifies and complicates it. The interesting friction between the two.]
+[Their day master ${ELEMENTS[s.day.stem]} in depth, but show how their month pillar ${ELEMENTS[s.month.stem]} modifies and complicates it. The interesting friction between the two.]
 
 LIFE PATH
 [Weave all three pillars into a destiny narrative. Year as origin, month as engine, day as destination. What pattern runs through the whole chart?]
 
 2026 FORECAST
-[2026 is 丙午 Fire Horse — how does this specific three-pillar chart interact with this year's energy? Be precise and personal.]
+[2026 is 丙午 Fire Horse, how does this specific three-pillar chart interact with this year's energy? Be precise and personal.]
 
-End with: "This is your cosmic signature — ${s.day.stem}${s.day.branch}, born from ${ELEMENTS[s.day.stem]}."`,
+End with: "This is your cosmic signature, ${s.day.stem}${s.day.branch}, born from ${ELEMENTS[s.day.stem]}."`,
 
   love: (s, gender='female') => `You are Born From, writing THE RELATIONSHIP DECODER. English, poetic, intimate, precise.
 
@@ -63,23 +63,23 @@ This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch} (${ELEMENTS[s.year.stem]}): How others first perceive them in love, the romantic pattern they inherited
 - Month Pillar ${s.month.stem}${s.month.branch} (${ELEMENTS[s.month.stem]}): How they pursue and process love, their emotional operating system
-- Day Pillar ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]}): Their true romantic self — what they give and need in intimacy
+- Day Pillar ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]}): Their true romantic self, what they give and need in intimacy
 
-Use the tension and harmony BETWEEN these pillars to create a deeply personal reading. Not generic element descriptions — find the specific story these three pillars tell together.
+Use the tension and harmony BETWEEN these pillars to create a deeply personal reading. Not generic element descriptions, find the specific story these three pillars tell together.
 
 Write 5 sections, 6-7 sentences each. Intimate, luminous, specific.
 
 ROMANTIC NATURE
-[How the interplay of their year and day master creates their love style — what contradiction they carry, what gift they offer that no one else can]
+[How the interplay of their year and day master creates their love style, what contradiction they carry, what gift they offer that no one else can]
 
 IDEAL PARTNER
-[Based on all three pillars — what element, what energy, what specific feeling they're looking for. Make the reader feel they already know this person]
+[Based on all three pillars, what element, what energy, what specific feeling they're looking for. Make the reader feel they already know this person]
 
 WHERE LOVE FINDS YOU
-[Specific to this chart — not generic. What circumstances, conversations, moments open THIS person's heart. What are the concrete scenes?]
+[Specific to this chart, not generic. What circumstances, conversations, moments open THIS person's heart. What are the concrete scenes?]
 
 HOW TO CATCH LOVE
-[The month pillar reveals the pattern that blocks love. Name it precisely. Give the specific shift this person must make — bold, practical, elemental]
+[The month pillar reveals the pattern that blocks love. Name it precisely. Give the specific shift this person must make, bold, practical, elemental]
 
 2026 LOVE FORECAST
 [Fire Horse 丙午 meets this specific three-pillar combination. Who arrives, what shifts, what must they pay attention to. End beautifully.]`,
@@ -90,17 +90,17 @@ This person: ${gender === 'male' ? 'Male' : 'Female'}
 Complete birth chart:
 - Year Pillar ${s.year.stem}${s.year.branch} (${ELEMENTS[s.year.stem]}): Their inherited work ethic, the career expectations they were born into
 - Month Pillar ${s.month.stem}${s.month.branch} (${ELEMENTS[s.month.stem]}): Their ambition engine, how they perform and produce, their professional rhythm
-- Day Pillar ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]}): Their authentic work self — what they build when no one is watching
+- Day Pillar ${s.day.stem}${s.day.branch} (${ELEMENTS[s.day.stem]}): Their authentic work self, what they build when no one is watching
 
-Find the friction and harmony across these three pillars. The month pillar is especially important for career — it governs professional drive and output.
+Find the friction and harmony across these three pillars. The month pillar is especially important for career, it governs professional drive and output.
 
 Write 5 sections, 6-7 sentences each. Empowering, specific, forward-looking.
 
 NATURAL GIFTS
-[What talent emerges from the combination of their month pillar's engine and day master's depth — not just what they're good at, but what they do that nobody else does]
+[What talent emerges from the combination of their month pillar's engine and day master's depth, not just what they're good at, but what they do that nobody else does]
 
 DESTINED PATHS
-[Based on all three pillars together — specific industries, roles, environments. Not a list. A vivid portrait of where they thrive]
+[Based on all three pillars together, specific industries, roles, environments. Not a list. A vivid portrait of where they thrive]
 
 THE SHADOW AT WORK
 [The month pillar reveals the professional pattern that holds them back. Name it exactly. The shadow of ${ELEMENTS[s.month.stem]} in professional settings]
@@ -111,21 +111,21 @@ POWER DECADE
 2026 CAREER FORECAST
 [Fire Horse 丙午 meets this chart. What professional opportunity or shift arrives? What must they act on now? End with one powerful sentence]`,
 
-  story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT — a personal mythological story.
+  story: (s, gender='female') => `You are Born From, writing THE LIFE SCRIPT, a personal mythological story.
 
 Born as ${s.day.stem}${s.day.branch}, the ${ELEMENTS[s.day.stem]} archetype.
 Their year pillar ${s.year.stem}${s.year.branch} is the world they came from.
 Their month pillar ${s.month.stem}${s.month.branch} is the force that drives them.
 
-Write a 950-1000 word personal story in 3 parts. No markdown, no headers. Pure flowing prose paragraphs separated by blank lines. Second person "you". Ancient Korea filtered through elemental metaphor. Use all three pillars to make this completely specific — not a generic element story.
+Write a 950-1000 word personal story in 3 parts. No markdown, no headers. Pure flowing prose paragraphs separated by blank lines. Second person "you". Ancient Korea filtered through elemental metaphor. Use all three pillars to make this completely specific, not a generic element story.
 
-PART 1 — THE BIRTH (250 words)
-The year pillar ${ELEMENTS[s.year.stem]} shaped the world you entered. Describe that world and what it asked of you before you were ready. Introduce who you are at your core — the ${ELEMENTS[s.day.stem]} that runs underneath everything.
+PART 1, THE BIRTH (250 words)
+The year pillar ${ELEMENTS[s.year.stem]} shaped the world you entered. Describe that world and what it asked of you before you were ready. Introduce who you are at your core, the ${ELEMENTS[s.day.stem]} that runs underneath everything.
 
-PART 2 — THE TRIAL (350 words)
-The month pillar ${ELEMENTS[s.month.stem]} is your engine — and your adversary. The moment it overrides your true self becomes the central trial. A specific scene. The darkest moment. The choice.
+PART 2, THE TRIAL (350 words)
+The month pillar ${ELEMENTS[s.month.stem]} is your engine, and your adversary. The moment it overrides your true self becomes the central trial. A specific scene. The darkest moment. The choice.
 
-PART 3 — THE ARRIVAL (350 words)
+PART 3, THE ARRIVAL (350 words)
 Resolution between all three pillars. The moment you became all three at once. A meeting or encounter that changes everything. End on the most beautiful sentence you have ever written.`,
 };
 
@@ -351,7 +351,7 @@ export async function POST(req) {
       from: 'Born From <hello@bornfrom.co>',
       replyTo: 'hello@bornfrom.co',
       to: email,
-      subject: `${TITLES[productId]} — Born From`,
+      subject: `${TITLES[productId]}, Born From`,
       html: emailHTML,
     });
     return NextResponse.json({ success: true });
@@ -386,7 +386,7 @@ export async function GET(req) {
       from: 'Born From <hello@bornfrom.co>',
       replyTo: 'hello@bornfrom.co',
       to: testEmail,
-      subject: `[TEST] ${TITLES[testProduct]} — Born From`,
+      subject: `[TEST] ${TITLES[testProduct]}, Born From`,
       html: emailHTML,
     });
     
