@@ -88,7 +88,7 @@ RULES: Every paragraph contains something that HAPPENS. Sentences 8-12 words. Ko
 async function callClaude(p,maxTok=1200){const r=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:p}],max_tokens:maxTok})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content[0].text;}
 function parseSections(text){const m=[...text.matchAll(/###\s+(.+?)\n([\s\S]+?)(?=\n###|$)/g)];return m.map(x=>({title:x[1].trim(),body:x[2].trim()}));}
 const TABS=[{id:'basic',ko:'Basic Fortune',icon:'命'},{id:'love',ko:'The Relationship Decoder',icon:'♡'},{id:'career',ko:'The Success Compass',icon:'↑'},{id:'story',ko:'The Life Script',icon:'✦'}];
-const PRODUCTS={basic:'drqcvf',love:'yqbcw',career:'lfvmx',story:'nuxbbx',bundle:'vhtko',combo:'COMBO_ID'};
+const PRODUCTS={basic:'drqcvf',love:'yqbcw',career:'lfvmx',story:'nuxbbx',bundle:'vhtko',combo:'hjazzy'};
 function polarCheckout(productId,onSuccess,birthDate,gender){
   const isTest=typeof window!=='undefined'&&window.location.search.includes('test=true');
   if(isTest){if(onSuccess)onSuccess();return;}
