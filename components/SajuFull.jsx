@@ -205,19 +205,19 @@ export default function SajuFull(){
         <button onClick={()=>setGender('male')} style={{...SS,flex:1,background:gender==='male'?V.am:'none',color:gender==='male'?'#FFFFFF':V.mu,border:`1px solid ${gender==='male'?V.am:V.br}`,padding:'10px'}}>Male</button>
       </div>
       {err&&<p style={{color:'#E05050',fontSize:14,marginBottom:12,textAlign:'center'}}>{err}</p>}
-      <button className="hvr-fill" onClick={handleReveal} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'16px',fontFamily:FF,fontSize:19,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s'}}>REVEAL MY ELEMENT — FREE</button>
+      <button className="hvr-fill" onClick={handleReveal} style={{width:'100%',background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'16px',fontFamily:FF,fontSize:19,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s'}}>REVEAL MY ELEMENT FREE</button>
+      <p style={{fontSize:12,color:V.mu,textAlign:'center',marginTop:8,letterSpacing:1}}>Full Relationship Report available for $4.90 after your free reading.</p>
     </div>
   );
   if(view==='landing') return(
     <div style={base}>
       <style>{`@keyframes tw{0%,100%{opacity:.8}50%{opacity:.2}} @keyframes tw2{0%,100%{opacity:.45}50%{opacity:.95}} .el-item:hover{background:#EDE8E0} .hvr-fill:hover{background:#9A7070!important;color:#FFFFFF!important} @media(max-width:600px){.hero-h1{font-size:36px!important}.why-grid{grid-template-columns:1fr!important}.sp{padding:56px 20px!important}}`}</style>
-      <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 32px',borderBottom:`1px solid ${V.br}`,position:'sticky',top:0,background:V.bg,zIndex:50}}>
-        <div style={{display:'flex',gap:24}}>
-          <button onClick={()=>document.getElementById('shop-section')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:'none',fontSize:12,letterSpacing:3,color:V.mu,cursor:'pointer',fontFamily:FF,padding:0}}>SHOP</button>
-          <button onClick={()=>document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:'none',fontSize:12,letterSpacing:3,color:V.mu,cursor:'pointer',fontFamily:FF,padding:0}}>ABOUT</button>
+      <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 20px',borderBottom:`1px solid ${V.br}`,position:'sticky',top:0,background:V.bg,zIndex:50}}>
+        <div style={{display:'flex',gap:16,flexShrink:0}}>
+          <button onClick={()=>document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:'none',fontSize:11,letterSpacing:2,color:V.mu,cursor:'pointer',fontFamily:FF,padding:0,whiteSpace:'nowrap'}}>ABOUT</button>
         </div>
-        <div style={{fontSize:15,letterSpacing:5,fontWeight:600,color:V.tx,position:'absolute',left:'50%',transform:'translateX(-50%)'}}>BORN FROM</div>
-        <a href="#saju-form" style={{fontSize:12,letterSpacing:3,color:V.am,textDecoration:'none',fontWeight:600}}>START FREE</a>
+        <div style={{fontSize:14,letterSpacing:4,fontWeight:600,color:V.tx,textAlign:'center',flexShrink:0,margin:'0 12px'}}>BORN FROM</div>
+        <a href="#saju-form" onClick={e=>{e.preventDefault();document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'});}} style={{fontSize:11,letterSpacing:2,color:'#FFFFFF',background:V.am,padding:'6px 12px',textDecoration:'none',fontWeight:600,whiteSpace:'nowrap',flexShrink:0}}>FREE</a>
       </nav>
       <section style={{position:'relative',width:'100%',overflow:'hidden'}}>
         <img src="/hero_prism.png" alt="Born From" style={{width:'100%',display:'block',maxHeight:'65vh',objectFit:'cover',objectPosition:'center'}}/>
@@ -227,24 +227,20 @@ export default function SajuFull(){
           <svg style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:-1}} viewBox="0 0 800 320" preserveAspectRatio="xMidYMid slice">
             {[[42,28,1,'tw',2.8,0],[112,14,1.5,'tw2',3.4,.5],[198,44,1,'tw',2.2,.2],[278,11,1,'tw2',3.8,.8],[354,34,1.5,'tw',2.5,.3],[432,7,1,'tw2',3,.1],[512,26,1,'tw',2.8,.6],[594,17,1.5,'tw2',3.2,1],[664,38,1,'tw',2.6,.4],[754,20,1,'tw2',2.9,.9]].map(([cx,cy,r,a,d,dl],i)=>(<circle key={i} cx={cx} cy={cy} r={r} fill={i%9===4?'#B38B8B':'#1A1A1A'} style={{animation:`${a} ${d}s ${dl}s infinite`}}/>))}
           </svg>
-          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>WHAT ELEMENT WERE YOU BORN FROM?</p>
-          <h1 className="hero-h1" style={{fontSize:64,lineHeight:1.08,fontWeight:600,marginBottom:20}}>You Were<br/><span style={{color:V.am}}>BORN FROM</span><br/>the elements.<br/><span style={{fontSize:'0.55em',fontWeight:400,color:V.mu,letterSpacing:2}}>Ancient Korea knew exactly who you are.</span></h1>
-          <p style={{fontSize:19,color:V.mu,lineHeight:1.7,maxWidth:500,margin:'0 auto 20px'}}>Your birthdate contains a precise cosmic signature. One of five elemental forces shapes your personality, love life, and career. Not a horoscope. The ancient Korean system that has mapped human nature for 3,000 years.</p>
-          <div style={{background:V.s,border:`1px solid ${V.br}`,padding:'20px 28px',maxWidth:480,margin:'0 auto 28px',textAlign:'left'}}>
-            <p style={{fontSize:13,color:V.am,letterSpacing:3,marginBottom:10,fontWeight:700}}>THE FULL SAJU REPORT · $4.9</p>
-            <p style={{fontSize:17,color:V.tx,lineHeight:1.7,marginBottom:8}}>Personality + Love + Career. 1,500-word personal report delivered to your email instantly.</p>
-            <p style={{fontSize:14,color:V.mu,marginBottom:12}}>The price of one coffee. The answer to questions you have been carrying for years.</p>
-            <p style={{fontSize:13,color:V.mu,fontStyle:'italic',marginBottom:16}}>K-pop idols and Korean celebrities have relied on Saju to manage their lives and careers for generations. Now in English, built by a Korean who has studied this system for over 10 years.</p>
-            <p style={{fontSize:12,color:V.am,letterSpacing:2,fontWeight:700}}>Unlike other sites that simply run your birth date through a chart, this algorithm was built from a decade of Saju study. People are shocked by how personal it reads.</p>
-          </div>
-          <button className="hvr-fill" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'15px 44px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:18}}>DISCOVER YOUR ELEMENT</button>
+          <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:16}}>KOREAN ELEMENTAL ASTROLOGY · SAJU</p>
+          <h1 className="hero-h1" style={{fontSize:56,lineHeight:1.1,fontWeight:600,marginBottom:16}}>Stop Wandering.<br/><span style={{color:V.am}}>Get the Truth About<br/>Your Relationship.</span></h1>
+          <p style={{fontSize:18,color:V.mu,lineHeight:2,maxWidth:480,margin:'0 auto 16px'}}>Tired of mixed signals?<br/>Still in a situationship going nowhere?<br/>Your birth date holds the answer.<br/>Korean elemental astrology has mapped love patterns for 3,000 years.</p>
+          <p style={{fontSize:15,color:V.mu,lineHeight:1.6,maxWidth:440,margin:'0 auto 28px',fontStyle:'italic'}}>"Stop crying at 2AM. End the situationship spiral."</p>
+
+          <button className="hvr-fill" onClick={()=>document.getElementById('saju-form')?.scrollIntoView({behavior:'smooth'})} style={{background:'none',border:`2px solid ${V.am}`,color:V.am,padding:'15px 44px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:3,fontWeight:600,transition:'all .2s',marginBottom:18}}>DISCOVER YOUR ELEMENT FREE</button>
         </div>
 
       </section>
       <section className="sp" id='about-section' style={{padding:'80px 40px',borderTop:`1px solid ${V.br}`,borderBottom:`1px solid ${V.br}`}}>
         <div style={{maxWidth:820,margin:'0 auto',textAlign:'center'}}>
           <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>WHY BORN FROM?</p>
-          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.25,marginBottom:36}}>Tarot gave you symbols.<br/>Astrology gave you archetypes.<br/><span style={{color:V.am}}>BORN FROM gives you yourself.</span></h2>
+          <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.25,marginBottom:24}}>Tarot gave you symbols.<br/>Astrology gave you archetypes.<br/><span style={{color:V.am}}>BORN FROM gives you yourself.</span></h2>
+          <p style={{fontSize:16,color:V.mu,lineHeight:1.8,maxWidth:560,margin:'0 auto 36px'}}>K-pop idols and Korean celebrities have used Saju for generations to navigate love, career, and life decisions. Built by a Korean who has studied this system for over 10 years and put it into an algorithm. People are shocked by how personal it reads.</p>
           <div className="why-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,textAlign:'left',marginBottom:48}}>
             {[{icon:'木',title:'You were born from nature',body:'From the moment of your first breath, one of the Five Elements became the core of who you are. This is not a personality test. This is the record the universe made of you.'},{icon:'地',title:'The code, decoded',body:'SAJU reads from the same elemental forces that govern the natural world. Live in alignment with your element, and happiness is not a hope, it is a certainty.'},{icon:'命',title:'Your path to happiness exists',body:'Tarot shows you cards. Astrology shows you planets. Born From shows you you. Your exact elemental makeup, with precision developed over 3,000 years of Eastern wisdom.'},{icon:'✦',title:'Oldest Statistical Science',body:'From K-pop to K-beauty to K-drama, Korea has been showing the world something real. Born From is that system, 3,000 years of mapping who people truly are, now in English.'}].map((c,i)=>(<div key={i} style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px'}}><div style={{fontSize:28,color:V.am,marginBottom:10}}>{c.icon}</div><h3 style={{fontSize:19,marginBottom:10,fontWeight:400}}>{c.title}</h3><p style={{fontSize:16,color:V.mu,lineHeight:1.7}}>{c.body}</p></div>))}
           </div>
@@ -379,7 +375,7 @@ export default function SajuFull(){
           <div className="ri5" style={{marginBottom:40}}>
             <div style={{background:V.s,border:`2px solid ${V.am}`,padding:'28px 24px',textAlign:'center'}}>
               <p style={{fontSize:11,letterSpacing:5,color:V.am,marginBottom:8,fontWeight:700}}>YOUR FULL SAJU REPORT</p>
-              <h3 style={{fontSize:24,fontWeight:600,color:V.tx,marginBottom:8,lineHeight:1.3}}>Personality + Love + Career<br/>in one 1,500-word report.</h3>
+              <h3 style={{fontSize:24,fontWeight:600,color:V.tx,marginBottom:8,lineHeight:1.3}}>Decode the situationship.<br/>Find out why the mixed signals.<br/>Know what 2026 brings.</h3>
               <p style={{fontSize:14,color:V.mu,marginBottom:6,lineHeight:1.7}}>Built by a Korean who studied Saju for 10+ years. Not a chart tool. A real algorithm that reads all three pillars together.</p>
               <p style={{fontSize:13,color:V.mu,fontStyle:'italic',marginBottom:20}}>K-pop idols and Korean celebrities have used this system for generations to navigate love, career, and life decisions.</p>
               <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:8,marginBottom:6}}>
