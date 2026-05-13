@@ -138,6 +138,7 @@ const TITLES = {
 };
 
 const PRODUCT_MAP = {
+  'hjazzy': 'combo',
   'drqcvf': 'basic',
   'yqbcw': 'love',
   'lfvmx': 'career',
