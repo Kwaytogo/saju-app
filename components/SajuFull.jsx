@@ -241,11 +241,7 @@ export default function SajuFull(){
           <p style={{fontSize:12,letterSpacing:7,color:V.am,marginBottom:20}}>WHY BORN FROM?</p>
           <h2 style={{fontSize:40,fontWeight:400,lineHeight:1.25,marginBottom:24}}>Tarot gave you symbols.<br/>Astrology gave you archetypes.<br/><span style={{color:V.am}}>BORN FROM gives you yourself.</span></h2>
           <p style={{fontSize:16,color:V.mu,lineHeight:1.8,maxWidth:560,margin:'0 auto 20px'}}>K-pop idols and Korean celebrities have used Saju for generations. G-Dragon, IU, BTS — they all consult Saju before major decisions. Built by a Korean with 10+ years of Saju study. People are shocked by how personal it reads.</p>
-          <div style={{display:'flex',flexWrap:'wrap',gap:8,justifyContent:'center',marginBottom:36}}>
-            {['As seen on Korean TV','G-Dragon consults Saju','IU reads her chart yearly','BTS knows their elements'].map((t,i)=>(
-              <div key={i} style={{background:V.s,border:`1px solid ${V.br}`,padding:'6px 14px',fontSize:12,color:V.mu,letterSpacing:1}}>{t}</div>
-            ))}
-          </div>
+
           <div className="why-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,textAlign:'left',marginBottom:48}}>
             {[{icon:'木',title:'You were born from nature',body:'From the moment of your first breath, one of the Five Elements became the core of who you are. This is not a personality test. This is the record the universe made of you.'},{icon:'地',title:'The code, decoded',body:'SAJU reads from the same elemental forces that govern the natural world. Live in alignment with your element, and happiness is not a hope, it is a certainty.'},{icon:'命',title:'Your path to happiness exists',body:'Tarot shows you cards. Astrology shows you planets. Born From shows you you. Your exact elemental makeup, with precision developed over 3,000 years of Eastern wisdom.'},{icon:'✦',title:'Oldest Statistical Science',body:'From K-pop to K-beauty to K-drama, Korea has been showing the world something real. Born From is that system, 3,000 years of mapping who people truly are, now in English.'}].map((c,i)=>(<div key={i} style={{background:V.s,border:`1px solid ${V.br}`,padding:'24px'}}><div style={{fontSize:28,color:V.am,marginBottom:10}}>{c.icon}</div><h3 style={{fontSize:19,marginBottom:10,fontWeight:400}}>{c.title}</h3><p style={{fontSize:16,color:V.mu,lineHeight:1.7}}>{c.body}</p></div>))}
           </div>
@@ -285,9 +281,10 @@ export default function SajuFull(){
           ))}
         </div>
       </section>
-      <section style={{padding:'32px 24px',background:V.am,textAlign:'center'}}>
-        <p style={{fontSize:14,color:'#FFFFFF',letterSpacing:2,marginBottom:6,fontWeight:700}}>FULL 5-PAGE LOVE REPORT · $4.90</p>
-        <p style={{fontSize:18,color:'#FFFFFF',lineHeight:1.6}}>Why your love life has been hard. What to do. Who is coming.<br/>K-beauty 팩 한 장 값. 이메일로 즉시 발송.</p>
+      <section style={{padding:'28px 24px',background:V.s,borderTop:`1px solid ${V.br}`,textAlign:'center'}}>
+        <p style={{fontSize:11,letterSpacing:5,color:V.am,marginBottom:8,fontWeight:700}}>THE RELATIONSHIP DECODER</p>
+        <p style={{fontSize:18,color:V.tx,lineHeight:1.7,maxWidth:480,margin:'0 auto 12px'}}>Why your love has been hard.<br/>What to do. Who is coming to you.</p>
+        <p style={{fontSize:14,color:V.mu}}>5-page personal report · email delivery · $4.90</p>
       </section>
       <section id="saju-form" style={{padding:'80px 32px',borderTop:`1px solid ${V.br}`,textAlign:'center',background:V.s}}>
         <p style={{fontSize:13,letterSpacing:5,color:V.am,marginBottom:12,fontWeight:700}}>ELEMENTAL FREQUENCY ANALYSIS</p>
@@ -394,12 +391,12 @@ export default function SajuFull(){
                 ))}
               </div>
               <p style={{fontSize:13,color:V.mu,fontStyle:'italic',marginBottom:20}}>Korean girl들은 이미 다 하고 있다. K-beauty 팩 한 장 값에 당신의 연애 고민을 해결하세요.</p>
+              <div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8,fontWeight:700}}>THIS PAGE ONLY</div>
               <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:8,marginBottom:6}}>
-                <span style={{fontSize:16,color:'#AAAAAA',textDecoration:'line-through'}}>$27</span>
-                <span style={{fontSize:44,color:V.am,fontWeight:700,lineHeight:1}}>$4.9</span>
+                <span style={{fontSize:44,color:V.am,fontWeight:700,lineHeight:1}}>$4.90</span>
               </div>
               <p style={{fontSize:12,color:V.mu,marginBottom:20}}>The price of one coffee. Delivered to your email in minutes.</p>
-              <button onClick={()=>polarCheckout(PRODUCTS.combo,null,`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,color:'#FFFFFF',border:'none',padding:'16px',fontFamily:FF,fontSize:17,cursor:'pointer',letterSpacing:2,fontWeight:700,marginBottom:10}}>GET MY FULL REPORT · $4.9</button>
+              <button onClick={()=>polarCheckout(PRODUCTS.combo,null,`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,color:'#FFFFFF',border:'none',padding:'18px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700,marginBottom:10}}>GET YOUR FULL READING · $4.90</button>
               <p style={{fontSize:11,color:V.mu}}>Delivered to your email instantly. Yours to keep forever.</p>
             </div></div>
         </div>
