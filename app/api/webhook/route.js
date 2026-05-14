@@ -84,7 +84,7 @@ Birth chart:
 ### YOUR 2026 LOVE FORECAST
 5-6 sentences. Fire Horse year meets this chart. Specific timing, specific energy. What to watch for. What to finally let go.
 
-Prose only. No bullets. Every line should make them want to share this reading.\`
+Prose only. No bullets. Every line should make them want to share this reading.`,
   career: (s, gender='female') => `You are Born From, writing THE SUCCESS COMPASS. English, empowering, visionary, precise.
 
 This person: ${gender === 'male' ? 'Male' : 'Female'}
