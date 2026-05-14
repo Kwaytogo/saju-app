@@ -390,12 +390,16 @@ export default function SajuFull(){
                   </div>
                 ))}
               </div>
-              <p style={{fontSize:13,color:V.mu,fontStyle:'italic',marginBottom:20}}>Korean girl들은 이미 다 하고 있다. K-beauty 팩 한 장 값에 당신의 연애 고민을 해결하세요.</p>
-              <div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8,fontWeight:700}}>THIS PAGE ONLY</div>
-              <div style={{display:'flex',alignItems:'baseline',justifyContent:'center',gap:8,marginBottom:6}}>
-                <span style={{fontSize:44,color:V.am,fontWeight:700,lineHeight:1}}>$4.90</span>
+              <div style={{borderTop:`1px solid ${V.br}`,borderBottom:`1px solid ${V.br}`,padding:'20px 0',marginBottom:24}}>
+                <p style={{fontSize:13,letterSpacing:4,color:V.am,marginBottom:10,fontWeight:700}}>KOREAN GIRLS ALREADY KNOW THIS.</p>
+                <p style={{fontSize:22,color:V.tx,fontWeight:600,lineHeight:1.4,marginBottom:6}}>One sheet mask for your skin.</p>
+                <p style={{fontSize:22,color:V.am,fontWeight:600,lineHeight:1.4}}>One reading for your love life.</p>
               </div>
-              <p style={{fontSize:12,color:V.mu,marginBottom:20}}>The price of one coffee. Delivered to your email in minutes.</p>
+              <div style={{fontSize:11,letterSpacing:4,color:V.am,marginBottom:8,fontWeight:700}}>THIS PAGE ONLY</div>
+              <div style={{marginBottom:6}}>
+                <span style={{fontSize:52,color:V.am,fontWeight:700,lineHeight:1}}>$4.90</span>
+              </div>
+              <p style={{fontSize:12,color:V.mu,marginBottom:20}}>Delivered to your email in minutes.</p>
               <button onClick={()=>polarCheckout(PRODUCTS.combo,null,`${year}-${String(month).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`,gender)} style={{width:'100%',background:V.am,color:'#FFFFFF',border:'none',padding:'18px',fontFamily:FF,fontSize:18,cursor:'pointer',letterSpacing:2,fontWeight:700,marginBottom:10}}>GET YOUR FULL READING · $4.90</button>
               <p style={{fontSize:11,color:V.mu}}>Delivered to your email instantly. Yours to keep forever.</p>
             </div></div>
