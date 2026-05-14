@@ -333,12 +333,8 @@ export async function POST(req) {
 
     let readings = [];
     if (productId === 'combo') {
-      const [basic, love, career] = await Promise.all([
-        generateReading('basic', saju, gender),
-        generateReading('love', saju, gender),
-        generateReading('career', saju, gender),
-      ]);
-      readings = [{type:'basic',text:basic},{type:'love',text:love},{type:'career',text:career}];
+      const love = await generateReading('love', saju, gender);
+      readings = [{type:'love',text:love}];
     } else if (productId === 'bundle') {
       const [basic, love, career, story] = await Promise.all([
         generateReading('basic', saju),
