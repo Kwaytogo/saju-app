@@ -383,9 +383,11 @@ export async function GET(req) {
   try {
     const [year, month, day] = testBirth.split('-').map(Number);
     const saju = calcSaju(year, month, day);
-    const text = await generateReading(testProduct, saju, testGender);
-    const readings = [{ type: testProduct, text }];
-    const emailHTML = buildReadingEmail(readings, saju, testBirth, testProduct);
+    // combo = love only
+    const readingType = testProduct === 'combo' ? 'love' : testProduct;
+    const text = await generateReading(readingType, saju, testGender);
+    const readings = [{ type: readingType, text }];
+    const emailHTML = buildReadingEmail(readings, saju, testBirth, readingType);
     
     await resend.emails.send({
       from: 'Born From <hello@bornfrom.co>',
